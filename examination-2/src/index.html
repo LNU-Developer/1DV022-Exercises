@@ -8,11 +8,35 @@
         <script type="module" src="js/app.js"></script>
         <link rel="stylesheet" href="css/style.css">
     </head>
+    
     <body>
-        <h1>Quizzy</h1>
+        <header>
+            <h1>Quizzy</h1>
+        </header>
+
+        <main>
+            <div id="highscore">
+            </div>
+        </main>
+        <div id="instructions">
         <p>Welcome to Quizzy, please continue by entering your nickname.</p>
         <p>You will be able to respond to a set of question and will have 20 seconds to answer each one.</p>
-        <p>If you're quick enough you might join the top 5 in the highscores which itself brings some bragging right</p>
+        <p>If you're quick enough you might join the top 5 in the highscores which itself brings some bragging right.</p>
+        </div>
+        <br>
+        
+        <div id="nickname">
+        <h2>Enter your nickname</h2>
+        <p><input type="text" name="name" id="name" size="20" required></p>
+        <button type="button" id="startGameBtn">Start game</button>
+        </div>
+        
+        <br>
+
+        <div id="question">
+        <h2>Question </h2>
+        </div>
+
         <script nomodule src="build.js"></script>
     </body>
 </html>
