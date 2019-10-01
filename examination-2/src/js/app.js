@@ -1,6 +1,6 @@
 
 function reqListener () {
-  console.log(this.responseText)
+  console.log(JSON.parse(this.response).question)
 }
 
 var api = new window.XMLHttpRequest()
