@@ -1,10 +1,16 @@
+var nextURL
+var api = new window.XMLHttpRequest()
 
-function reqListener () {
-  console.log(JSON.parse(this.response).question)
+function testResponse () {
+  console.log(JSON.parse(this.response))
 }
 
-var api = new window.XMLHttpRequest()
-api.addEventListener('load', reqListener)
-api.open('GET', 'http://vhost3.lnu.se:20080/question/1', true)
-api.setRequestHeader('Content-Type', 'application/json')
-api.send()
+function init () {
+  nextURL = 'http://vhost3.lnu.se:20080/question/1'
+  api.open('GET', nextURL, true)
+  api.setRequestHeader('Content-Type', 'application/json')
+  api.send()
+  api.addEventListener('load', testResponse)
+  console.log('Window loaded')
+}
+window.addEventListener('load', init)
