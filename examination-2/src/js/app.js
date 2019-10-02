@@ -3,10 +3,6 @@ var api = new window.XMLHttpRequest()
 var startGameBtn
 var answerBtn
 
-function testResponse () {
-  console.log(JSON.parse(this.response))
-}
-
 function init () {
   startGameBtn = document.getElementById('startGameBtn')
   answerBtn = document.getElementById('answerBtn')
@@ -20,11 +16,29 @@ window.addEventListener('load', init)
 function startGame () {
   api.open('GET', nextURL, true)
   api.setRequestHeader('Content-Type', 'application/json')
+  api.responseType = 'json'
   api.send()
-  api.addEventListener('load', testResponse)
+  api.onreadystatechange = function () {
+    if (api.readyState === 4 && api.status === 200) {
+      nextURL = this.response.nextURL
+      console.log(this.response)
+    }
+  }
+
   console.log('Started game')
 }
 
 function submitAnswer () {
-  console.log('Answer provided')
+  console.log(nextURL)
+  api.open('POST', nextURL, true)
+  api.setRequestHeader('Content-Type', 'application/json')
+  api.responseType = 'json'
+  api.send(JSON.stringify({ answer: 2 }))
+  api.onreadystatechange = function () {
+    if (api.readyState === 4 && api.status === 200) {
+      nextURL = this.response.nextURL
+      console.log(this.response)
+      console.log(nextURL)
+    }
+  }
 }
