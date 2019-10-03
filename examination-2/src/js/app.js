@@ -13,27 +13,11 @@ function init () {
 }
 window.addEventListener('load', init)
 
-function startGame () {
-  api.open('GET', nextURL, true)
+function useApi (type, answer) {
+  api.open(type, nextURL, true)
   api.setRequestHeader('Content-Type', 'application/json')
   api.responseType = 'json'
-  api.send()
-  api.onreadystatechange = function () {
-    if (api.readyState === 4 && api.status === 200) {
-      nextURL = this.response.nextURL
-      console.log(this.response)
-    }
-  }
-
-  console.log('Started game')
-}
-
-function submitAnswer () {
-  console.log(nextURL)
-  api.open('POST', nextURL, true)
-  api.setRequestHeader('Content-Type', 'application/json')
-  api.responseType = 'json'
-  api.send(JSON.stringify({ answer: 2 }))
+  api.send(JSON.stringify(answer))
   api.onreadystatechange = function () {
     if (api.readyState === 4 && api.status === 200) {
       nextURL = this.response.nextURL
@@ -41,4 +25,13 @@ function submitAnswer () {
       console.log(nextURL)
     }
   }
+}
+
+function startGame () {
+  useApi('GET')
+  console.log('Started game')
+}
+
+function submitAnswer () {
+  useApi('POST', { answer: 2 })
 }
