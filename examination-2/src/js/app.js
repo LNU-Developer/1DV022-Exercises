@@ -1,17 +1,18 @@
 var nextURL
 var startGameBtn
 var answerBtn
-// var questionId
-// var questionMessage
+var questionId
+var questionMessage
+var questionArea
 // var answerType
 // var submittedAnswer
 var response
-// var questionArea
+
 function init () {
-  // questionArea = document.getElementById('questionArea')
+  questionArea = document.getElementById('questionArea')
   // answerType = document.getElementById('answerType')
-  // questionId = document.getElementById('questionId')
-  // questionMessage = document.getElementById('questionMessage')
+  questionId = document.getElementById('questionId')
+  questionMessage = document.getElementById('questionMessage')
   startGameBtn = document.getElementById('startGameBtn')
   answerBtn = document.getElementById('answerBtn')
   nextURL = 'http://vhost3.lnu.se:20080/question/1'
@@ -35,23 +36,22 @@ function useApi (type, answer) {
   })
 }
 
-// function apiData () {
-// svar = this.response
-// nextURL = this.response.nextURL
-// console.log(this.response)
-// console.log(nextURL)
-
 // if (this.response.message === 'You got your question! Now send me the answer via HTTP POST to the nextURL in JSON-format') {
-// questionMessage.innerHTML = this.response.question
-// questionId.innerHTML = this.response.id
 // answerType.innerHTML = '<input type="text" name="answer" id="userAnswer" size="5">'
 // submittedAnswer = document.getElementById('userAnswer').value
 // console.log(submittedAnswer)
 // } // else if (|| 'You got your question! Now send me which alternative that is right (the key) as the answer via HTTP POST to the nextURL in JSON-format'))
 // }
 
+function updateQuestion () {
+  questionMessage.innerHTML = response.question
+  questionId.innerHTML = response.id.toString(10).substring(0, 1)
+  console.log(response.id)
+}
+
 async function startGame () {
   response = await useApi('GET')
+  updateQuestion()
   console.log(response)
 }
 
