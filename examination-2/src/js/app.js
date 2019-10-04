@@ -2,6 +2,7 @@ var nextURL
 var startGameBtn
 var answerBtn
 var questionId
+var questionNumber
 var questionMessage
 var questionArea
 var answerType
@@ -11,6 +12,7 @@ var userAnswer
 var userOption
 
 function init () {
+  questionNumber = 0
   questionArea = document.getElementById('questionArea')
   answerType = document.getElementById('answerType')
   questionId = document.getElementById('questionId')
@@ -40,9 +42,10 @@ function useApi (type, answer) {
 
 function updateQuestion () {
   answerType.innerHTML = ''
+  questionNumber++
 
   questionMessage.innerHTML = response.question
-  questionId.innerHTML = response.id.toString(10).substring(0, 1)
+  questionId.innerHTML = questionNumber
 
   if (response.message === 'You got your question! Now send me the answer via HTTP POST to the nextURL in JSON-format') {
     answerType.innerHTML = '<input type="text" name="answer" id="userAnswer" size="5">'
@@ -76,5 +79,6 @@ async function submitAnswer () {
 
   console.log(submittedAnswer)
   response = await useApi('POST', { answer: submittedAnswer })
-  console.log(response)
+  response = await useApi('GET')
+  updateQuestion()
 }
