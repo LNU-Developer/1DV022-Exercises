@@ -7,6 +7,8 @@ var questionArea
 var answerType
 var submittedAnswer
 var response
+var userAnswer
+var userOption
 
 function init () {
   questionArea = document.getElementById('questionArea')
@@ -36,23 +38,23 @@ function useApi (type, answer) {
   })
 }
 
-// if (this. {
-
-// console.log(submittedAnswer)
-// } // else if (|| 'You got your question! Now send me which alternative that is right (the key) as the answer via HTTP POST to the nextURL in JSON-format'))
-// }
-
 function updateQuestion () {
+  answerType.innerHTML = ''
+
   questionMessage.innerHTML = response.question
   questionId.innerHTML = response.id.toString(10).substring(0, 1)
-  console.log(response.id)
 
   if (response.message === 'You got your question! Now send me the answer via HTTP POST to the nextURL in JSON-format') {
     answerType.innerHTML = '<input type="text" name="answer" id="userAnswer" size="5">'
-    submittedAnswer = document.getElementById('userAnswer')
+    userAnswer = document.getElementById('userAnswer')
+  } else if (response.message === 'You got your question! Now send me which alternative that is right (the key) as the answer via HTTP POST to the nextURL in JSON-format') {
+    userAnswer = ''
+    for (let i = 0; i < Object.keys(response.alternatives).length; i++) {
+      answerType.innerHTML += '<input type="radio" name="userOption" value=alt' + (i + 1) + '>' + Object.values(response.alternatives)[i] + '<br>'
+    }
+    userOption = document.getElementsByName('userOption')
   }
 }
-
 async function startGame () {
   response = await useApi('GET')
   updateQuestion()
@@ -60,6 +62,19 @@ async function startGame () {
 }
 
 async function submitAnswer () {
-  response = await useApi('POST', { answer: submittedAnswer.value })
+  console.log(userAnswer.id)
+  console.log(userOption)
+  if (!userAnswer.id) {
+    for (let i = 0; i < userOption.length; i++) {
+      if (userOption[i].checked) {
+        submittedAnswer = userOption[i].value
+      }
+    }
+  } else {
+    submittedAnswer = userAnswer.value
+  }
+
+  console.log(submittedAnswer)
+  response = await useApi('POST', { answer: submittedAnswer })
   console.log(response)
 }
