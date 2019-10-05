@@ -12,7 +12,6 @@ var userAnswer
 var userOption
 
 function init () {
-  questionNumber = 0
   questionArea = document.getElementById('questionArea')
   answerType = document.getElementById('answerType')
   questionId = document.getElementById('questionId')
@@ -21,17 +20,15 @@ function init () {
   answerBtn = document.getElementById('answerBtn')
   startGameBtn.addEventListener('click', startGame)
   answerBtn.addEventListener('click', submitAnswer)
-  console.log('Window loaded')
 }
 window.addEventListener('load', init)
 
 function useApi (type, answer) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function (resolve) {
     var api = new window.XMLHttpRequest()
     api.open(type, nextURL, true)
     api.setRequestHeader('Content-Type', 'application/json')
     api.responseType = 'json'
-    api.onerror = reject
     api.onload = function () {
       nextURL = api.response.nextURL
       return resolve(api.response)
@@ -59,9 +56,11 @@ function updateQuestion () {
   }
 }
 async function startGame () {
+  questionNumber = 0
   nextURL = 'http://vhost3.lnu.se:20080/question/1'
   response = await useApi('GET')
   updateQuestion()
+  startGameBtn.disabled = true
 }
 
 async function submitAnswer () {
@@ -79,10 +78,12 @@ async function submitAnswer () {
 
   if (response.message === 'Wrong answer! :(') {
     console.log('fel svar')
+    startGameBtn.disabled = false
   } else if (response.nextURL !== undefined) {
     response = await useApi('GET')
     updateQuestion()
   } else {
     console.log('end')
+    startGameBtn.disabled = false
   }
 }
