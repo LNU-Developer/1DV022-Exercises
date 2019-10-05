@@ -13,6 +13,8 @@ var userOption
 var answerArea
 var countdownTimer
 var userMessage
+var totalTime
+var timeLeft
 
 function init () {
   answerArea = document.getElementById('answerArea')
@@ -65,6 +67,7 @@ function updateQuestion () {
 async function startGame () {
   userMessage.innerHTML = ''
   questionNumber = 0
+  totalTime = 0
   nextURL = 'http://vhost3.lnu.se:20080/question/1'
   response = await useApi('GET')
   updateQuestion()
@@ -73,6 +76,7 @@ async function startGame () {
 
 async function submitAnswer () {
   questionTimer('stop')
+  totalTime = totalTime + 20 - timeLeft
   if (!userAnswer.id) {
     for (let i = 0; i < userOption.length; i++) {
       if (userOption[i].checked) {
@@ -92,18 +96,18 @@ async function submitAnswer () {
     response = await useApi('GET')
     updateQuestion()
   } else {
-    userMessage.innerHTML = 'Congratualtions, you finished the quiz'
+    userMessage.innerHTML = 'Congratualtions, you finished the quiz. It took you ' + totalTime + ' seconds.'
     showAreas(false)
   }
 }
 
 function questionTimer (choice) {
   if (choice === 'start') {
-    let timeleft = 20
+    timeLeft = 20
     countdownTimer = setInterval(function () {
-      userMessage.innerHTML = timeleft + ' seconds remaining'
-      timeleft -= 1
-      if (timeleft <= 0) {
+      userMessage.innerHTML = timeLeft + ' seconds remaining'
+      timeLeft -= 1
+      if (timeLeft <= 0) {
         clearInterval(countdownTimer)
         userMessage.innerHTML = 'Sorry, the time is up, please start over'
         showAreas(false)
