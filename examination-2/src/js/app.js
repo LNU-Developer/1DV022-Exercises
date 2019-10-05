@@ -17,8 +17,10 @@ var totalTime
 var timeLeft
 var nicknameArea
 var userNickname
+var highscoreArea
 
 function init () {
+  highscoreArea = document.getElementById('highscoreArea')
   nicknameArea = document.getElementById('nicknameArea')
   userNickname = document.getElementById('userNickname')
   answerArea = document.getElementById('answerArea')
@@ -31,6 +33,8 @@ function init () {
   answerBtn = document.getElementById('answerBtn')
   startGameBtn.addEventListener('click', startGame)
   answerBtn.addEventListener('click', submitAnswer)
+
+  highscoreArea.innerHTML = window.sessionStorage.getItem('highscore')
 }
 window.addEventListener('load', init)
 
@@ -101,6 +105,7 @@ async function submitAnswer () {
   } else {
     userMessage.innerHTML = 'Congratualtions, you finished the quiz. It took you ' + totalTime + ' seconds.'
     showAreas(false)
+    checkHighscore(totalTime)
   }
 }
 
@@ -134,4 +139,21 @@ function showAreas (choice) {
     questionArea.hidden = true
     userNickname.disabled = false
   }
+}
+
+function checkHighscore (score) {
+  let highscore = []
+  let result = { 'nickname': userNickname.value, 'score': score }
+  let sessionStorage = window.sessionStorage.getItem('highscore') || '[]'
+  let parseStorage = JSON.parse(sessionStorage)
+  for (let i = 0; i < parseStorage.length; i++) {
+    console.log(parseStorage[i])
+    highscore.push(parseStorage[i])
+  }
+  highscore.push(result)
+  highscore.sort((a, b) => a.score - b.score)
+  highscore = highscore.slice(0, 5)
+
+  window.sessionStorage.setItem('highscore', JSON.stringify(highscore))
+  highscoreArea.innerHTML = sessionStorage
 }
