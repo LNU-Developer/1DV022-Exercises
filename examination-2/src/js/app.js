@@ -79,7 +79,6 @@ async function submitAnswer () {
 
   if (response.message === 'Wrong answer! :(') {
     console.log('fel svar')
-    response.nextURL = ''
   }
 
   if (response.nextURL !== undefined) {
