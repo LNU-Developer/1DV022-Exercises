@@ -19,7 +19,6 @@ function init () {
   questionMessage = document.getElementById('questionMessage')
   startGameBtn = document.getElementById('startGameBtn')
   answerBtn = document.getElementById('answerBtn')
-  nextURL = 'http://vhost3.lnu.se:20080/question/1'
   startGameBtn.addEventListener('click', startGame)
   answerBtn.addEventListener('click', submitAnswer)
   console.log('Window loaded')
@@ -27,11 +26,12 @@ function init () {
 window.addEventListener('load', init)
 
 function useApi (type, answer) {
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     var api = new window.XMLHttpRequest()
     api.open(type, nextURL, true)
     api.setRequestHeader('Content-Type', 'application/json')
     api.responseType = 'json'
+    api.onerror = reject
     api.onload = function () {
       nextURL = api.response.nextURL
       return resolve(api.response)
@@ -59,14 +59,12 @@ function updateQuestion () {
   }
 }
 async function startGame () {
+  nextURL = 'http://vhost3.lnu.se:20080/question/1'
   response = await useApi('GET')
   updateQuestion()
-  console.log(response)
 }
 
 async function submitAnswer () {
-  console.log(userAnswer.id)
-  console.log(userOption)
   if (!userAnswer.id) {
     for (let i = 0; i < userOption.length; i++) {
       if (userOption[i].checked) {
@@ -77,8 +75,17 @@ async function submitAnswer () {
     submittedAnswer = userAnswer.value
   }
 
-  console.log(submittedAnswer)
   response = await useApi('POST', { answer: submittedAnswer })
-  response = await useApi('GET')
-  updateQuestion()
+
+  if (response.message === 'Wrong answer! :(') {
+    console.log('fel svar')
+    response.nextURL = ''
+  }
+
+  if (response.nextURL !== undefined) {
+    response = await useApi('GET')
+    updateQuestion()
+  } else {
+    console.log('end')
+  }
 }
