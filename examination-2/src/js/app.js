@@ -11,10 +11,13 @@ var response
 var userAnswer
 var userOption
 var answerArea
+var countdownTimer
+var userMessage
 
 function init () {
   answerArea = document.getElementById('answerArea')
   questionArea = document.getElementById('questionArea')
+  userMessage = document.getElementById('userMessage')
   answerType = document.getElementById('answerType')
   questionId = document.getElementById('questionId')
   questionMessage = document.getElementById('questionMessage')
@@ -40,6 +43,7 @@ function useApi (type, answer) {
 }
 
 function updateQuestion () {
+  questionTimer('start')
   answerType.innerHTML = ''
   questionNumber++
 
@@ -57,7 +61,9 @@ function updateQuestion () {
     userOption = document.getElementsByName('userOption')
   }
 }
+
 async function startGame () {
+  userMessage.innerHTML = ''
   questionNumber = 0
   nextURL = 'http://vhost3.lnu.se:20080/question/1'
   response = await useApi('GET')
@@ -68,6 +74,7 @@ async function startGame () {
 }
 
 async function submitAnswer () {
+  questionTimer('stop')
   if (!userAnswer.id) {
     for (let i = 0; i < userOption.length; i++) {
       if (userOption[i].checked) {
@@ -93,5 +100,24 @@ async function submitAnswer () {
     startGameBtn.disabled = false
     answerArea.hidden = true
     questionArea.hidden = true
+  }
+}
+
+function questionTimer (choice) {
+  if (choice === 'start') {
+    let timeleft = 20
+    countdownTimer = setInterval(function () {
+      userMessage.innerHTML = timeleft + ' seconds remaining'
+      timeleft -= 1
+      if (timeleft <= 0) {
+        clearInterval(countdownTimer)
+        userMessage.innerHTML = 'Sorry, the time is up, please start over'
+        startGameBtn.disabled = false
+        answerArea.hidden = true
+        questionArea.hidden = true
+      }
+    }, 1000)
+  } else if (choice === 'stop') {
+    clearInterval(countdownTimer)
   }
 }
