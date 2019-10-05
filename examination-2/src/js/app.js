@@ -51,7 +51,7 @@ function updateQuestion () {
   questionId.innerHTML = questionNumber
 
   if (response.message === 'You got your question! Now send me the answer via HTTP POST to the nextURL in JSON-format') {
-    answerType.innerHTML = '<input type="text" name="answer" id="userAnswer" size="5">'
+    answerType.innerHTML = '<input type="text" name="answer" id="userAnswer" size="20">'
     userAnswer = document.getElementById('userAnswer')
   } else if (response.message === 'You got your question! Now send me which alternative that is right (the key) as the answer via HTTP POST to the nextURL in JSON-format') {
     userAnswer = ''
@@ -68,9 +68,7 @@ async function startGame () {
   nextURL = 'http://vhost3.lnu.se:20080/question/1'
   response = await useApi('GET')
   updateQuestion()
-  startGameBtn.disabled = true
-  answerArea.hidden = false
-  questionArea.hidden = false
+  showAreas(true)
 }
 
 async function submitAnswer () {
@@ -89,17 +87,13 @@ async function submitAnswer () {
 
   if (response.message === 'Wrong answer! :(') {
     console.log('fel svar')
-    startGameBtn.disabled = false
-    answerArea.hidden = true
-    questionArea.hidden = true
+    showAreas(false)
   } else if (response.nextURL !== undefined) {
     response = await useApi('GET')
     updateQuestion()
   } else {
     console.log('end')
-    startGameBtn.disabled = false
-    answerArea.hidden = true
-    questionArea.hidden = true
+    showAreas(false)
   }
 }
 
@@ -112,12 +106,22 @@ function questionTimer (choice) {
       if (timeleft <= 0) {
         clearInterval(countdownTimer)
         userMessage.innerHTML = 'Sorry, the time is up, please start over'
-        startGameBtn.disabled = false
-        answerArea.hidden = true
-        questionArea.hidden = true
+        showAreas(false)
       }
     }, 1000)
   } else if (choice === 'stop') {
     clearInterval(countdownTimer)
+  }
+}
+
+function showAreas (choice) {
+  if (choice === true) {
+    startGameBtn.disabled = true
+    answerArea.hidden = false
+    questionArea.hidden = false
+  } else {
+    startGameBtn.disabled = false
+    answerArea.hidden = true
+    questionArea.hidden = true
   }
 }
