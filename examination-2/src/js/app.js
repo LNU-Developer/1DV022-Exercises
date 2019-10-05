@@ -86,13 +86,13 @@ async function submitAnswer () {
   response = await useApi('POST', { answer: submittedAnswer })
 
   if (response.message === 'Wrong answer! :(') {
-    console.log('fel svar')
+    userMessage.innerHTML = 'Sorry, wrong answer, please start over'
     showAreas(false)
   } else if (response.nextURL !== undefined) {
     response = await useApi('GET')
     updateQuestion()
   } else {
-    console.log('end')
+    userMessage.innerHTML = 'Congratualtions, you finished the quiz'
     showAreas(false)
   }
 }
