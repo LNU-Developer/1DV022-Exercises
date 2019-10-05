@@ -79,9 +79,7 @@ async function submitAnswer () {
 
   if (response.message === 'Wrong answer! :(') {
     console.log('fel svar')
-  }
-
-  if (response.nextURL !== undefined) {
+  } else if (response.nextURL !== undefined) {
     response = await useApi('GET')
     updateQuestion()
   } else {
