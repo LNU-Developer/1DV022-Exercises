@@ -10,8 +10,10 @@ var submittedAnswer
 var response
 var userAnswer
 var userOption
+var answerArea
 
 function init () {
+  answerArea = document.getElementById('answerArea')
   questionArea = document.getElementById('questionArea')
   answerType = document.getElementById('answerType')
   questionId = document.getElementById('questionId')
@@ -61,6 +63,8 @@ async function startGame () {
   response = await useApi('GET')
   updateQuestion()
   startGameBtn.disabled = true
+  answerArea.hidden = false
+  questionArea.hidden = false
 }
 
 async function submitAnswer () {
@@ -79,11 +83,15 @@ async function submitAnswer () {
   if (response.message === 'Wrong answer! :(') {
     console.log('fel svar')
     startGameBtn.disabled = false
+    answerArea.hidden = true
+    questionArea.hidden = true
   } else if (response.nextURL !== undefined) {
     response = await useApi('GET')
     updateQuestion()
   } else {
     console.log('end')
     startGameBtn.disabled = false
+    answerArea.hidden = true
+    questionArea.hidden = true
   }
 }
