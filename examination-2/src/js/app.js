@@ -15,8 +15,12 @@ var countdownTimer
 var userMessage
 var totalTime
 var timeLeft
+var nicknameArea
+var userNickname
 
 function init () {
+  nicknameArea = document.getElementById('nicknameArea')
+  userNickname = document.getElementById('userNickname')
   answerArea = document.getElementById('answerArea')
   questionArea = document.getElementById('questionArea')
   userMessage = document.getElementById('userMessage')
@@ -75,8 +79,7 @@ async function startGame () {
 }
 
 async function submitAnswer () {
-  questionTimer('stop')
-  totalTime = totalTime + 20 - timeLeft
+  totalTime = totalTime + questionTimer('stop')
   if (!userAnswer.id) {
     for (let i = 0; i < userOption.length; i++) {
       if (userOption[i].checked) {
@@ -115,6 +118,7 @@ function questionTimer (choice) {
     }, 1000)
   } else if (choice === 'stop') {
     clearInterval(countdownTimer)
+    return 20 - timeLeft
   }
 }
 
@@ -123,9 +127,11 @@ function showAreas (choice) {
     startGameBtn.disabled = true
     answerArea.hidden = false
     questionArea.hidden = false
+    userNickname.disabled = true
   } else {
     startGameBtn.disabled = false
     answerArea.hidden = true
     questionArea.hidden = true
+    userNickname.disabled = false
   }
 }
