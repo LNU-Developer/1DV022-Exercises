@@ -34,7 +34,7 @@ function init () {
   startGameBtn.addEventListener('click', startGame)
   answerBtn.addEventListener('click', submitAnswer)
 
-  highscoreArea.innerHTML = window.sessionStorage.getItem('highscore')
+  updateHighscore()
 }
 window.addEventListener('load', init)
 
@@ -83,7 +83,7 @@ async function startGame () {
 }
 
 async function submitAnswer () {
-  totalTime = totalTime + questionTimer('stop')
+  totalTime += questionTimer('stop')
   if (!userAnswer.id) {
     for (let i = 0; i < userOption.length; i++) {
       if (userOption[i].checked) {
@@ -142,12 +142,11 @@ function showAreas (choice) {
 }
 
 function checkHighscore (score) {
+  let sessionStorage = window.sessionStorage.getItem('highscore') || '[]'
   let highscore = []
   let result = { 'nickname': userNickname.value, 'score': score }
-  let sessionStorage = window.sessionStorage.getItem('highscore') || '[]'
   let parseStorage = JSON.parse(sessionStorage)
   for (let i = 0; i < parseStorage.length; i++) {
-    console.log(parseStorage[i])
     highscore.push(parseStorage[i])
   }
   highscore.push(result)
@@ -155,5 +154,17 @@ function checkHighscore (score) {
   highscore = highscore.slice(0, 5)
 
   window.sessionStorage.setItem('highscore', JSON.stringify(highscore))
-  highscoreArea.innerHTML = sessionStorage
+  updateHighscore()
+}
+
+function updateHighscore () {
+  let parseStorage = JSON.parse(window.sessionStorage.getItem('highscore'))
+  if (parseStorage !== null) {
+    let html = '<table>\n<tr>\n<th>#</th>\n<th>Nickname</th>\n<th>Score</th>\n</tr>\n'
+    for (let i = 0; i < parseStorage.length; i++) {
+      html += '<tr>\n<td>' + (i + 1) + '</td>\n<td>' + parseStorage[i].nickname + '</td>\n<td>' + parseStorage[i].score + '</td>\n</tr>\n'
+    }
+    html += '</table>'
+    highscoreArea.innerHTML = html // Since the dom tries to compensate for unfinished tags on each add I need to add all of the html in one go.
+  }
 }
