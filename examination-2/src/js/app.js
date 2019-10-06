@@ -13,15 +13,12 @@ var userOption
 var answerArea
 var countdownTimer
 var userMessage
-var totalTime
-var timeLeft
-var nicknameArea
 var userNickname
 var highscoreArea
+var beginTime
 
 function init () {
   highscoreArea = document.getElementById('highscoreArea')
-  nicknameArea = document.getElementById('nicknameArea')
   userNickname = document.getElementById('userNickname')
   answerArea = document.getElementById('answerArea')
   questionArea = document.getElementById('questionArea')
@@ -73,9 +70,9 @@ function updateQuestion () {
 }
 
 async function startGame () {
+  beginTime = Date.now()
   userMessage.innerHTML = ''
   questionNumber = 0
-  totalTime = 0
   nextURL = 'http://vhost3.lnu.se:20080/question/1'
   response = await useApi('GET')
   updateQuestion()
@@ -83,7 +80,7 @@ async function startGame () {
 }
 
 async function submitAnswer () {
-  totalTime += questionTimer('stop')
+  questionTimer('stop')
   if (!userAnswer.id) {
     for (let i = 0; i < userOption.length; i++) {
       if (userOption[i].checked) {
@@ -103,27 +100,29 @@ async function submitAnswer () {
     response = await useApi('GET')
     updateQuestion()
   } else {
-    userMessage.innerHTML = 'Congratualtions, you finished the quiz. It took you ' + totalTime + ' seconds.'
+    let endTime = Math.round((Date.now() - beginTime) / 1000)
+    userMessage.innerHTML = 'Congratualtions, you finished the quiz. It took you ' + endTime + ' seconds.'
     showAreas(false)
-    checkHighscore(totalTime)
+    checkHighscore(endTime)
   }
 }
 
 function questionTimer (choice) {
   if (choice === 'start') {
-    timeLeft = 20
+    let timeLeft
+    let start = Date.now()
     countdownTimer = setInterval(function () {
+      timeLeft = 20 - Math.round((Date.now() - start) / 1000)
       userMessage.innerHTML = timeLeft + ' seconds remaining'
-      timeLeft -= 1
+
       if (timeLeft <= 0) {
         clearInterval(countdownTimer)
         userMessage.innerHTML = 'Sorry, the time is up, please start over'
         showAreas(false)
       }
-    }, 1000)
+    }, 200)
   } else if (choice === 'stop') {
     clearInterval(countdownTimer)
-    return 20 - timeLeft
   }
 }
 
