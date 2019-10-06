@@ -1,20 +1,23 @@
-var nextURL
+// References to DOM
+var userNickname
+var highscoreArea
 var startGameBtn
 var answerBtn
 var questionId
-var questionNumber
 var questionMessage
 var questionArea
+var answerArea
+var userMessage
 var answerType
+
+// Other JS variables
+var nextURL
+var questionNumber
 var submittedAnswer
 var response
 var userAnswer
 var userOption
-var answerArea
 var countdownTimer
-var userMessage
-var userNickname
-var highscoreArea
 var beginTime
 
 function init () {
@@ -58,6 +61,7 @@ function updateQuestion () {
   questionId.innerHTML = questionNumber
 
   if (response.message === 'You got your question! Now send me the answer via HTTP POST to the nextURL in JSON-format') {
+    userOption = ''
     answerType.innerHTML = '<input type="text" name="answer" id="userAnswer" size="20">'
     userAnswer = document.getElementById('userAnswer')
   } else if (response.message === 'You got your question! Now send me which alternative that is right (the key) as the answer via HTTP POST to the nextURL in JSON-format') {
@@ -101,7 +105,7 @@ async function submitAnswer () {
     updateQuestion()
   } else {
     let endTime = Math.round((Date.now() - beginTime) / 1000)
-    userMessage.innerHTML = 'Congratualtions, you finished the quiz. It took you ' + endTime + ' seconds.'
+    userMessage.innerHTML = 'Congratualtions ' + userNickname.value + ', you finished the quiz. It took you ' + endTime + ' seconds.'
     showAreas(false)
     checkHighscore(endTime)
   }
