@@ -33,10 +33,22 @@ function init () {
   answerBtn = document.getElementById('answerBtn')
   startGameBtn.addEventListener('click', startGame)
   answerBtn.addEventListener('click', submitAnswer)
-
+  window.addEventListener('keypress', keyStart)
   updateHighscore()
 }
 window.addEventListener('load', init)
+
+function keyStart (e) {
+  if (e.keyCode === 13) {
+    startGame()
+  }
+}
+
+function keyAnswer (e) {
+  if (e.keyCode === 13) {
+    submitAnswer()
+  }
+}
 
 function useApi (type, answer) {
   return new Promise(function (resolve) {
@@ -81,6 +93,8 @@ async function startGame () {
   response = await useApi('GET')
   updateQuestion()
   showAreas(true)
+  window.removeEventListener('keypress', keyStart)
+  window.addEventListener('keypress', keyAnswer)
 }
 
 async function submitAnswer () {
@@ -108,6 +122,8 @@ async function submitAnswer () {
     userMessage.innerHTML = 'Congratualtions ' + userNickname.value + ', you finished the quiz. It took you ' + endTime + ' seconds.'
     showAreas(false)
     checkHighscore(endTime)
+    window.addEventListener('keypress', keyStart)
+    window.removeEventListener('keypress', keyAnswer)
   }
 }
 
