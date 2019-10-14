@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  background-image: url("/src/image/question-mark-1872665.jpg");
+  background-image: url("/src/image/question-mark-1872665.jpg"); /* Downloaded from https://pixabay.com/illustrations/question-mark-important-sign-1872665 */
   background-position: center;
   background-repeat: no-repeat;
   font-family: Georgia;
@@ -29,6 +29,14 @@ main {
 header h1 {
   padding: 10px;
   text-align: center;
+  color: rgb(255, 94, 36);
+  font-size: 30px;
+}
+
+#nicknameArea h2,
+#highscoreArea th, 
+#questionArea h2 {
+  color: rgb(255, 94, 36);
 }
 
 #wrapper {
@@ -38,7 +46,7 @@ header h1 {
 
 #highscoreArea {
   position: absolute;
-  font-size: 16px;
+  font-size: 20px;
   animation: breathing 7s ease-out infinite normal;
 }
 
@@ -72,17 +80,7 @@ td {
   color: red;
 }
 
-#startGameBtn {
-  padding: 5px 25px;
-  border: none;
-  background-color: rgb(180, 180, 180);
-  transition: all .2s ease-in;
-}
-
-#startGameBtn:hover {
-  transform: scale(1.2);
-}
-
+#startGameBtn,
 #answerBtn {
   padding: 5px 25px;
   border: none;
@@ -90,15 +88,16 @@ td {
   transition: all .2s ease-in;
 }
 
-#answerBtn:hover {
-  transform: scale(1.2);
+#answerBtn:hover,
+#startGameBtn:hover {
+  transform: scale(1.1);
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1200px) {
 
   #highscoreArea {
     position: relative;
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     justify-content: center;
     animation: none;
