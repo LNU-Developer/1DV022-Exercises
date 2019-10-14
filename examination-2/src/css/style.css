@@ -36,6 +36,25 @@ header h1 {
 #highscoreArea {
   position: absolute;
   font-size: 16px;
+  animation: breathing 7s ease-out infinite normal;
+}
+
+@keyframes breathing {
+  0% {
+    transform: scale(0.9);
+  }
+
+  25% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(0.9);
+  }
 }
 
 #highscoreArea,
@@ -79,6 +98,7 @@ td {
     font-size: 12px;
     display: flex;
     justify-content: center;
+    animation: none;
   }
 
   #highscoreArea,
