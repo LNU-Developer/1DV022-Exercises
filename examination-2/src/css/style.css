@@ -13,3 +13,60 @@ body {
 main {
   position: relative;
 }
+
+#instructions,
+#nicknameArea,
+#questionArea,
+#answerArea,
+#messageArea {
+  text-align: center;
+}
+
+header h1 {
+  padding: 10px;
+  text-align: center;
+}
+
+#wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#highscoreArea {
+  position: absolute;
+  font-size: 16px;
+}
+
+#highscoreArea,
+th,
+td {
+  padding-left: 25px;
+}
+
+#messageArea {
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+}
+
+#startGameBtn {
+  padding: 5px 25px;
+  border: none;
+  background-color: rgb(180, 180, 180);
+  transition: all .2s ease-in;
+}
+
+#startGameBtn:hover {
+  transform: scale(1.2);
+}
+
+#answerBtn {
+  padding: 5px 25px;
+  border: none;
+  background-color: rgb(180, 180, 180);
+  transition: all .2s ease-in;
+}
+
+#answerBtn:hover {
+  transform: scale(1.2);
+}
