@@ -20,6 +20,10 @@ var userOption
 var countdownTimer
 var beginTime
 
+/**
+ * Initiates when DOM has loaded
+ */
+
 function init () {
   highscoreArea = document.getElementById('highscoreArea')
   userNickname = document.getElementById('userNickname')
@@ -38,11 +42,23 @@ function init () {
 }
 window.addEventListener('load', init)
 
+/**
+ * Event handler for key stroke enter
+ *
+ * @param {number} e - keystroke
+ */
+
 function keyStart (e) {
   if (e.keyCode === 13) {
     startGame()
   }
 }
+
+/**
+ * Event handler for key stroke enter
+ *
+ * @param {number} e - keystroke
+ */
 
 function keyAnswer (e) {
   if (e.keyCode === 13) {
@@ -50,6 +66,13 @@ function keyAnswer (e) {
   }
 }
 
+/**
+ * Function to send and receive answer from API
+ *
+ * @param {string} type - API type (GET or POST)
+ * @param {string} answer - The answer to be sent in a POST request 
+ * @returns {Promise} - Promise object representing an API response 
+ */
 function useApi (type, answer) {
   return new Promise(function (resolve) {
     var api = new window.XMLHttpRequest()
@@ -64,6 +87,11 @@ function useApi (type, answer) {
   })
 }
 
+
+/**
+ * Functions to update questions depending on received answer
+ * 
+ */
 function updateQuestion () {
   questionTimer('start')
   answerType.innerHTML = ''
@@ -85,6 +113,10 @@ function updateQuestion () {
   }
 }
 
+/**
+ * Async functions to receive initial question and initate game
+ *
+ */
 async function startGame () {
   beginTime = Date.now()
   userMessage.innerHTML = ''
@@ -97,6 +129,10 @@ async function startGame () {
   window.addEventListener('keypress', keyAnswer)
 }
 
+/**
+ * Async functions to submit and check answer
+ *
+ */
 async function submitAnswer () {
   questionTimer('stop')
   if (!userAnswer.id) {
@@ -127,6 +163,11 @@ async function submitAnswer () {
   }
 }
 
+/**
+ * Function to start and end timer
+ *
+ * @param {string} choice - selecting a choice of 'start' or 'stop' to start/stop clock
+ */
 function questionTimer (choice) {
   if (choice === 'start') {
     let timeLeft
@@ -146,6 +187,10 @@ function questionTimer (choice) {
   }
 }
 
+/**
+ * Function to show and hide different areas
+ *
+ */
 function showAreas (choice) {
   if (choice === true) {
     startGameBtn.disabled = true
@@ -160,6 +205,11 @@ function showAreas (choice) {
   }
 }
 
+/**
+ * Function to update already stored score and saving top five.
+ * *
+ * @param {number} score - User end game score
+ */
 function checkHighscore (score) {
   let sessionStorage = window.sessionStorage.getItem('highscore') || '[]'
   let highscore = []
@@ -176,6 +226,10 @@ function checkHighscore (score) {
   updateHighscore()
 }
 
+/**
+ * Function to inject HTML with score information
+ *
+ */
 function updateHighscore () {
   let parseStorage = JSON.parse(window.sessionStorage.getItem('highscore'))
   if (parseStorage !== null) {
