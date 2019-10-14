@@ -5,8 +5,11 @@ body {
 }
 
 body {
-  background-color: #dbdbdb;
+  background-image: url("/src/image/question-mark-1872665.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
   font-family: Georgia;
+  color: rgb(231, 235, 243);
   font-size: 12px;
   margin: 20px;
 }
