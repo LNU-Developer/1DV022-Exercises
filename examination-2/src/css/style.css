@@ -1,0 +1,15 @@
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  background-color: #dbdbdb;
+  font-family: Georgia;
+  font-size: 12px;
+}
+
+main {
+  position: relative;
+}
