@@ -7,7 +7,6 @@ body {
 body {
   background-image: url("/src/image/question-mark-1872665.jpg"); /* Downloaded from https://pixabay.com/illustrations/question-mark-important-sign-1872665 */
   background-position: center;
-  background-repeat: no-repeat;
   font-family: Georgia;
   color: rgb(231, 235, 243);
   font-size: 12px;
@@ -40,7 +39,7 @@ header h1 {
 }
 
 #wrapper {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -68,11 +67,6 @@ header h1 {
   }
 }
 
-#highscoreArea,
-th,
-td {
-  padding-left: 25px;
-}
 
 #messageArea {
   font-size: 18px;
@@ -93,7 +87,7 @@ td {
   transform: scale(1.1);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1000px) {
 
   #highscoreArea {
     position: relative;
