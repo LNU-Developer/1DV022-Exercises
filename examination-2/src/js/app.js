@@ -70,8 +70,8 @@ function keyAnswer (e) {
  * Function to send and receive answer from API
  *
  * @param {string} type - API type (GET or POST)
- * @param {string} answer - The answer to be sent in a POST request 
- * @returns {Promise} - Promise object representing an API response 
+ * @param {string} answer - The answer to be sent in a POST request
+ * @returns {Promise} - Promise object representing an API response
  */
 function useApi (type, answer) {
   return new Promise(function (resolve) {
@@ -87,10 +87,9 @@ function useApi (type, answer) {
   })
 }
 
-
 /**
  * Functions to update questions depending on received answer
- * 
+ *
  */
 function updateQuestion () {
   questionTimer('start')
@@ -154,7 +153,7 @@ async function submitAnswer () {
     response = await useApi('GET')
     updateQuestion()
   } else {
-    let endTime = Math.round((Date.now() - beginTime) / 1000)
+    const endTime = Math.round((Date.now() - beginTime) / 1000)
     userMessage.innerHTML = 'Congratualtions ' + userNickname.value + ', you finished the quiz. It took you ' + endTime + ' seconds.'
     showAreas(false)
     checkHighscore(endTime)
@@ -171,7 +170,7 @@ async function submitAnswer () {
 function questionTimer (choice) {
   if (choice === 'start') {
     let timeLeft
-    let start = Date.now()
+    const start = Date.now()
     countdownTimer = setInterval(function () {
       timeLeft = 20 - Math.round((Date.now() - start) / 1000)
       userMessage.innerHTML = timeLeft + ' seconds remaining'
@@ -211,10 +210,10 @@ function showAreas (choice) {
  * @param {number} score - User end game score
  */
 function checkHighscore (score) {
-  let sessionStorage = window.sessionStorage.getItem('highscore') || '[]'
+  const sessionStorage = window.sessionStorage.getItem('highscore') || '[]'
   let highscore = []
-  let result = { 'nickname': userNickname.value, 'score': score }
-  let parseStorage = JSON.parse(sessionStorage)
+  const result = { nickname: userNickname.value, score: score }
+  const parseStorage = JSON.parse(sessionStorage)
   for (let i = 0; i < parseStorage.length; i++) {
     highscore.push(parseStorage[i])
   }
@@ -231,7 +230,7 @@ function checkHighscore (score) {
  *
  */
 function updateHighscore () {
-  let parseStorage = JSON.parse(window.sessionStorage.getItem('highscore'))
+  const parseStorage = JSON.parse(window.sessionStorage.getItem('highscore'))
   if (parseStorage !== null) {
     let html = '<table>\n<tr>\n<th>#</th>\n<th>Nickname</th>\n<th>Score</th>\n</tr>\n'
     for (let i = 0; i < parseStorage.length; i++) {
