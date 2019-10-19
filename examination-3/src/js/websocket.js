@@ -1,7 +1,9 @@
 var nickname
+var userMessage
 
 function init () {
   nickname = document.getElementById('nickname')
+  userMessage = document.getElementById('userMessage')
 }
 window.addEventListener('load', init)
 
@@ -15,7 +17,7 @@ ws.addEventListener('message', event => {
 document.getElementById('sendMessage').addEventListener('click', event => {
   const data = {
     type: 'message',
-    data: 'The message text is sent using the data property',
+    data: userMessage.value,
     username: nickname.value,
     channel: 'my, not so secret, channel',
     key: 'asldfkjasdlkfj' }
