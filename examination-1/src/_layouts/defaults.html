@@ -6,16 +6,18 @@
     <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
+    <header>
+        {% include header.html %}
+    </header>
     <nav>
-      <a href="/">Home</a>
-      <a href="/blog/">Blog</a>
+        {% include navigation.html %}
     </nav>
     <h1>{{ page.title }}</h1>
     <section>
       {{ content }}
     </section>
     <footer>
-      &copy; to me
+        {% include footer.html %}
     </footer>
   </body>
 </html>
