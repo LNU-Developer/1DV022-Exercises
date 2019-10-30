@@ -21,9 +21,8 @@ document.getElementById('chat').addEventListener('click', function (pathname) {
     )
 
     var test = new Chat(count)
-    test.startChat()
     root.insertAdjacentHTML('beforeend', test.chat)
-    test.startEvents()
+    test.startChat()
     test.sendMessage()
     count++
   }
