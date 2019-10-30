@@ -36,8 +36,7 @@ class Chat {
 
   sendMessage () {
     const sendMessage = document.getElementById(`sendMessage${this.count}`)
-    sendMessage.addEventListener('click', function clickButton (event) {
-      console.log(this.count)
+    sendMessage.addEventListener('click', function clickedButton (event) {
       const data = {
         type: 'message',
         data: document.getElementById(`userMessage${this.count}`).value,
@@ -46,7 +45,7 @@ class Chat {
         key: 'asldfkjasdlkfj'
       }
       this.ws.send(JSON.stringify(data))
-      // document.getElementById(`userMessage${this.count}`).value = ''
+      document.getElementById(`userMessage${this.count}`).value = ''
     }.bind(this))
   }
 }
