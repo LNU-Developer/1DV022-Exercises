@@ -1,4 +1,4 @@
-import { Chat } from './chat.js'
+import { Chat } from './Chat.js'
 let count = 0
 
 // const home = ``
