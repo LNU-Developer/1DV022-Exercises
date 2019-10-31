@@ -15,23 +15,30 @@ class Chat {
                 <p><textarea rows="1" cols="50" id="userMessage${this.count}"></textarea></p>
                 </div>
                 <button type="button" id="sendMessage${this.count}">Send message</button>
+                <button type="button" id="closeChat${this.count}">Close chat</button>
                 `
   }
 
   closeChat () {
     this.ws.close()
+    this.ws.removeEventListener('message', this.listenMessage)
   }
 
   startChat () {
     this.ws = new window.WebSocket('ws://188.166.67.186:9080')
-    this.ws.addEventListener('message', event => {
+    document.getElementById(`closeChat${this.count}`).addEventListener('click', (event) => {
+      this.closeChat()
+    })
+
+    this.listenMessage = function listenMessage (event) {
       const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
       const data = JSON.parse(event.data)
       if (data.type === 'message' || data.type === 'notification') {
         receivedMessages.innerHTML += data.username + '<br>'
         receivedMessages.innerHTML += data.data + '<br><br>'
       }
-    })
+    }.bind(this)
+    this.ws.addEventListener('message', this.listenMessage)
   }
 
   sendMessage () {
@@ -50,4 +57,6 @@ class Chat {
   }
 }
 
-export { Chat }
+export {
+  Chat
+}
