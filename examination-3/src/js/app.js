@@ -1,33 +1,21 @@
 import { Chat } from './Chat.js'
+
 let count = 0
+let root
+let chat
 
-// const home = ``
+function init () {
+  root = document.getElementById('root')
+  chat = document.getElementById('chat')
+  chat.addEventListener('click', clickMenu)
+}
 
-// const routes = {
-//  '/': home,
-//  '/chat': chat
-// }
+window.addEventListener('load', init)
 
-const root = document.getElementById('root')
-
-document.getElementById('chat').addEventListener('click', function (pathname) {
-  pathname = '/chat' // temp fix
-
-  if (pathname === '/chat') {
-    window.history.pushState(
-      {},
-      pathname,
-      window.location.origin + pathname
-    )
-
-    var test = new Chat(count)
-    root.insertAdjacentHTML('beforeend', test.chat)
-    test.startChat()
-    test.sendMessage()
-    count++
-  }
-})
-
-// window.onpopstate = () => {
-// root.innerHTML = routes[window.location.pathname]
-// }
+function clickMenu (event) {
+  var test = new Chat(count)
+  root.insertAdjacentHTML('beforeend', test.chat)
+  test.startChat()
+  test.sendMessage()
+  count++
+}
