@@ -2,12 +2,12 @@ import { Chat } from './Chat.js'
 
 let count = 0
 let rootDiv
-let chatMenu
 
 function init () {
   rootDiv = document.getElementById('root')
-  chatMenu = document.getElementById('chat')
-  chatMenu.addEventListener('click', createChat)
+  document.getElementById('chat').addEventListener('click', createChat)
+  document.getElementById('memory').addEventListener('click', createMemory)
+  document.getElementById('ownApp').addEventListener('click', createOwnApp)
 }
 
 window.addEventListener('load', init)
@@ -18,4 +18,12 @@ function createChat () {
   chat.startChat()
   chat.sendMessage()
   count++
+}
+
+function createMemory () {
+  console.log('Load memory')
+}
+
+function createOwnApp () {
+  console.log('Load ownApp')
 }

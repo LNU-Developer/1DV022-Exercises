@@ -2,10 +2,14 @@ html,
 body {
   padding: 0px;
   margin: 0px;
+  height: 100%;
 }
 
 body {
     background-image: url("/examination-3/src/image/hacker-2300772.jpg"); /* Downloaded from https://pixabay.com/illustrations/hacker-cyber-crime-internet-2300772/ */
+    background-color: black;
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
