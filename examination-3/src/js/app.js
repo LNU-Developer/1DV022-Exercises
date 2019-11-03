@@ -1,4 +1,5 @@
 import { Chat } from './Chat.js'
+import { createWindow } from './window.js'
 
 let count = 0
 let rootDiv
@@ -13,8 +14,10 @@ function init () {
 window.addEventListener('load', init)
 
 function createChat () {
+  const newWindow = createWindow()
   const chat = new Chat(count)
-  rootDiv.insertAdjacentHTML('beforeend', chat.chat)
+  rootDiv.appendChild(newWindow)
+  newWindow.insertAdjacentHTML('beforeend', chat.chat)
   chat.startChat()
   chat.sendMessage()
   count++
