@@ -1,0 +1,34 @@
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+    background-image: url("/examination-3/src/image/hacker-2300772.jpg"); /* Downloaded from https://pixabay.com/illustrations/hacker-cyber-crime-internet-2300772/ */
+    background-size: cover;
+}
+
+.navbar {
+    background-color: grey;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: silver;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: all .2s ease-in;
+  }
+
+  /* Change the color of links on hover */
+.navbar a:hover {
+    transform: scale(1.2);
+  }

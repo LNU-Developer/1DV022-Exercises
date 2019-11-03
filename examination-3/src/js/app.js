@@ -1,21 +1,21 @@
 import { Chat } from './Chat.js'
 
 let count = 0
-let root
-let chat
+let rootDiv
+let chatMenu
 
 function init () {
-  root = document.getElementById('root')
-  chat = document.getElementById('chat')
-  chat.addEventListener('click', clickMenu)
+  rootDiv = document.getElementById('root')
+  chatMenu = document.getElementById('chat')
+  chatMenu.addEventListener('click', createChat)
 }
 
 window.addEventListener('load', init)
 
-function clickMenu (event) {
-  var test = new Chat(count)
-  root.insertAdjacentHTML('beforeend', test.chat)
-  test.startChat()
-  test.sendMessage()
+function createChat () {
+  const chat = new Chat(count)
+  rootDiv.insertAdjacentHTML('beforeend', chat.chat)
+  chat.startChat()
+  chat.sendMessage()
   count++
 }
