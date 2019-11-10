@@ -1,18 +1,30 @@
 
 $font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
+$primary-color: #AEC6D9; // #FF3B03;
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
     font: 100% $font-stack;
     color: $primary-color;
+    background-image: url("/assets/images/highway-2025863_1920.jpg"); /* Downloaded from https://pixabay.com/photos/highway-lights-night-road-2025863/ */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
+
 nav {
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color:#111; 
   }
   
   li {
@@ -21,7 +33,7 @@ nav {
   
   li a {
     display: block;
-    color: white;
+    color: #FF3B03;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -29,6 +41,11 @@ nav {
   
   /* Change the link color to #111 (black) on hover */
   li a:hover {
-    background-color: #111;
+    background-color: #335F85;
   }
+}
+
+#wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
 }
