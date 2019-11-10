@@ -2,15 +2,13 @@
 layout: post
 title:  "What do you think of static site generators?"
 comments: true
+excerpt_separator: <!--more-->
 ---
-
-# Welcome
-
-**Hello world**, this is my first Jekyll blog post.
 
 What do you think of static site generators?
 
 What type of projects are they suitable for?
+<!--more-->
 
 {% if page.comments %}
 <div id="disqus_thread"></div>

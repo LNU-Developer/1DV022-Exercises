@@ -1,0 +1,10 @@
+/* TEAM */
+	Web designer: Rickard Marjanovic
+	Github: RMarjanovic
+	From: Helsingborg, Sweden
+
+/* SITE */
+	Last update:2019-11-10
+	Language: English
+	Doctype:HTML5
+	IDE: VS Code, Disqust, Jekyll, Docker
