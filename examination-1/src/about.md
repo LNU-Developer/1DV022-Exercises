@@ -1,6 +1,5 @@
 ---
 layout: defaults
-title: About
 permalink: /about/
 ---
  <h2>Some info about myself</h2>

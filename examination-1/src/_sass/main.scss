@@ -1,6 +1,8 @@
 
 $font-stack:    Helvetica, sans-serif;
-$primary-color: #AEC6D9; // #FF3B03;
+$primary-color: #AEC6D9; 
+$secondary-color: #FF3B03;
+
 html,
 body {
   padding: 0px;
@@ -17,7 +19,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
   }
-
+p {
+  color: $secondary-color;
+}
 nav {
   ul {
     list-style-type: none;
