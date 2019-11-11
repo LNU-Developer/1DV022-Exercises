@@ -19,9 +19,11 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
   }
-p {
+
+  p {
   color: $secondary-color;
 }
+
 nav {
   ul {
     list-style-type: none;
@@ -49,7 +51,20 @@ nav {
   }
 }
 
+footer {
+  text-align: center;
+  background-color: #111;
+  width: 640px;
+  margin: 0% -320px;
+  position: fixed;
+  left: 50%;
+  bottom: 0%;
+  p {
+    color: $secondary-color
+  }
+}
+
 #wrapper {
-  max-width: 1600px;
+  max-width: 80%;
   margin: 0 auto;
 }
