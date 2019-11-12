@@ -14,7 +14,7 @@ function init () {
 window.addEventListener('load', init)
 
 function createChat () {
-  const newWindow = createWindow()
+  const newWindow = createWindow(count)
   const chat = new Chat(count)
   rootDiv.appendChild(newWindow)
   newWindow.insertAdjacentHTML('beforeend', chat.chat)

@@ -2,6 +2,7 @@ class Chat {
   constructor (count) {
     this.count = count
     this.chat = `
+                <div id="chat${this.count}">
                 <div id="nicknameArea">
                 <h2>Enter your nickname</h2>
                 <p><input type="text" name="name" id="nickname${this.count}" size="20"></p>
@@ -16,11 +17,14 @@ class Chat {
                 </div>
                 <button type="button" id="sendMessage${this.count}">Send message</button>
                 <button type="button" id="closeChat${this.count}">Close chat</button>
+                </div>
                 `
   }
 
   closeChat () {
+    const window = document.getElementById(`window${this.count}`)
     this.ws.close()
+    window.parentNode.removeChild(window)
     this.ws.removeEventListener('message', this.listenMessage)
   }
 
