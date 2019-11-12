@@ -21,7 +21,7 @@
 title: RMarjanovic
 email: rickard.marjanovic@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Personal space for Rickard Marjanovic and a website that will be the front for published assignments in the course 1DV022.
+  Personal space for RMarjanovic and a website that will be the front for published assignments in the course 1DV022.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  rmarjanovic
