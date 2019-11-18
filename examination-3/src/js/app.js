@@ -40,7 +40,6 @@ function dragElement (elmnt) {
   var pos4 = 0
   if (document.getElementById((elmnt.id + 'header'))) {
     // if present, the header is where you move the DIV from:
-    console.log('inside')
     document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown
   } else {
     // otherwise, move the DIV from anywhere inside the DIV:
@@ -54,6 +53,7 @@ function dragElement (elmnt) {
     pos3 = e.clientX
     pos4 = e.clientY
     document.onmouseup = closeDragElement
+    document.onmouseleave = closeDragElement
     // call a function whenever the cursor moves:
     document.onmousemove = elementDrag
   }

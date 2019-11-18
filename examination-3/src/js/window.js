@@ -21,6 +21,12 @@ class Window {
     headerElement.setAttribute('id', `window${this.count}header`)
     windowElement.style.position = 'absolute'
 
+    const button = document.createElement('Button')
+    const text = document.createTextNode('Close')
+    button.appendChild(text)
+    button.setAttribute('id', `closeChat${this.count}`)
+    headerElement.appendChild(button)
+
     windowElement.appendChild(headerElement)
     headerElement.appendChild(headerText)
     windowElement.appendChild(menuElement)

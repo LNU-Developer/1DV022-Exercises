@@ -16,7 +16,6 @@ class Chat {
                 <p><textarea rows="1" cols="50" id="userMessage${this.count}"></textarea></p>
                 </div>
                 <button type="button" id="sendMessage${this.count}">Send message</button>
-                <button type="button" id="closeChat${this.count}">Close chat</button>
                 </div>
                 `
   }
