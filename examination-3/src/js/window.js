@@ -14,7 +14,6 @@ class Window {
     windowElement.setAttribute('id', `window${this.count}`)
     windowElement.style.background = 'grey'
     windowElement.style.boxShadow = '10px 10px 10px 6px rgba(0, 0, 0, 0.75)'
-    windowElement.style.width = 'fit-content'
     windowElement.style.padding = '5px'
     menuElement.style.background = 'red'
     headerElement.style.background = 'yellow'
@@ -24,7 +23,7 @@ class Window {
     const button = document.createElement('Button')
     const text = document.createTextNode('Close')
     button.appendChild(text)
-    button.setAttribute('id', `closeChat${this.count}`)
+    button.setAttribute('id', `close${this.count}`)
     headerElement.appendChild(button)
 
     windowElement.appendChild(headerElement)

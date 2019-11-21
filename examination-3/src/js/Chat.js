@@ -29,7 +29,7 @@ class Chat {
 
   startChat () {
     this.ws = new window.WebSocket('ws://188.166.67.186:9080')
-    document.getElementById(`closeChat${this.count}`).addEventListener('click', (event) => {
+    document.getElementById(`close${this.count}`).addEventListener('click', (event) => {
       this.closeChat()
     })
 

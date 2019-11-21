@@ -1,5 +1,6 @@
 import { Chat } from './Chat.js'
 import { Window } from './window.js'
+import { Memory } from './Memory.js'
 
 let count = 0
 let rootDiv
@@ -26,7 +27,13 @@ function createChat () {
 }
 
 function createMemory () {
-  console.log('Load memory')
+  const window = new Window(count, `window${count}`)
+  const newWindow = window.createWindow()
+  const memory = new Memory(count)
+  rootDiv.appendChild(newWindow)
+  newWindow.insertAdjacentHTML('beforeend', memory.memory)
+  dragElement(newWindow)
+  count++
 }
 
 function createOwnApp () {

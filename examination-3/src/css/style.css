@@ -37,3 +37,14 @@ body {
 .navbar a:hover {
     transform: scale(1.2);
   }
+
+#bricks {
+  width: 270px;
+  display: inline-block
+}
+
+#bricks img {
+  width: 60px;
+  height: 60px;
+  margin: 2px;
+}
