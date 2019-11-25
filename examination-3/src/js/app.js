@@ -33,6 +33,7 @@ function createMemory () {
   rootDiv.appendChild(newWindow)
   newWindow.insertAdjacentHTML('beforeend', memory.memory)
   dragElement(newWindow)
+  memory.startGame()
   count++
 }
 
