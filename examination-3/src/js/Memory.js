@@ -2,43 +2,40 @@ class Memory {
   constructor (count) {
     this.count = count
     this.memory = `
-<div id="bricks">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}1">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}2">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}3">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}4">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}5">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}6">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}7">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}8">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}9">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}10">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}11">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}12">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}13">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}14">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}15">
-<img src="image/0.png" alt="spelbricka" class="" id=img${this.count}16">
+<div id="bricks${this.count}" style="width: 250px; display: inline-block;">
+<img src="image/0.png" alt="spelbricka" class="" id="0" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="1" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="2" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="3" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="4" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="5" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="6" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="7" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="8" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="9" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="10" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="11" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="12" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="13" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="14" width="60px" height="60px" margin="2px">
+<img src="image/0.png" alt="spelbricka" class="" id="15" width="60px" height="60px" margin="2px">
 </div> <!-- End bricks -->
-</div>
-<button type="button" id="startGame${this.count}">Start Game</button>
-</div>
 `
     this.picElems = []
     this.frontPic = []
   }
 
   startGame () {
-    const startGameBtn = document.getElementById(`startGame${this.count}`)
-    startGameBtn.addEventListener('click', function clickedGameButton (event) {
-      this.picsElems = document.getElementById('bricks').getElementsByTagName('img')
+    this.picsElems = document.getElementById(`bricks${this.count}`).getElementsByTagName('img')
+    for (let i = 0; i < this.picsElems.length; i++) {
+      this.picsElems[i].src = '/examination-3/src/image/0.png'
+    }
+    this.ranomdizePics()
+    document.getElementById(`bricks${this.count}`).addEventListener('click', this.clickedImg)
+  }
 
-      for (let i = 0; i < this.picsElems.length; i++) {
-        this.picsElems[i].src = '/examination-3/src/image/0.png'
-      }
-      this.ranomdizePics()
-      startGameBtn.disabled = true
-    }.bind(this))
+  clickedImg (event) {
+    console.log(event.target.id)
   }
 
   ranomdizePics () {
@@ -51,7 +48,7 @@ class Memory {
       allNo[i] = i
     }
 
-    // Tilldela ett random nummer mellan 0-20, antal gånger motsvarande hälften av alla picElems
+    // Tilldela ett random nummer mellan 0-15, antal gånger motsvarande hälften av alla picElems
     for (let i = 0; i < this.picsElems.length / 2; i++) {
       r = Math.floor(Math.random() * allNo.length)
       picNo[i] = allNo[r]
