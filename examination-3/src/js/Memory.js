@@ -21,7 +21,6 @@ class Memory {
 <img src="image/0.png" alt="spelbricka" class="" id="15" width="60px" height="60px" margin="2px">
 </div> <!-- End bricks -->
 `
-    this.picElems = []
     this.frontPic = []
   }
 
@@ -31,41 +30,35 @@ class Memory {
       this.picsElems[i].src = '/examination-3/src/image/0.png'
     }
     this.ranomdizePics()
-    document.getElementById(`bricks${this.count}`).addEventListener('click', this.clickedImg)
+    document.getElementById(`bricks${this.count}`).addEventListener('click', this.clickedImg.bind(this))
   }
 
   clickedImg (event) {
-    console.log(event.target.id)
+    this.picsElems[event.target.id].src = `/examination-3/src/image/${[this.frontPic[event.target.id]]}.png`
   }
 
   ranomdizePics () {
-    const picNo = [] // Array för slumptal, väljer i sin tur bilden
-    let r // Variabel för att ange ett slumpässigt tal
-    const allNo = [] // Array som skall hålla alla möjliga tal (för bildernas referens)
-    let a, b // Variablar för att hålla temporära värden för shuffle av array
-    // Populera arrayn med maximalt möjliga referenser till bilderna
-    for (let i = 0; i < 8; i++) {
-      allNo[i] = i
+    const values = [1, 2, 3, 4, 5, 6, 7, 8]
+
+    for (const value of values) {
+      this.frontPic.push(value)
     }
 
-    // Tilldela ett random nummer mellan 0-15, antal gånger motsvarande hälften av alla picElems
-    for (let i = 0; i < this.picsElems.length / 2; i++) {
-      r = Math.floor(Math.random() * allNo.length)
-      picNo[i] = allNo[r]
-      allNo.splice(r, 1)
-      this.frontPic[i] = picNo[i]
+    for (const value of values) {
+      this.frontPic.push(value)
     }
 
-    for (let i = picNo.length - 1; i > 0; i--) {
-      a = Math.floor(Math.random() * (i + 1))
-      b = picNo[i]
-      picNo[i] = picNo[a]
-      picNo[a] = b
-    }
+    let tempValue, randomNo
+    let currentElement = this.frontPic.length
 
-    // Populera resterande del av array med slumpade siffror så att allt inte hamnar på motsvarande platser
-    for (let i = this.picsElems.length / 2; i < this.picsElems.length; i++) {
-      this.frontPic[i] = picNo[i - this.picsElems.length / 2]
+    while (currentElement !== 0) {
+      randomNo = Math.floor(Math.random() * (currentElement))
+
+      currentElement--
+
+      tempValue = this.frontPic[randomNo]
+      this.frontPic[randomNo] = this.frontPic[currentElement]
+      this.frontPic[currentElement] = tempValue
     }
   }
 }
