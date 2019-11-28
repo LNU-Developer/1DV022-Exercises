@@ -45,16 +45,20 @@ class Memory {
   }
 
   async checkPics () {
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
     const first = this.turnedPic.pop()
     const second = this.turnedPic.pop()
 
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    if (this.frontPic[first] === this.frontPic[second]) {
-      console.log('same picture')
+    if (first !== second) {
+      if (this.frontPic[first] === this.frontPic[second]) {
+        console.log('same picture')
+      } else {
+        this.picsElems[first].src = '/examination-3/src/image/0.png'
+        this.picsElems[second].src = '/examination-3/src/image/0.png'
+      }
     } else {
-      this.picsElems[first].src = '/examination-3/src/image/0.png'
-      this.picsElems[second].src = '/examination-3/src/image/0.png'
+      this.turnedPic.push(first)
     }
   }
 
