@@ -22,6 +22,7 @@ class Memory {
 </div> <!-- End bricks -->
 `
     this.frontPic = []
+    this.turnedPic = []
   }
 
   startGame () {
@@ -34,15 +35,31 @@ class Memory {
   }
 
   clickedImg (event) {
-    this.picsElems[event.target.id].src = `/examination-3/src/image/${[this.frontPic[event.target.id]]}.png`
+    if (!isNaN(event.target.id) && this.turnedPic.length < 2) {
+      this.picsElems[event.target.id].src = `/examination-3/src/image/${[this.frontPic[event.target.id]]}.png`
+      this.turnedPic.push(event.target.id)
+      if (this.turnedPic.length === 2) {
+        this.checkPics()
+      }
+    }
+  }
+
+  async checkPics () {
+    const first = this.turnedPic.pop()
+    const second = this.turnedPic.pop()
+
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    if (this.frontPic[first] === this.frontPic[second]) {
+      console.log('same picture')
+    } else {
+      this.picsElems[first].src = '/examination-3/src/image/0.png'
+      this.picsElems[second].src = '/examination-3/src/image/0.png'
+    }
   }
 
   ranomdizePics () {
-    const values = [1, 2, 3, 4, 5, 6, 7, 8]
-
-    for (const value of values) {
-      this.frontPic.push(value)
-    }
+    const values = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
 
     for (const value of values) {
       this.frontPic.push(value)
