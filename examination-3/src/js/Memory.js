@@ -52,7 +52,8 @@ class Memory {
 
     if (first !== second) {
       if (this.frontPic[first] === this.frontPic[second]) {
-        console.log('same picture')
+        this.picsElems[first].style.visibility = 'hidden'
+        this.picsElems[second].style.visibility = 'hidden'
       } else {
         this.picsElems[first].src = '/examination-3/src/image/0.png'
         this.picsElems[second].src = '/examination-3/src/image/0.png'
