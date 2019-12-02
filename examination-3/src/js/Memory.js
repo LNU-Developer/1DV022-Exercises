@@ -1,3 +1,9 @@
+/**
+ * Creates an instance of a memorygame
+ * * @param {number} count - The unique instance number that will populate all IDs
+ * @constructor
+ */
+
 class Memory {
   constructor (count) {
     this.count = count
@@ -7,11 +13,9 @@ class Memory {
 <option selected value="16">4x4</option>
 <option value="4">2x2</option>
 <option value="8">2x4</option>
-</select>
-</p>
+</select></p>
 <div id="bricks${this.count}" style="width: 240px; display: inline-block;"></div>
-<div id="userMessage${this.count}"></div>
-`
+<div id="userMessage${this.count}"></div>`
     this.userTries = 0
     this.foundPic = 0
     this.frontPic = []
@@ -20,6 +24,9 @@ class Memory {
     this.stop = 0
   }
 
+  /**
+  * Function to handle initial start and adding eventlisteners
+  */
   startGame () {
     this.createBricks(16)
     this.ranomdizePics()
@@ -31,6 +38,10 @@ class Memory {
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.createBricks.bind(this))
   }
 
+  /**
+   * Event handler for key strokes
+   * @param {object} event - keystroke
+   */
   keyUse (event) {
     const id = Number(document.activeElement.id)
     if (event.keyCode === 13 || event.keyCode === 32) {
@@ -50,6 +61,10 @@ class Memory {
     }
   }
 
+  /**
+  * Event handler for clicking on img
+  * @param {object} event - click
+  */
   selectImg (event) {
     if (!isNaN(event.target.id) && this.turnedPic.length < 2 && event.target.tabIndex === 0) {
       this.picsElems[event.target.id].src = `/examination-3/src/image/${[this.frontPic[event.target.id]]}.png`
@@ -60,6 +75,9 @@ class Memory {
     }
   }
 
+  /**
+  * Async function to turn and check brick as well as check win condition
+  */
   async checkPics () {
     await new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -87,6 +105,9 @@ class Memory {
     }
   }
 
+  /**
+ * Functions to randomize array containing picture id references.
+ */
   ranomdizePics () {
     document.getElementById(`userMessage${this.count}`).innerHTML = ``
     this.userTries = 0
@@ -113,6 +134,10 @@ class Memory {
     this.timer(1)
   }
 
+  /**
+  * Function to populate the amount of bricks that should be used as a playfield
+  * @param {number} event - number of bricks that are to be created
+  */
   createBricks (event) {
     for (let i = 0; i < Number(event); i++) {
       const img = document.createElement('img')
@@ -131,6 +156,10 @@ class Memory {
     }
   }
 
+  /**
+  * Function to remove all bricks
+  * @param {object} event - Object containing the value of the change option
+  */
   removeBricks (event) {
     for (let i = this.picsElems.length - 1; i >= 0; i--) {
       document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
@@ -141,6 +170,11 @@ class Memory {
     }
   }
 
+  /**
+   * Function to start and end timer
+   * @param {number} choice - selecting a choice of 1 or any other value to start/stop clock
+   * @returns {number} returns seconds it took from startvalue
+   */
   timer (choice) {
     if (choice === 1) {
       this.startValue = Date.now()
@@ -149,6 +183,9 @@ class Memory {
     }
   }
 
+  /**
+   * Function to remove all eventlisteners and to remove HTML reference to created Window
+   */
   closeMemory () {
     const window = document.getElementById(`window${this.count}`)
     document.getElementById(`close${this.count}`).removeEventListener('click', this.closeMemory.bind(this))
