@@ -2,7 +2,7 @@ class Memory {
   constructor (count) {
     this.count = count
     this.memory = `
-<p>Antal brickor: 
+<p>Select game layout: 
 <select id="nrOfBricks${this.count}">
 <option selected>4x4</option>
 <option>2x2</option>
@@ -26,8 +26,11 @@ class Memory {
 <img src="image/0.png" alt="Brick" tabindex="0" id="13" width="60px" height="60px" margin="2px">
 <img src="image/0.png" alt="Brick" tabindex="0" id="14" width="60px" height="60px" margin="2px">
 <img src="image/0.png" alt="Brick" tabindex="0" id="15" width="60px" height="60px" margin="2px">
-</div> <!-- End bricks -->
+</div>
+<div id="userMessage${this.count}"></div>
 `
+    this.userTries = 0
+    this.foundPic = 0
     this.frontPic = []
     this.turnedPic = []
   }
@@ -79,6 +82,7 @@ class Memory {
 
     const first = this.turnedPic.pop()
     const second = this.turnedPic.pop()
+    this.userTries++
 
     if (first !== second) {
       if (this.frontPic[first] === this.frontPic[second]) {
@@ -86,6 +90,14 @@ class Memory {
         this.picsElems[second].style.opacity = 0
         this.picsElems[first].tabIndex = -1
         this.picsElems[second].tabIndex = -1
+        this.foundPic = this.foundPic + 2
+        if (this.foundPic === this.picsElems.length) {
+          const length = this.picsElems.length
+          for (let i = length - 1; i >= 0; i--) {
+            document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
+          }
+          document.getElementById(`userMessage${this.count}`).innerHTML = `Congratulation! It took you ${this.userTries} tries!`
+        }
       } else {
         this.picsElems[first].src = '/examination-3/src/image/0.png'
         this.picsElems[second].src = '/examination-3/src/image/0.png'
@@ -96,6 +108,9 @@ class Memory {
   }
 
   ranomdizePics () {
+    document.getElementById(`userMessage${this.count}`).innerHTML = ``
+    this.userTries = 0
+    this.foundPic = 0
     this.frontPic.length = 0
     const values = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
     values.length = this.picsElems.length
@@ -121,7 +136,6 @@ class Memory {
     const bricksSelection = document.getElementById(`nrOfBricks${this.count}`)
     const rawSelection = bricksSelection.options[bricksSelection.selectedIndex].text
     const length = this.picsElems.length
-    console.log(length)
     const total = Number(rawSelection.charAt(0)) * Number(rawSelection.charAt(2))
     for (let i = length - 1; i >= 0; i--) {
       document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
@@ -145,6 +159,7 @@ class Memory {
     document.getElementById(`close${this.count}`).removeEventListener('click', this.closeMemory.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.changeBricks.bind(this))
     window.parentNode.removeChild(window)
   }
 }
