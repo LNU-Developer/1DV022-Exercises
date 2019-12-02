@@ -34,6 +34,7 @@ class Memory {
     this.picsElems[0].focus()
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
+    document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this))
   }
 
   keyUse (event) {
@@ -105,6 +106,14 @@ class Memory {
       this.frontPic[randomNo] = this.frontPic[currentElement]
       this.frontPic[currentElement] = tempValue
     }
+  }
+
+  closeMemory () {
+    const window = document.getElementById(`window${this.count}`)
+    document.getElementById(`close${this.count}`).removeEventListener('click', this.closeMemory.bind(this))
+    document.getElementById(`bricks${this.count}`).removeEventListener('click', this.selectImg.bind(this))
+    document.getElementById(`bricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
+    window.parentNode.removeChild(window)
   }
 }
 

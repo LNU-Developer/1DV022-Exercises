@@ -20,18 +20,9 @@ class Chat {
                 `
   }
 
-  closeChat () {
-    const window = document.getElementById(`window${this.count}`)
-    this.ws.close()
-    window.parentNode.removeChild(window)
-    this.ws.removeEventListener('message', this.listenMessage)
-  }
-
   startChat () {
     this.ws = new window.WebSocket('ws://188.166.67.186:9080')
-    document.getElementById(`close${this.count}`).addEventListener('click', (event) => {
-      this.closeChat()
-    })
+    document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this))
 
     this.listenMessage = function listenMessage (event) {
       const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
@@ -57,6 +48,14 @@ class Chat {
       this.ws.send(JSON.stringify(data))
       document.getElementById(`userMessage${this.count}`).value = ''
     }.bind(this))
+  }
+
+  closeChat () {
+    const window = document.getElementById(`window${this.count}`)
+    this.ws.close()
+    document.getElementById(`close${this.count}`).removeEventListener('click', this.closeChat.bind(this))
+    this.ws.removeEventListener('message', this.listenMessage)
+    window.parentNode.removeChild(window)
   }
 }
 
