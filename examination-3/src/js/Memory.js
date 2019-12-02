@@ -2,6 +2,13 @@ class Memory {
   constructor (count) {
     this.count = count
     this.memory = `
+<p>Antal brickor: 
+<select id="nrOfBricks${this.count}">
+<option selected>4x4</option>
+<option>2x2</option>
+<option>2x4</option>
+</select>
+</p>
 <div id="bricks${this.count}" style="width: 250px; display: inline-block;">
 <img src="image/0.png" alt="Brick" tabindex="0" id="0" width="60px" height="60px" margin="2px">
 <img src="image/0.png" alt="Brick" tabindex="0" id="1" width="60px" height="60px" margin="2px">
@@ -35,6 +42,7 @@ class Memory {
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.changeBricks.bind(this))
   }
 
   keyUse (event) {
@@ -88,8 +96,9 @@ class Memory {
   }
 
   ranomdizePics () {
+    this.frontPic.length = 0
     const values = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
-
+    values.length = this.picsElems.length
     for (const value of values) {
       this.frontPic.push(value)
     }
@@ -106,6 +115,29 @@ class Memory {
       this.frontPic[randomNo] = this.frontPic[currentElement]
       this.frontPic[currentElement] = tempValue
     }
+  }
+
+  changeBricks () {
+    const bricksSelection = document.getElementById(`nrOfBricks${this.count}`)
+    const rawSelection = bricksSelection.options[bricksSelection.selectedIndex].text
+    const length = this.picsElems.length
+    console.log(length)
+    const total = Number(rawSelection.charAt(0)) * Number(rawSelection.charAt(2))
+    for (let i = length - 1; i >= 0; i--) {
+      document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
+    }
+    for (let i = 0; i < total; i++) {
+      const img = document.createElement('img')
+      img.setAttribute('src', 'image/0.png')
+      img.setAttribute('alt', 'Brick')
+      img.setAttribute('tabindex', 0)
+      img.setAttribute('id', i)
+      img.setAttribute('width', '60px')
+      img.setAttribute('height', '60px')
+      img.setAttribute('margin', '2px')
+      document.getElementById(`bricks${this.count}`).appendChild(img)
+    }
+    this.ranomdizePics()
   }
 
   closeMemory () {
