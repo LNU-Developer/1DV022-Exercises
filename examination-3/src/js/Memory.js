@@ -4,29 +4,12 @@ class Memory {
     this.memory = `
 <p>Select game layout: 
 <select id="nrOfBricks${this.count}">
-<option selected>4x4</option>
-<option>2x2</option>
-<option>2x4</option>
+<option selected value="16">4x4</option>
+<option value="4">2x2</option>
+<option value="8">2x4</option>
 </select>
 </p>
-<div id="bricks${this.count}" style="width: 250px; display: inline-block;">
-<img src="image/0.png" alt="Brick" tabindex="0" id="0" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="1" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="2" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="3" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="4" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="5" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="6" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="7" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="8" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="9" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="10" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="11" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="12" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="13" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="14" width="60px" height="60px" margin="2px">
-<img src="image/0.png" alt="Brick" tabindex="0" id="15" width="60px" height="60px" margin="2px">
-</div>
+<div id="bricks${this.count}" style="width: 240px; display: inline-block;"></div>
 <div id="userMessage${this.count}"></div>
 `
     this.userTries = 0
@@ -36,16 +19,14 @@ class Memory {
   }
 
   startGame () {
-    this.picsElems = document.getElementById(`bricks${this.count}`).getElementsByTagName('img')
-    for (let i = 0; i < this.picsElems.length; i++) {
-      this.picsElems[i].src = '/examination-3/src/image/0.png'
-    }
+    this.createBricks(16)
     this.ranomdizePics()
     this.picsElems[0].focus()
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this))
-    document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.changeBricks.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.removeBricks.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.createBricks.bind(this))
   }
 
   keyUse (event) {
@@ -92,10 +73,7 @@ class Memory {
         this.picsElems[second].tabIndex = -1
         this.foundPic = this.foundPic + 2
         if (this.foundPic === this.picsElems.length) {
-          const length = this.picsElems.length
-          for (let i = length - 1; i >= 0; i--) {
-            document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
-          }
+          this.removeBricks(0)
           document.getElementById(`userMessage${this.count}`).innerHTML = `Congratulation! It took you ${this.userTries} tries!`
         }
       } else {
@@ -132,15 +110,8 @@ class Memory {
     }
   }
 
-  changeBricks () {
-    const bricksSelection = document.getElementById(`nrOfBricks${this.count}`)
-    const rawSelection = bricksSelection.options[bricksSelection.selectedIndex].text
-    const length = this.picsElems.length
-    const total = Number(rawSelection.charAt(0)) * Number(rawSelection.charAt(2))
-    for (let i = length - 1; i >= 0; i--) {
-      document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
-    }
-    for (let i = 0; i < total; i++) {
+  createBricks (event) {
+    for (let i = 0; i < Number(event); i++) {
       const img = document.createElement('img')
       img.setAttribute('src', 'image/0.png')
       img.setAttribute('alt', 'Brick')
@@ -151,7 +122,20 @@ class Memory {
       img.setAttribute('margin', '2px')
       document.getElementById(`bricks${this.count}`).appendChild(img)
     }
-    this.ranomdizePics()
+    this.picsElems = document.getElementById(`bricks${this.count}`).getElementsByTagName('img')
+    for (let i = 0; i < this.picsElems.length; i++) {
+      this.picsElems[i].src = '/examination-3/src/image/0.png'
+    }
+  }
+
+  removeBricks (event) {
+    for (let i = this.picsElems.length - 1; i >= 0; i--) {
+      document.getElementById(`bricks${this.count}`).removeChild(this.picsElems[i])
+    }
+    if (event !== 0) {
+      this.createBricks(Number(event.target.value))
+      this.ranomdizePics()
+    }
   }
 
   closeMemory () {
@@ -159,7 +143,8 @@ class Memory {
     document.getElementById(`close${this.count}`).removeEventListener('click', this.closeMemory.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
-    document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.changeBricks.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.removeBricks.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.createBricks.bind(this))
     window.parentNode.removeChild(window)
   }
 }
