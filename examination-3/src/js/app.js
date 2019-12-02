@@ -15,7 +15,7 @@ function init () {
 window.addEventListener('load', init)
 
 function createChat () {
-  const window = new Window(count, `window${count}`)
+  const window = new Window(count, 'Chat')
   const newWindow = window.createWindow()
   const chat = new Chat(count)
   rootDiv.appendChild(newWindow)
@@ -27,7 +27,7 @@ function createChat () {
 }
 
 function createMemory () {
-  const window = new Window(count, `window${count}`)
+  const window = new Window(count, 'Memory')
   const newWindow = window.createWindow()
   const memory = new Memory(count)
   rootDiv.appendChild(newWindow)

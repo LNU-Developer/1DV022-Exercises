@@ -8,14 +8,9 @@ class Memory {
   constructor (count) {
     this.count = count
     this.memory = `
-<p>Select game layout: 
-<select id="nrOfBricks${this.count}">
-<option selected value="16">4x4</option>
-<option value="4">2x2</option>
-<option value="8">2x4</option>
-</select></p>
-<div id="bricks${this.count}" style="width: 240px; display: inline-block;"></div>
-<div id="userMessage${this.count}"></div>`
+                  <div id="bricks${this.count}" style="width: 240px; display: inline-block;"></div>
+                  <div id="userMessage${this.count}"></div>
+                  `
     this.userTries = 0
     this.foundPic = 0
     this.frontPic = []

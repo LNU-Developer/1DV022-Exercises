@@ -1,6 +1,7 @@
 class Window {
-  constructor (count) {
+  constructor (count, choice) {
     this.count = count
+    this.choice = choice
   }
 
   createWindow () {
@@ -9,8 +10,27 @@ class Window {
     const menuElement = document.createElement('div')
     const headerText = document.createElement('p')
 
-    headerText.innerHTML = 'Header text'
-    menuElement.innerHTML = 'Menu'
+    const headerImg = document.createElement('img')
+    headerImg.setAttribute('src', this.headerChoice(this.choice).src)
+    headerImg.setAttribute('alt', this.headerChoice(this.choice).alt)
+    headerImg.setAttribute('float', 'left')
+    headerElement.appendChild(headerImg)
+
+    const closeImg = document.createElement('img')
+    closeImg.setAttribute('src', 'image/baseline_close_black_18dp.png')
+    closeImg.setAttribute('alt', 'Close')
+    closeImg.setAttribute('id', `close${this.count}`)
+    closeImg.setAttribute('style', `float: right`)
+    headerElement.appendChild(closeImg)
+
+    const minimizeImg = document.createElement('img')
+    minimizeImg.setAttribute('src', 'image/outline_remove_black_18dp.png')
+    minimizeImg.setAttribute('alt', 'Minimize')
+    minimizeImg.setAttribute('style', `float: right`)
+    headerElement.appendChild(minimizeImg)
+
+    menuElement.innerHTML = this.menuChoice(this.choice)
+
     windowElement.setAttribute('id', `window${this.count}`)
     windowElement.style.background = 'grey'
     windowElement.style.boxShadow = '10px 10px 10px 6px rgba(0, 0, 0, 0.75)'
@@ -20,17 +40,33 @@ class Window {
     headerElement.setAttribute('id', `window${this.count}header`)
     windowElement.style.position = 'absolute'
 
-    const button = document.createElement('Button')
-    const text = document.createTextNode('Close')
-    button.appendChild(text)
-    button.setAttribute('id', `close${this.count}`)
-    headerElement.appendChild(button)
-
     windowElement.appendChild(headerElement)
     headerElement.appendChild(headerText)
     windowElement.appendChild(menuElement)
 
     return windowElement
+  }
+
+  headerChoice (choice) {
+    if (choice === 'Memory') {
+      return { src: 'image/baseline_layers_black_18dp2.png', alt: 'Memory' }
+    } else if (choice === 'Chat') {
+      return 'Chat'
+    }
+  }
+
+  menuChoice (choice) {
+    if (choice === 'Memory') {
+      return `
+              <p>Select game layout: 
+              <select id="nrOfBricks${this.count}">
+              <option selected value="16">4x4</option>
+              <option value="4">2x2</option>
+              <option value="8">2x4</option>
+              </select></p>`
+    } else if (choice === 'Chat') {
+      return 'Chat Menu'
+    }
   }
 }
 
