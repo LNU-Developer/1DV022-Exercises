@@ -16,6 +16,8 @@ class Memory {
     this.foundPic = 0
     this.frontPic = []
     this.turnedPic = []
+    this.start = 0
+    this.stop = 0
   }
 
   startGame () {
@@ -74,7 +76,7 @@ class Memory {
         this.foundPic = this.foundPic + 2
         if (this.foundPic === this.picsElems.length) {
           this.removeBricks(0)
-          document.getElementById(`userMessage${this.count}`).innerHTML = `Congratulation! It took you ${this.userTries} tries!`
+          document.getElementById(`userMessage${this.count}`).innerHTML = `Congratulation! It took you ${this.userTries} tries and ${this.timer(0)} seconds!`
         }
       } else {
         this.picsElems[first].src = '/examination-3/src/image/0.png'
@@ -108,6 +110,7 @@ class Memory {
       this.frontPic[randomNo] = this.frontPic[currentElement]
       this.frontPic[currentElement] = tempValue
     }
+    this.timer(1)
   }
 
   createBricks (event) {
@@ -135,6 +138,14 @@ class Memory {
     if (event !== 0) {
       this.createBricks(Number(event.target.value))
       this.ranomdizePics()
+    }
+  }
+
+  timer (choice) {
+    if (choice === 1) {
+      this.startValue = Date.now()
+    } else {
+      return Math.floor((Date.now() - this.startValue) / 1000)
     }
   }
 
