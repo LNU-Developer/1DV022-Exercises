@@ -8,19 +8,29 @@ class Window {
     const windowElement = document.createElement('div')
     const headerElement = document.createElement('div')
     const menuElement = document.createElement('div')
-    const headerText = document.createElement('p')
+    const headerText = document.createElement('div')
 
     const headerImg = document.createElement('img')
     headerImg.setAttribute('src', this.headerChoice(this.choice).src)
     headerImg.setAttribute('alt', this.headerChoice(this.choice).alt)
     headerImg.setAttribute('float', 'left')
+    headerImg.setAttribute('width', '25px')
+    headerImg.setAttribute('height', '25px')
     headerElement.appendChild(headerImg)
+
+    headerText.innerHTML = this.headerChoice(this.choice).alt
+    headerText.style = 'display: inline; line-height: 27px; vertical-align: top;'
+    headerElement.style.borderColor = 'orange'
+    headerElement.style.background = 'orange'
+    headerElement.style.borderWidth = 'medium'
+    headerElement.style.borderStyle = 'outset'
 
     const closeImg = document.createElement('img')
     closeImg.setAttribute('src', 'image/baseline_close_black_18dp.png')
     closeImg.setAttribute('alt', 'Close')
     closeImg.setAttribute('id', `close${this.count}`)
     closeImg.setAttribute('style', `float: right`)
+
     headerElement.appendChild(closeImg)
 
     const minimizeImg = document.createElement('img')
@@ -36,7 +46,6 @@ class Window {
     windowElement.style.boxShadow = '10px 10px 10px 6px rgba(0, 0, 0, 0.75)'
     windowElement.style.padding = '5px'
     menuElement.style.background = 'red'
-    headerElement.style.background = 'yellow'
     headerElement.setAttribute('id', `window${this.count}header`)
     windowElement.style.position = 'absolute'
 
@@ -51,7 +60,7 @@ class Window {
     if (choice === 'Memory') {
       return { src: 'image/baseline_layers_black_18dp2.png', alt: 'Memory' }
     } else if (choice === 'Chat') {
-      return 'Chat'
+      return { src: 'image/baseline_chat_black_18dp2.png', alt: 'Chat' }
     }
   }
 
