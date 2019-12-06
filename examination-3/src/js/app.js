@@ -59,7 +59,9 @@ function dragElement (elmnt) {
     // Set focus when clicked, as well as make all other elements see through
 
     for (let i = 0; i < count; i++) {
-      document.getElementById('window' + i).style.opacity = '0.8'
+      if (document.getElementById('window' + i) !== null) {
+        document.getElementById('window' + i).style.opacity = '0.8'
+      }
     }
     document.getElementById(elmnt.id).style.zIndex = zIndex++
     document.getElementById(elmnt.id).style.opacity = '1'
@@ -97,7 +99,9 @@ function dragElement (elmnt) {
     // Make all elements visible when mousebutton is released
 
     for (let i = 0; i < count; i++) {
-      document.getElementById('window' + i).style.opacity = '1'
+      if (document.getElementById('window' + i) !== null) {
+        document.getElementById('window' + i).style.opacity = '1'
+      }
     }
   }
 }
