@@ -4,6 +4,7 @@ import { Memory } from './Memory.js'
 
 let count = 0
 let rootDiv
+let zIndex = 0
 
 function init () {
   rootDiv = document.getElementById('root')
@@ -55,8 +56,17 @@ function dragElement (elmnt) {
   }
 
   function dragMouseDown (e) {
+    // Set focus when clicked, as well as make all other elements see through
+
+    for (let i = 0; i < count; i++) {
+      document.getElementById('window' + i).style.opacity = '0.8'
+    }
+    document.getElementById(elmnt.id).style.zIndex = zIndex++
+    document.getElementById(elmnt.id).style.opacity = '1'
+
     e = e || window.event
     e.preventDefault()
+
     // get the mouse cursor position at startup:
     pos3 = e.clientX
     pos4 = e.clientY
@@ -83,5 +93,11 @@ function dragElement (elmnt) {
     // stop moving when mouse button is released:
     document.onmouseup = null
     document.onmousemove = null
+
+    // Make all elements visible when mousebutton is released
+
+    for (let i = 0; i < count; i++) {
+      document.getElementById('window' + i).style.opacity = '1'
+    }
   }
 }

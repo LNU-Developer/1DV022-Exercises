@@ -19,7 +19,9 @@ class Window {
     headerElement.appendChild(headerImg)
 
     headerText.innerHTML = this.headerChoice(this.choice).alt
-    headerText.style = 'display: inline; line-height: 27px; vertical-align: top;'
+    headerText.style.display = 'inline'
+    headerText.style.lineHeight = '27px'
+    headerText.style.verticalAlign = 'top'
     headerElement.style.borderColor = 'orange'
     headerElement.style.background = 'orange'
     headerElement.style.borderWidth = 'medium'
@@ -42,10 +44,10 @@ class Window {
     menuElement.innerHTML = this.menuChoice(this.choice)
 
     windowElement.setAttribute('id', `window${this.count}`)
-    windowElement.style.background = 'grey'
+    windowElement.style.background = 'lightgrey'
     windowElement.style.boxShadow = '10px 10px 10px 6px rgba(0, 0, 0, 0.75)'
     windowElement.style.padding = '5px'
-    menuElement.style.background = 'red'
+    menuElement.style.background = 'grey'
     headerElement.setAttribute('id', `window${this.count}header`)
     windowElement.style.position = 'absolute'
 
