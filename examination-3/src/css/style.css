@@ -18,7 +18,7 @@ body {
     background-color: grey;
     overflow: hidden;
     position: fixed;
-    bottom: 20px;
+    bottom: 60px;
     width: 11%;
     opacity: 80%;
     height: 7%;
@@ -31,11 +31,9 @@ body {
     text-align: center;
     padding: 10px 10px;
     text-decoration: none;
-    font-size: 17px;
     transition: all .2s ease-in;
   }
 
-  /* Change the color of links on hover */
 .navbar a:hover {
     transform: scale(1.2);
   }

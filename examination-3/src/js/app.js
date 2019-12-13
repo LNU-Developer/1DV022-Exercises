@@ -23,7 +23,6 @@ function createChat () {
   newWindow.insertAdjacentHTML('beforeend', chat.chat)
   dragElement(newWindow)
   chat.startChat()
-  chat.sendMessage()
   count++
 }
 

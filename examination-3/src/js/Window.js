@@ -77,7 +77,9 @@ class Window {
               <option value="8">2x4</option>
               </select></p>`
     } else if (choice === 'Chat') {
-      return 'Chat Menu'
+      return ` <p>
+      <a role="button" id="userName">Nickname</a>
+      </p>`
     }
   }
 }
