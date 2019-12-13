@@ -21,7 +21,7 @@ class Chat {
   }
 
   startChat () {
-    this.ws = new window.WebSocket('ws://188.166.67.186:9080')
+    this.ws = new window.WebSocket('ws://vhost3.lnu.se:20080/socket/')
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this))
 
     this.listenMessage = function listenMessage (event) {
@@ -43,7 +43,7 @@ class Chat {
         data: document.getElementById(`userMessage${this.count}`).value,
         username: document.getElementById(`nickname${this.count}`).value,
         channel: 'channel',
-        key: 'asldfkjasdlkfj'
+        key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
       }
       this.ws.send(JSON.stringify(data))
       document.getElementById(`userMessage${this.count}`).value = ''

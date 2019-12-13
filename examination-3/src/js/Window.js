@@ -26,6 +26,7 @@ class Window {
     headerElement.style.background = 'orange'
     headerElement.style.borderWidth = 'medium'
     headerElement.style.borderStyle = 'outset'
+    headerElement.style.cursor = 'default'
 
     const closeImg = document.createElement('img')
     closeImg.setAttribute('src', 'image/baseline_close_black_18dp.png')
