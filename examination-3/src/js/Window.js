@@ -56,6 +56,8 @@ class Window {
     headerElement.appendChild(headerText)
     windowElement.appendChild(menuElement)
 
+    windowElement.style.top = `${this.count * 20}px`
+    windowElement.style.left = `${this.count * 20}px`
     return windowElement
   }
 

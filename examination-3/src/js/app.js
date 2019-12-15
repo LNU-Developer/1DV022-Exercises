@@ -1,5 +1,5 @@
 import { Chat } from './Chat.js'
-import { Window } from './window.js'
+import { Window } from './Window.js'
 import { Memory } from './Memory.js'
 
 let count = 0
