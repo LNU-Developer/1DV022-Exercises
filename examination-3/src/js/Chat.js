@@ -20,7 +20,7 @@ class Chat {
     this.ws = new window.WebSocket('ws://vhost3.lnu.se:20080/socket/')
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this))
     document.getElementById(`sendMessage${this.count}`).addEventListener('click', this.sendMessage.bind(this))
-    document.getElementById('userName').addEventListener('click', this.changeUsername)
+    document.getElementById('userName').addEventListener('click', this.changeUsername.bind(this))
     this.ws.addEventListener('message', this.listenMessage.bind(this))
   }
 
