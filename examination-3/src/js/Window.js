@@ -51,6 +51,7 @@ class Window {
     menuElement.style.background = 'grey'
     headerElement.setAttribute('id', `window${this.count}header`)
     windowElement.style.position = 'absolute'
+    windowElement.style.maxWidth = '400px'
 
     windowElement.appendChild(headerElement)
     headerElement.appendChild(headerText)

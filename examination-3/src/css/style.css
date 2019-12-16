@@ -20,7 +20,7 @@ body {
     overflow: hidden;
     position: fixed;
     bottom: 60px;
-    width: 11%;
+    min-width: 11%;
     opacity: 80%;
     height: 60px;
 }

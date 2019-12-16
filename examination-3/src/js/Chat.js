@@ -9,7 +9,7 @@ class Chat {
                 </div>
                 <div id="inputArea">
                 <h2>Type your message</h2>
-                <p><textarea rows="1" cols="50" id="userMessage${this.count}"></textarea></p>
+                <p><textarea rows="5" cols="50" style="resize: none;" id="userMessage${this.count}"></textarea></p>
                 </div>
                 <button type="button" id="sendMessage${this.count}">Send message</button>
                 </div>
