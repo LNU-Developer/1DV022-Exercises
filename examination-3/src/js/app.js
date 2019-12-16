@@ -86,8 +86,21 @@ function dragElement (elmnt) {
     pos3 = e.clientX
     pos4 = e.clientY
     // set the element's new position:
-    elmnt.style.top = (elmnt.offsetTop - pos2) + 'px'
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + 'px'
+    if (elmnt.offsetLeft - pos1 >= 0 && elmnt.offsetLeft >= 0 && window.innerWidth - elmnt.getBoundingClientRect().width - elmnt.offsetLeft >= 0 && elmnt.offsetLeft - pos1 <= window.innerWidth - elmnt.getBoundingClientRect().width) {
+      elmnt.style.left = (elmnt.offsetLeft - pos1) + 'px'
+    } else if (elmnt.offsetLeft <= 100 && elmnt.offsetLeft - pos1 <= 100) { // Fixing bug by snapping in place if is close to border
+      elmnt.style.left = '0px'
+    } else if (window.innerWidth - elmnt.getBoundingClientRect().width - elmnt.offsetLeft <= 100 && elmnt.offsetLeft - pos1 >= window.innerWidth - elmnt.getBoundingClientRect().width - 100) { // Fixing bug by snapping in place if is close to border
+      elmnt.style.left = window.innerWidth - elmnt.getBoundingClientRect().width - 1 + 'px'
+    }
+
+    if (elmnt.offsetTop - pos2 >= 0 && elmnt.offsetTop >= 0 && window.innerHeight - elmnt.getBoundingClientRect().height - elmnt.offsetTop >= 0 && elmnt.offsetTop - pos2 <= window.innerHeight - elmnt.getBoundingClientRect().height) {
+      elmnt.style.top = (elmnt.offsetTop - pos2) + 'px'
+    } else if (elmnt.offsetTop <= 100 && elmnt.offsetTop - pos2 <= 100) { // Fixing bug by snapping in place if is close to border
+      elmnt.style.top = '0px'
+    } else if (window.innerHeight - elmnt.getBoundingClientRect().height - elmnt.offsetTop <= 100 && elmnt.offsetTop - pos2 >= window.innerHeight - elmnt.getBoundingClientRect().height) { // Fixing bug by snapping in place if is close to border
+      elmnt.style.top = window.innerHeight - elmnt.getBoundingClientRect().height - 1 + 'px'
+    }
   }
 
   function closeDragElement () {
