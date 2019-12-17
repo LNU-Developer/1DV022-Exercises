@@ -8,7 +8,7 @@ class Memory {
   constructor (count) {
     this.count = count
     this.memory = `
-                  <div id="bricks${this.count}" style="width: 240px; display: inline-block;"></div>
+                  <div id="bricks${this.count}" class="memoryDiv"</div>
                   <div id="userMessage${this.count}"></div>
                   `
     this.userTries = 0
@@ -140,9 +140,7 @@ class Memory {
       img.setAttribute('alt', 'Brick')
       img.setAttribute('tabindex', 0)
       img.setAttribute('id', i)
-      img.setAttribute('width', '60px')
-      img.setAttribute('height', '60px')
-      img.setAttribute('margin', '2px')
+      img.setAttribute('class', 'memoryDiv')
       document.getElementById(`bricks${this.count}`).appendChild(img)
     }
     this.picsElems = document.getElementById(`bricks${this.count}`).getElementsByTagName('img')

@@ -2,7 +2,7 @@ class Chat {
   constructor (count) {
     this.count = count
     this.chat = `
-                <div id="chat${this.count}">
+                <div id="chat${this.count}" style="padding: 8px;">
                 <div id="messageArea">
                 <h2>Messages</h2>
                 <span id="receivedMessages${this.count}"></span>

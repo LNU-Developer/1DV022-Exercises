@@ -16,8 +16,8 @@ function init () {
 window.addEventListener('load', init)
 
 function createChat () {
-  const window = new Window(count, 'Chat')
-  const newWindow = window.createWindow()
+  const windowObj = new Window(count, 'Chat')
+  const newWindow = windowObj.createWindow()
   const chat = new Chat(count)
   rootDiv.appendChild(newWindow)
   newWindow.insertAdjacentHTML('beforeend', chat.chat)
@@ -27,8 +27,8 @@ function createChat () {
 }
 
 function createMemory () {
-  const window = new Window(count, 'Memory')
-  const newWindow = window.createWindow()
+  const windowObj = new Window(count, 'Memory')
+  const newWindow = windowObj.createWindow()
   const memory = new Memory(count)
   rootDiv.appendChild(newWindow)
   newWindow.insertAdjacentHTML('beforeend', memory.memory)
