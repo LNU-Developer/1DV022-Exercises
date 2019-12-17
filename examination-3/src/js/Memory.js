@@ -7,10 +7,6 @@
 class Memory {
   constructor (count) {
     this.count = count
-    this.memory = `
-                  <div id="bricks${this.count}" class="memoryDiv"</div>
-                  <div id="userMessage${this.count}"></div>
-                  `
     this.userTries = 0
     this.foundPic = 0
     this.frontPic = []

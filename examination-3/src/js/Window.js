@@ -43,6 +43,8 @@ class Window {
     minimizeImg.setAttribute('alt', 'Minimize')
     headerElement.appendChild(minimizeImg)
 
+    windowElement.insertAdjacentHTML('beforeend', this.rootChoice(this.choice))
+
     windowElement.style.top = `${(this.count * 50) % window.innerHeight}px`
     windowElement.style.left = `${(this.count * 20) % window.innerWidth}px`
     return windowElement
@@ -69,6 +71,29 @@ class Window {
       return ` <p>
       <a role="button" id="userName">Nickname</a>
       </p>`
+    }
+  }
+
+  rootChoice (choice) {
+    if (choice === 'Memory') {
+      return `
+              <div id="bricks${this.count}" class="memoryDiv"</div>
+              <div id="userMessage${this.count}"></div>
+              `
+    } else if (choice === 'Chat') {
+      return `
+              <div id="chat${this.count}" class="chatDiv">
+                <div id="messageArea">
+                <h2>Messages</h2>
+                <span id="receivedMessages${this.count}"></span>
+                </div>
+                <div id="inputArea">
+                <h2>Type your message</h2>
+                <p><textarea rows="5" cols="50" id="userMessage${this.count}"></textarea></p>
+                </div>
+                <button type="button" id="sendMessage${this.count}">Send message</button>
+                </div>
+               `
     }
   }
 }

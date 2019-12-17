@@ -20,7 +20,6 @@ function createChat () {
   const newWindow = windowObj.createWindow()
   const chat = new Chat(count)
   rootDiv.appendChild(newWindow)
-  newWindow.insertAdjacentHTML('beforeend', chat.chat)
   dragElement(newWindow)
   chat.startChat()
   count++
@@ -31,7 +30,6 @@ function createMemory () {
   const newWindow = windowObj.createWindow()
   const memory = new Memory(count)
   rootDiv.appendChild(newWindow)
-  newWindow.insertAdjacentHTML('beforeend', memory.memory)
   dragElement(newWindow)
   memory.startGame()
   count++

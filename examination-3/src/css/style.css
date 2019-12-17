@@ -123,3 +123,16 @@ body {
     height: 60px;
     padding: 0px;
   }
+
+  /*/ Chat CSS /**/
+  .chatDiv {
+     padding: 8px;
+  }
+
+  .chatDiv textarea {
+    resize: none;
+  }
+
+  .chatDiv h2 {
+    font-size: 10px;
+  }

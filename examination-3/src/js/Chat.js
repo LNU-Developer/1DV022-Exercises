@@ -1,19 +1,6 @@
 class Chat {
   constructor (count) {
     this.count = count
-    this.chat = `
-                <div id="chat${this.count}" style="padding: 8px;">
-                <div id="messageArea">
-                <h2>Messages</h2>
-                <span id="receivedMessages${this.count}"></span>
-                </div>
-                <div id="inputArea">
-                <h2>Type your message</h2>
-                <p><textarea rows="5" cols="50" style="resize: none;" id="userMessage${this.count}"></textarea></p>
-                </div>
-                <button type="button" id="sendMessage${this.count}">Send message</button>
-                </div>
-               `
   }
 
   startChat () {
