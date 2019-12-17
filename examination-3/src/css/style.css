@@ -12,6 +12,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: ‘Montserrat’, sans-serif;
 }
 
 /*/ Menu CSS /**/
@@ -51,10 +52,13 @@ body {
     display:inline;
     line-height: 50px;
     vertical-align: top;
+    font-size: 15px;
+    font-weight: bold;
   }
 
   .headerElement {
     background: #e17055;
+    background: linear-gradient(90deg, rgba(225, 112, 85, 1) 68%, rgba(245, 246, 250, 1) 100%);
     cursor: default;
     border-radius: 3px 3px 0px 0px;
   }
@@ -72,6 +76,10 @@ body {
     padding-top: 12px;
     width: 20px;
     height: 20px;
+    transition: all .2s ease-in-out;
+  }
+  .headerElement img:nth-child(4):hover {
+    transform: scale(1.2);
   }
 
   .headerElement img:nth-child(3) {
@@ -80,6 +88,11 @@ body {
     padding-top: 12px;
     width: 20px;
     height: 20px;
+    transition: all .2s ease-in-out;
+  }
+
+   .headerElement img:nth-child(3):hover {
+    transform: scale(1.2);
   }
 
   .menuElement {
@@ -91,11 +104,14 @@ body {
     padding-left: 12px;
     padding-right: 11px;
     padding-top: 5px;
-    margin: 0px
+    margin: 0px;
+    font-size: 12px;
   }
 
   .memoryMenu select {
     float: right;
+    font-size: 12px;
+    font-weight: bold;
   }
 
   .memoryDiv {
