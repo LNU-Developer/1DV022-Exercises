@@ -44,24 +44,11 @@ function dragElement (elmnt) {
   var pos2 = 0
   var pos3 = 0
   var pos4 = 0
-  if (document.getElementById((elmnt.id + 'header'))) {
-    // if present, the header is where you move the DIV from:
-    document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown
-  } else {
-    // otherwise, move the DIV from anywhere inside the DIV:
-    elmnt.onmousedown = dragMouseDown
-  }
+
+  elmnt.onmousedown = dragMouseDown
 
   function dragMouseDown (e) {
-    // Set focus when clicked, as well as make all other elements see through
-
-    for (let i = 0; i < count; i++) {
-      if (document.getElementById('window' + i) !== null) {
-        document.getElementById('window' + i).style.opacity = '0.8'
-      }
-    }
     document.getElementById(elmnt.id).style.zIndex = zIndex++
-    document.getElementById(elmnt.id).style.opacity = '1'
 
     e = e || window.event
     e.preventDefault()
@@ -76,6 +63,15 @@ function dragElement (elmnt) {
   }
 
   function elementDrag (e) {
+    // Set focus when clicked, as well as make all other elements see through
+    for (let i = 0; i < count; i++) {
+      if (document.getElementById('window' + i) !== null) {
+        document.getElementById('window' + i).style.opacity = '0.8'
+      }
+    }
+
+    document.getElementById(elmnt.id).style.opacity = '1'
+
     e = e || window.event
     e.preventDefault()
     // calculate the new cursor position:
