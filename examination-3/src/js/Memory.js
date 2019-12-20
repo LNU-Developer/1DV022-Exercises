@@ -21,7 +21,7 @@ class Memory {
   startGame () {
     this.createBricks(16)
     this.ranomdizePics()
-    this.picsElems[0].focus()
+    document.getElementById(`nrOfBricks${this.count}`).focus()
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this))
@@ -37,18 +37,16 @@ class Memory {
     const id = Number(document.activeElement.id)
     if (event.keyCode === 13 || event.keyCode === 32) {
       this.selectImg(event)
-    }
-    if (event.keyCode === 37 && id !== 0) {
+    } else if (event.keyCode === 37 && id !== 0) {
       this.picsElems[id].previousElementSibling.focus()
-    }
-    if (event.keyCode === 39 && id !== this.picsElems.length - 1) {
+    } else if (event.keyCode === 39 && id !== this.picsElems.length - 1) {
       this.picsElems[id].nextElementSibling.focus()
-    }
-    if (event.keyCode === 38 && id > 3) {
+    } else if (event.keyCode === 38 && id > 3) {
       this.picsElems[id - 4].focus()
-    }
-    if (event.keyCode === 40 && id < this.picsElems.length - 4) {
+    } else if (event.keyCode === 40 && id < this.picsElems.length - 4) {
       this.picsElems[id + 4].focus()
+    } else {
+      document.getElementById(`nrOfBricks${this.count}`).focus()
     }
   }
 

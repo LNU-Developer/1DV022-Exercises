@@ -13,12 +13,14 @@ class Chat {
 
   sendMessage () {
     const username = String(this.userName)
+    this.messageData = document.getElementById(`userMessage${this.count}`).value
     const data = {
       type: 'message',
       data: document.getElementById(`userMessage${this.count}`).value,
       username: username,
       channel: 'channel',
-      key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
+      key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd',
+      id: 'myApp'
     }
     this.ws.send(JSON.stringify(data))
     document.getElementById(`userMessage${this.count}`).value = ''
@@ -26,10 +28,19 @@ class Chat {
 
   listenMessage (event) {
     const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
+    const time = new Date()
     const data = JSON.parse(event.data)
+
+    let classData
+
+    if (data.id !== 'myApp') {
+      classData = 'receivedMessages'
+    } else {
+      classData = 'sentMessages'
+    }
     if (data.type === 'message' || data.type === 'notification') {
-      receivedMessages.innerHTML += data.username + '<br>'
-      receivedMessages.innerHTML += data.data + '<br><br>'
+      receivedMessages.innerHTML += `<p class=${classData}>${data.data}</p>`
+      receivedMessages.innerHTML += `<p class=${classData}>${data.username} ${time.getHours()}:${time.getMinutes()}</p>`
     }
   }
 

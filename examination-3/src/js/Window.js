@@ -62,14 +62,14 @@ class Window {
     if (choice === 'Memory') {
       return `
               <p class="memoryMenu">Select game layout: 
-              <select id="nrOfBricks${this.count}">
+              <select id="nrOfBricks${this.count}" tabindex="0">
               <option selected value="16">4x4</option>
               <option value="4">2x2</option>
               <option value="8">2x4</option>
               </select></p>`
     } else if (choice === 'Chat') {
       return ` <p>
-      <a role="button" id="userName">Nickname</a>
+      <a role="button" id="userName" class="chatMenu">Nickname</a>
       </p>`
     }
   }
@@ -83,16 +83,16 @@ class Window {
     } else if (choice === 'Chat') {
       return `
               <div id="chat${this.count}" class="chatDiv">
-                <div id="messageArea">
-                <h2>Messages</h2>
-                <span id="receivedMessages${this.count}"></span>
+                <div id="messageArea" class="messageArea">
+                  <h2>Messages</h2>
+                  <p id="receivedMessages${this.count}"></p>
                 </div>
-                <div id="inputArea">
-                <h2>Type your message</h2>
-                <p><textarea rows="5" cols="50" id="userMessage${this.count}"></textarea></p>
+                <div id="inputArea" class="inputArea">
+                  <h2>Type your message</h2>
+                  <p><textarea rows="2" cols="30" id="userMessage${this.count}"></textarea></p>
+                  <button type="button" id="sendMessage${this.count}">Send message</button>
                 </div>
-                <button type="button" id="sendMessage${this.count}">Send message</button>
-                </div>
+              </div>
                `
     }
   }
