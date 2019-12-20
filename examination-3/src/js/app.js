@@ -45,11 +45,15 @@ function dragElement (elmnt) {
   var pos3 = 0
   var pos4 = 0
 
-  elmnt.onmousedown = dragMouseDown
+  document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown
+  elmnt.onmousedown = indexUpdate
+
+  function indexUpdate () {
+    document.getElementById(elmnt.id).style.zIndex = zIndex++
+  }
 
   function dragMouseDown (e) {
     document.getElementById(elmnt.id).style.zIndex = zIndex++
-
     e = e || window.event
     e.preventDefault()
 

@@ -91,8 +91,8 @@ class Window {
                 </div>
                 <div id="inputArea" class="inputArea">
                   <h2>Type your message</h2>
-                  <p><textarea rows="2" cols="35" id="userMessage${this.count}" tabindex="0"></textarea></p>
-                  <button type="button" id="sendMessage${this.count}" tabindex="0">Send message</button>
+                  <p><textarea rows="2" cols="35" id="userMessage${this.count}" tabindex="${this.count}"></textarea></p>
+                  <button type="button" id="sendMessage${this.count}" tabindex="${this.count}">Send message</button>
                 </div>
               </div>
                `
