@@ -6,6 +6,7 @@ body {
 }
 
 body {
+  position: fixed;
   background-image: url("/examination-3/src/image/hacker-symbol-2714262.jpg");
   /* Downloaded from https://pixabay.com/illustrations/hacker-symbol-abstract-analysis-2714262/ */
   background-color: black;

@@ -1,7 +1,8 @@
 class Window {
-  constructor (count, choice) {
+  constructor (count, choice, zIndex) {
     this.count = count
     this.choice = choice
+    this.zIndex = zIndex
   }
 
   createWindow () {
@@ -45,8 +46,9 @@ class Window {
 
     windowElement.insertAdjacentHTML('beforeend', this.rootChoice(this.choice))
 
-    windowElement.style.top = `${(this.count * 50) % window.innerHeight}px`
-    windowElement.style.left = `${(this.count * 20) % window.innerWidth}px`
+    windowElement.style.top = `${(this.count * 30) % (window.innerHeight - 300)}px`
+    windowElement.style.left = `${(this.count * 10) % (window.innerWidth - 300)}px`
+    windowElement.style.zIndex = this.zIndex++
     return windowElement
   }
 
