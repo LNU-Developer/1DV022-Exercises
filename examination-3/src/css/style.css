@@ -13,6 +13,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   font-family: ‘Montserrat’, sans-serif;
+  overflow: hidden;
 }
 
 /*/ Menu CSS /**/
@@ -152,10 +153,6 @@ body {
 }
 
 .inputArea button {
-  left: 10px;
-}
-
-.inputArea button {
   position: absolute;
   background-color: #e17055;
   border: none;
@@ -171,6 +168,7 @@ body {
   cursor: pointer;
   left: 300px;
   bottom: 20px;
+  border-radius: 10px 10px 10px 10px;
 }
 
 .inputArea button:after {

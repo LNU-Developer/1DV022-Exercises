@@ -83,7 +83,7 @@ class Window {
     } else if (choice === 'Chat') {
       return `
               <div id="chat${this.count}" class="chatDiv">
-                <div id="messageArea" class="messageArea">
+                <div id="messageArea${this.count}" class="messageArea">
                   <h2>Messages</h2>
                   <p id="receivedMessages${this.count}"></p>
                 </div>

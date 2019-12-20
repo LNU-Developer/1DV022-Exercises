@@ -42,9 +42,10 @@ class Chat {
     } else {
       classData = 'sentMessages'
     }
-    if (data.type === 'message' || data.type === 'notification') {
+    if ((data.type === 'message' || data.type === 'notification') && data.username !== 'The Server') {
       receivedMessages.innerHTML += `<p class=${classData}>${data.data}</p>`
       receivedMessages.innerHTML += `<p class=${classData}>${data.username} ${time.getHours()}:${time.getMinutes()}</p>`
+      document.getElementById(`messageArea${this.count}`).scrollTo(0, document.getElementById(`messageArea${this.count}`).scrollHeight)
     }
   }
 
