@@ -9,21 +9,25 @@ class Chat {
     document.getElementById(`sendMessage${this.count}`).addEventListener('click', this.sendMessage.bind(this))
     document.getElementById('userName').addEventListener('click', this.changeUsername.bind(this))
     this.ws.addEventListener('message', this.listenMessage.bind(this))
+    document.getElementById(`userMessage${this.count}`).focus()
   }
 
   sendMessage () {
-    const username = String(this.userName)
-    this.messageData = document.getElementById(`userMessage${this.count}`).value
-    const data = {
-      type: 'message',
-      data: document.getElementById(`userMessage${this.count}`).value,
-      username: username,
-      channel: 'channel',
-      key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd',
-      id: 'myApp'
+    document.getElementById(`userMessage${this.count}`).focus()
+    if (document.getElementById(`userMessage${this.count}`).value !== '') {
+      const username = String(this.userName)
+      this.messageData = document.getElementById(`userMessage${this.count}`).value
+      const data = {
+        type: 'message',
+        data: document.getElementById(`userMessage${this.count}`).value,
+        username: username,
+        channel: 'channel',
+        key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd',
+        id: 'myApp'
+      }
+      this.ws.send(JSON.stringify(data))
+      document.getElementById(`userMessage${this.count}`).value = ''
     }
-    this.ws.send(JSON.stringify(data))
-    document.getElementById(`userMessage${this.count}`).value = ''
   }
 
   listenMessage (event) {
