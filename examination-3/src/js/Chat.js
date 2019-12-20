@@ -10,6 +10,12 @@ class Chat {
     document.getElementById('userName').addEventListener('click', this.changeUsername.bind(this))
     this.ws.addEventListener('message', this.listenMessage.bind(this))
     document.getElementById(`userMessage${this.count}`).focus()
+    const sessionStorage = window.sessionStorage.getItem('username')
+    if (sessionStorage === null) {
+      this.changeUsername()
+    } else {
+      this.userName = sessionStorage
+    }
   }
 
   sendMessage () {
@@ -53,6 +59,8 @@ class Chat {
     while (this.userName === null || this.userName === '' || this.userName === undefined) {
       this.userName = window.prompt('Please enter your nickname')
     }
+    this.userName = window.prompt('Please enter your nickname')
+    window.sessionStorage.setItem('username', this.userName)
   }
 
   closeChat () {
