@@ -57,6 +57,8 @@ class Window {
       return { src: 'image/baseline_layers_black_18dp2.png', alt: 'Memory' }
     } else if (choice === 'Chat') {
       return { src: 'image/baseline_chat_black_18dp2.png', alt: 'Chat' }
+    } else if (choice === 'RSS') {
+      return { src: 'image/baseline_rss_feed_black_18dp2.png', alt: 'RSS' }
     }
   }
 
@@ -84,6 +86,8 @@ class Window {
                 </div>
               </div>
               `
+    } else if (choice === 'RSS') {
+      return ''
     }
   }
 
@@ -106,8 +110,12 @@ class Window {
                 </div>
               </div>
                `
+    } else if (choice === 'RSS') {
+      return ''
     }
   }
 }
 
-export { Window }
+export {
+  Window
+}

@@ -25,7 +25,7 @@ class Memory {
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
-    document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this))
+    document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this), { once: true })
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.removeBricks.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.createBricks.bind(this))
   }
@@ -178,7 +178,6 @@ class Memory {
    */
   closeMemory () {
     const window = document.getElementById(`window${this.count}`)
-    document.getElementById(`close${this.count}`).removeEventListener('click', this.closeMemory.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.removeBricks.bind(this))

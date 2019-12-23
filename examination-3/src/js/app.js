@@ -1,6 +1,7 @@
 import { Chat } from './Chat.js'
 import { Window } from './Window.js'
 import { Memory } from './Memory.js'
+import { RSS } from './Rss.js'
 
 let count = 0
 let rootDiv
@@ -10,10 +11,10 @@ function init () {
   rootDiv = document.getElementById('root')
   document.getElementById('chat').addEventListener('click', createChat)
   document.getElementById('memory').addEventListener('click', createMemory)
-  document.getElementById('ownApp').addEventListener('click', createOwnApp)
+  document.getElementById('ownApp').addEventListener('click', createRSS)
 }
 
-window.addEventListener('load', init)
+window.addEventListener('load', init, { once: true })
 
 function createChat () {
   const windowObj = new Window(count, 'Chat', zIndex)
@@ -35,8 +36,14 @@ function createMemory () {
   count++
 }
 
-function createOwnApp () {
-  console.log('Load ownApp')
+function createRSS () {
+  const windowObj = new Window(count, 'RSS', zIndex)
+  const newWindow = windowObj.createWindow()
+  const rss = new RSS(count)
+  rootDiv.appendChild(newWindow)
+  dragElement(newWindow)
+  rss.startRSS()
+  count++
 }
 
 function dragElement (elmnt) {
