@@ -23,8 +23,8 @@ body {
   overflow: hidden;
   position: fixed;
   bottom: 60px;
-  min-width: 11%;
   opacity: 80%;
+  min-width: 180px;
   height: 60px;
 }
 

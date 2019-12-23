@@ -7,13 +7,15 @@ class Chat {
   startChat () {
     this.ws = new window.WebSocket('ws://vhost3.lnu.se:20080/socket/')
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this), { once: true })
-    document.getElementById(`window${this.count}`).addEventListener('keydown', this.keyHandle.bind(this))
     document.getElementById(`changeUsernameBtn${this.count}`).addEventListener('click', this.showMenu.bind(this))
     document.getElementById(`changeChannelNameBtn${this.count}`).addEventListener('click', this.showMenu.bind(this))
+    document.getElementById(`window${this.count}`).addEventListener('keydown', this.keyHandle.bind(this))
     this.ws.addEventListener('message', this.listenMessage.bind(this))
     document.getElementById(`userMessage${this.count}`).focus()
     document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
     document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
+
+    document.getElementById(`userMessage${this.count}`).disabled = true
 
     const sessionStorage = window.sessionStorage.getItem('username')
     if (sessionStorage === null) {
@@ -23,6 +25,7 @@ class Chat {
       document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">The Matrix ${this.getTime()}</p>`
     } else {
       this.userName = sessionStorage
+      document.getElementById(`userMessage${this.count}`).disabled = false
     }
   }
 
@@ -106,6 +109,7 @@ class Chat {
       this.userName = document.getElementById(`nickName${this.count}`).value
       document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
       window.sessionStorage.setItem('username', this.userName)
+      document.getElementById(`userMessage${this.count}`).disabled = false
     } else if (event.target.id === `channelAcceptSettingsBtn${this.count}`) {
       this.channel = document.getElementById(`channel${this.count}`).value
       document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')

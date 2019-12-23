@@ -24,6 +24,7 @@ class Memory {
     document.getElementById(`nrOfBricks${this.count}`).focus()
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.removeBricks.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.createBricks.bind(this))
@@ -45,6 +46,8 @@ class Memory {
       this.picsElems[id - 4].focus()
     } else if (event.keyCode === 40 && id < this.picsElems.length - 4) {
       this.picsElems[id + 4].focus()
+    } else if (event.keyCode === 27) {
+      this.closeMemory()
     } else {
       document.getElementById(`nrOfBricks${this.count}`).focus()
     }
@@ -180,6 +183,7 @@ class Memory {
     document.getElementById(`bricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.removeBricks.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.createBricks.bind(this))
+    document.getElementById(`nrOfBricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
     window.parentNode.removeChild(window)
   }
 }
