@@ -70,9 +70,20 @@ class Window {
               <option value="8">2x4</option>
               </select></p>`
     } else if (choice === 'Chat') {
-      return ` <p>
-      <a role="button" id="userName" class="chatMenu">Nickname</a>
-      </p>`
+      return `
+              <div class="chatMenu"> 
+                <button type="button" id="changeUsernameBtn${this.count}">Change Nickname</button>
+                <button type="button" id="changeChannelNameBtn${this.count}">Change Channel</button>
+                <div id="nameSettings${this.count}">
+                  <p><input id="nickName${this.count}" type="text" style="width: 50px;">
+                  <button id="nameAcceptSettingsBtn${this.count}">Go</button></p>
+                </div>
+                <div id="channelSettings${this.count}">
+                <p><input id="channel${this.count}" type="text" style="width: 50px;">
+                <button id="channelAcceptSettingsBtn${this.count}">Go</button></p>
+                </div>
+              </div>
+              `
     }
   }
 
@@ -85,14 +96,13 @@ class Window {
     } else if (choice === 'Chat') {
       return `
               <div id="chat${this.count}" class="chatDiv">
-                <div id="messageArea${this.count}" class="messageArea">
-                  <h2>Messages</h2>
-                  <p id="receivedMessages${this.count}"></p>
+              <h1>Messages</h2>    
+              <div id="messageArea${this.count}" class="messageArea">
+                <p id="receivedMessages${this.count}"></p>
                 </div>
                 <div id="inputArea" class="inputArea">
                   <h2>Type your message</h2>
                   <p><textarea rows="2" cols="35" id="userMessage${this.count}" tabindex="${this.count}"></textarea></p>
-                  <button type="button" id="sendMessage${this.count}" tabindex="${this.count}">Send message</button>
                 </div>
               </div>
                `
