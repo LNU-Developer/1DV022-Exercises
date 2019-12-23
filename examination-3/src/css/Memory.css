@@ -1,0 +1,24 @@
+/*/ Memory CSS /**/  
+.memoryMenu {
+    padding-left: 12px;
+    padding-right: 11px;
+    padding-top: 5px;
+    margin: 0px;
+    font-size: 12px;
+  }
+  
+  .memoryMenu select {
+    float: right;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .memoryDiv {
+    width: 240px;
+    padding: 10px;
+  }
+  .memoryDiv img {
+    width: 60px;
+    height: 60px;
+    padding: 0px;
+  }

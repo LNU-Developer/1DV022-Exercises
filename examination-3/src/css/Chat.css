@@ -1,0 +1,128 @@
+/*/ Chat CSS /**/
+.chatDiv {
+    padding: 8px;
+    height: 500px;
+    width: 385px;
+    padding-top: 10px;
+ }
+   
+ .chatDiv textarea {
+   resize: none;
+ }
+ 
+ .chatDiv h2 {
+   font-size: 10px;
+   position: relative;
+   top: 10px;
+ }
+ 
+ .chatDiv h1 {
+   font-size: 10px;
+   position: relative;
+   top: 40px;
+ }
+ 
+ .chatMenu {
+   margin: 0;
+   padding-left: 10px;
+   margin-bottom: -50px;
+   padding-top: 10px;
+ }
+ 
+ .chatMenu button {
+   position: relative;
+   background-color: #e17055;
+   border: none;
+   font-size: 10px;
+   color: #FFFFFF;
+   padding: 8px;
+   margin-left: 12px;
+   width: 70px;
+   cursor: pointer;
+   border-radius: 3px 3px 3px 3px;
+   
+ }
+ 
+ .inputArea {
+   width: 370px;
+   max-height: 300px;
+   position: absolute;
+   bottom: 0px;
+ }
+ 
+ .messageArea {
+   max-height: 380px;
+   overflow-y: auto;
+   position: relative;
+   top: 40px;
+ }
+ 
+ .receivedMessages:nth-of-type(odd) {
+   margin: 0px;
+   padding: 10px;
+   border-radius: 20px 20px 20px 20px;
+   background: rgb(204, 204, 204);
+   background: linear-gradient(90deg, rgba(204, 204, 204, 1) 70%, rgba(218, 218, 218, 1) 95%);
+   box-shadow: 3px 9px 15px -8px rgba(0, 0, 0, 0.75);
+   overflow-wrap: break-word;
+   max-width: 200px;
+   width: fit-content;
+ }
+ 
+ .receivedMessages:nth-of-type(even) {
+   margin: 5px;
+   text-align: left;
+   font-size: 8px;
+   font-weight: bold;
+ }
+ 
+ .sentMessages:nth-of-type(odd) {
+   margin: 0px;
+   margin-left: auto;
+   padding: 10px;
+   border-radius: 20px 20px 20px 20px;
+   background: #e17055;
+   background: linear-gradient(90deg, rgba(225, 112, 85, 1) 70%, rgba(230, 148, 129, 1) 84%, rgba(236, 184, 173, 1) 95%);
+   box-shadow: 3px 9px 15px -8px rgba(0, 0, 0, 0.75);
+   overflow-wrap: break-word;
+   width: fit-content;
+   max-width: 200px;
+ }
+ 
+ .sentMessages:nth-of-type(even) {
+   margin: 5px;
+   text-align: right;
+   font-size: 8px;
+   font-weight: bold;
+ }
+ 
+ .invisibleSettings {
+   visibility: hidden;
+ }
+ 
+ .invisibleSettings p {
+   margin: 0px;
+   position: absolute;
+   font-size: 10px;
+   font-weight: bold;
+   padding-left: 10px;
+   left: 185px;
+   bottom: 30px;
+ }
+ 
+ .visibleSettings {
+   visibility: visible;
+   position: absolute;
+   
+ }
+ 
+ .visibleSettings p {
+   margin: 0px;
+   position: relative;
+   font-size: 10px;
+   font-weight: bold;
+   padding-left: 10px;
+   left: 185px;
+   bottom: 30px;
+  
+ }

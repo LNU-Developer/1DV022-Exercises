@@ -11,7 +11,7 @@ function init () {
   rootDiv = document.getElementById('root')
   document.getElementById('chat').addEventListener('click', createChat)
   document.getElementById('memory').addEventListener('click', createMemory)
-  document.getElementById('ownApp').addEventListener('click', createRSS)
+  document.getElementById('rss').addEventListener('click', createRSS)
 }
 
 window.addEventListener('load', init, { once: true })

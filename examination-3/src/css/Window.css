@@ -1,0 +1,58 @@
+/*/ Window CSS /**/
+.windowElement {
+    background: #f5f6fa;
+    box-shadow: 10px 10px 10px 6px rgba(0, 0, 0, 0.75);
+    border-radius: 3px 3px 3px 3px;
+    position: absolute;
+    max-width: 400px;
+  }
+  .headerText {
+    display:inline;
+    line-height: 50px;
+    vertical-align: top;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  
+  .headerElement {
+    background: #e17055;
+    background: linear-gradient(90deg, rgba(225, 112, 85, 1) 70%, rgba(230, 148, 129, 1) 84%, rgba(236, 184, 173, 1) 95%);
+    cursor: default;
+    border-radius: 3px 3px 0px 0px;
+  }
+  
+  .headerElement img:nth-child(2) {
+    float: left;
+    width: 25px;
+    height: 25px;
+    padding: 10px;
+  }
+  
+  .headerElement img:nth-child(4) {
+    float: right;
+    padding-right: 5px;
+    padding-top: 12px;
+    width: 20px;
+    height: 20px;
+    transition: all .2s ease-in-out;
+  }
+  .headerElement img:nth-child(4):hover {
+    transform: scale(1.2);
+  }
+  
+  .headerElement img:nth-child(3) {
+    float: right;
+    padding-right: 10px;
+    padding-top: 12px;
+    width: 20px;
+    height: 20px;
+    transition: all .2s ease-in-out;
+  }
+  
+  .headerElement img:nth-child(3):hover {
+    transform: scale(1.2);
+  }
+  
+  .menuElement {
+    background: #f5f6fa;
+  }
