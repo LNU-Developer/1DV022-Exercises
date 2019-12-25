@@ -59,7 +59,7 @@ class Memory {
   */
   selectImg (event) {
     if (!isNaN(event.target.id) && this.turnedPic.length < 2 && event.target.tabIndex === 0) {
-      this.picsElems[event.target.id].src = `/examination-3/src/image/${[this.frontPic[event.target.id]]}.png`
+      this.picsElems[event.target.id].src = `image/${[this.frontPic[event.target.id]]}.png`
       this.turnedPic.push(event.target.id)
       if (this.turnedPic.length === 2) {
         this.checkPics()
@@ -89,8 +89,8 @@ class Memory {
           document.getElementById(`userMessage${this.count}`).innerHTML = `Congratulation! It took you ${this.userTries} tries and ${this.timer(0)} seconds!`
         }
       } else {
-        this.picsElems[first].src = '/examination-3/src/image/0.png'
-        this.picsElems[second].src = '/examination-3/src/image/0.png'
+        this.picsElems[first].src = 'image/0.png'
+        this.picsElems[second].src = 'image/0.png'
       }
     } else {
       this.turnedPic.push(first)
@@ -142,7 +142,7 @@ class Memory {
     }
     this.picsElems = document.getElementById(`bricks${this.count}`).getElementsByTagName('img')
     for (let i = 0; i < this.picsElems.length; i++) {
-      this.picsElems[i].src = '/examination-3/src/image/0.png'
+      this.picsElems[i].src = 'image/0.png'
     }
   }
 

@@ -1,0 +1,16 @@
+.githubDiv {
+    padding: 8px;
+    height: 500px;
+    width: 385px;
+    padding-top: 10px;
+ }
+
+ .githubvisibleSettings {
+    visibility: visible;
+    position: absolute;
+    
+  } 
+  .githubinvisibleSettings {
+    visibility: hidden;
+    position: absolute;  
+}

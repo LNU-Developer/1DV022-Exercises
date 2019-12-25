@@ -57,8 +57,8 @@ class Window {
       return { src: 'image/baseline_layers_black_18dp2.png', alt: 'Memory' }
     } else if (choice === 'Chat') {
       return { src: 'image/baseline_chat_black_18dp2.png', alt: 'Chat' }
-    } else if (choice === 'RSS') {
-      return { src: 'image/baseline_rss_feed_black_18dp2.png', alt: 'RSS' }
+    } else if (choice === 'Github') {
+      return { src: 'image/baseline_rss_feed_black_18dp2.png', alt: 'Github' }
     }
   }
 
@@ -86,8 +86,16 @@ class Window {
                 </div>
               </div>
               `
-    } else if (choice === 'RSS') {
-      return ''
+    } else if (choice === 'Github') {
+      return `
+              <div class="GitMenu"> 
+                <button type="button" id="signInBtn${this.count}">Sign into Github</button>
+                  <div id="signInSettings${this.count}">
+                    <p>Enter Token:<input id="token${this.count}" type="text" style="width: 50px;"></p>
+                    <button id="signInAcceptSettingsBtn${this.count}">Go</button></p>
+                  </div>
+              </div>
+              `
     }
   }
 
@@ -110,8 +118,15 @@ class Window {
                 </div>
               </div>
                `
-    } else if (choice === 'RSS') {
-      return ''
+    } else if (choice === 'Github') {
+      return `
+              <div id="github${this.count}" class="githubDiv">
+                <h1>Messages</h2>    
+                <div id="githubMessageArea${this.count}" class="githubMessageArea">
+                  <p id="githubReceivedMessages${this.count}"></p>
+                </div>
+              </div>
+            `
     }
   }
 }

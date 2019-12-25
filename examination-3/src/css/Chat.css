@@ -63,7 +63,7 @@
    border-radius: 20px 20px 20px 20px;
    background: rgb(204, 204, 204);
    background: linear-gradient(90deg, rgba(204, 204, 204, 1) 70%, rgba(218, 218, 218, 1) 95%);
-   box-shadow: 3px 9px 15px -8px rgba(0, 0, 0, 0.75);
+   box-shadow: 5px 9px 15px -8px rgba(0, 0, 0, 0.75);
    overflow-wrap: break-word;
    max-width: 200px;
    width: fit-content;
@@ -83,7 +83,7 @@
    border-radius: 20px 20px 20px 20px;
    background: #e17055;
    background: linear-gradient(90deg, rgba(225, 112, 85, 1) 70%, rgba(230, 148, 129, 1) 84%, rgba(236, 184, 173, 1) 95%);
-   box-shadow: 3px 9px 15px -8px rgba(0, 0, 0, 0.75);
+   box-shadow: -5px 9px 15px -8px rgba(0, 0, 0, 0.75);
    overflow-wrap: break-word;
    width: fit-content;
    max-width: 200px;
