@@ -1,16 +1,52 @@
 .githubDiv {
-    padding: 8px;
-    height: 500px;
-    width: 385px;
-    padding-top: 10px;
+  padding: 7px;
+  width: 385px;
+  padding-top: 10px;
+  max-height: 500px;
+  overflow-y: auto;
  }
+.githubDiv a {
+  padding-left: 10px;
+}
 
- .githubvisibleSettings {
-    visibility: visible;
-    position: absolute;
-    
-  } 
-  .githubinvisibleSettings {
-    visibility: hidden;
-    position: absolute;  
+.gitMenu {
+  padding-top: 10px;
+  height: 70px;
+}
+
+.gitMenu p {
+  padding-left: 10px;
+  margin: 0px;
+  padding-top: 10px;
+}
+
+.gitMenu button {
+  position: relative;
+  background-color: #e17055;
+  border: none;
+  font-size: 10px;
+  color: #FFFFFF;
+  padding: 8px;
+  margin-left: 12px;
+  width: 70px;
+  cursor: pointer;
+  border-radius: 3px 3px 3px 3px;  
+}
+
+.githubvisibleSettings {
+  visibility: visible;
+  position: absolute;
+} 
+
+.githubinvisibleSettings {
+  visibility: hidden;
+  position: absolute;  
+}
+
+.githubvisibleSettings button {
+  position: relative;
+  left: 310px;
+  top: -40px;
+  margin-top: 17px;
+  padding: 8px;
 }

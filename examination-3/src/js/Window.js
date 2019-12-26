@@ -88,17 +88,19 @@ class Window {
               `
     } else if (choice === 'Github') {
       return `
-              <div class="GitMenu"> 
-                <button type="button" id="signInBtn${this.count}">Sign into Github</button>
-                  <div id="signInSettings${this.count}">
-                    <p>Enter Token:<input id="token${this.count}" type="text" style="width: 50px;"></p>
-                    <button id="signInAcceptSettingsBtn${this.count}">Go</button></p>
-                  </div>
-                <button type="button" id="starReposBtn${this.count}">Enter stars</button>
-                  <div id="starReposSettings${this.count}">
-                    <p>View repos above:<input id="star${this.count}" type="text" style="width: 50px;"> stars</p>
-                    <button id="starReposAcceptSettingsBtn${this.count}">Go</button></p>
-                  </div>
+              <div class="gitMenu"> 
+              <button type="button" id="signInBtn${this.count}">Sign into Github</button>
+                <div id="signInSettings${this.count}">
+                  <p>Token:<input id="token${this.count}" type="text" style="width: 250px;"></p>
+                  <button id="signInAcceptSettingsBtn${this.count}">Go</button></p>
+                </div>
+              <button type="button" id="allReposBtn${this.count}">List all user repos</button>  
+              <button type="button" id="viewIssuesBtn${this.count}">List all user issues</button>
+              <button type="button" id="starReposBtn${this.count}">Enter stars</button>
+                <div id="starReposSettings${this.count}">
+                  <p>View repos above:<input id="star${this.count}" type="text" style="width: 50px;"> stars</p>
+                  <button id="starReposAcceptSettingsBtn${this.count}">Go</button></p>
+                </div>
               </div>
               `
     }
@@ -126,7 +128,6 @@ class Window {
     } else if (choice === 'Github') {
       return `
               <div id="github${this.count}" class="githubDiv">
-                <h1>Messages</h2>    
                 <div id="githubMessageArea${this.count}" class="githubMessageArea">
                 </div>
               </div>
