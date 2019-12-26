@@ -75,9 +75,9 @@ class Memory {
 
     const first = this.turnedPic.pop()
     const second = this.turnedPic.pop()
-    this.userTries++
 
     if (first !== second) {
+      this.userTries++
       if (this.frontPic[first] === this.frontPic[second]) {
         this.picsElems[first].style.opacity = 0
         this.picsElems[second].style.opacity = 0
