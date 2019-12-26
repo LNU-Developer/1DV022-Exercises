@@ -94,6 +94,11 @@ class Window {
                     <p>Enter Token:<input id="token${this.count}" type="text" style="width: 50px;"></p>
                     <button id="signInAcceptSettingsBtn${this.count}">Go</button></p>
                   </div>
+                <button type="button" id="starReposBtn${this.count}">Enter stars</button>
+                  <div id="starReposSettings${this.count}">
+                    <p>View repos above:<input id="star${this.count}" type="text" style="width: 50px;"> stars</p>
+                    <button id="starReposAcceptSettingsBtn${this.count}">Go</button></p>
+                  </div>
               </div>
               `
     }
