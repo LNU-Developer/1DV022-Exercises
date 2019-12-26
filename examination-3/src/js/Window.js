@@ -123,7 +123,6 @@ class Window {
               <div id="github${this.count}" class="githubDiv">
                 <h1>Messages</h2>    
                 <div id="githubMessageArea${this.count}" class="githubMessageArea">
-                  <p id="githubReceivedMessages${this.count}"></p>
                 </div>
               </div>
             `

@@ -18,17 +18,28 @@ class Github {
     document.getElementById(`signInSettings${this.count}`).setAttribute('class', 'githubinvisibleSettings')
     this.token = document.getElementById(`token${this.count}`).value
     const url = 'https://api.github.com/search/issues?q=repo:RMarjanovic/1DV022-Exercises type:issue'
-    await this.fetchIssuesPrivate(url)
+    await this.fetch(url)
   }
 
-  fetchIssuesPrivate (url) {
+  fetch (url) {
     const token = this.token
     return new Promise(function (resolve, reject) {
       const response = window.fetch(url, { method: 'get', headers: { Accept: 'application/json', Authorization: `Token ${token}` } })
       return resolve(response)
     })
       .then(res => res.json())
-      .then(data => console.log(data.items))
+      .then(data => this.populate(data))
+  }
+
+  async populate (myData) {
+    const data = await myData
+    data.items.forEach(keys => {
+      const anchor = document.createElement('a')
+      anchor.href = keys.html_url
+      anchor.textContent = keys.title
+      document.getElementById(`githubMessageArea${this.count}`).appendChild(anchor)
+      document.getElementById(`githubMessageArea${this.count}`).appendChild(document.createElement('br'))
+    })
   }
 
   closeGithub () {
