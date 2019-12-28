@@ -21,7 +21,7 @@ class Chat {
     if (sessionStorage === null) {
       document.getElementById(`changeUsernameBtn${this.count}`).click()
       document.getElementById(`nickName${this.count}`).value = 'Jon Doe'
-      document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">You will need to enter a username before you can contiune</p>`
+      document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">You will need to enter a username before you can continue</p>`
       document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">The Matrix ${this.getTime()}</p>`
     } else {
       this.userName = sessionStorage
