@@ -33,6 +33,11 @@
   border-radius: 3px 3px 3px 3px;  
 }
 
+.githubMessageArea img {
+  width: 32px;
+  height: 32px;
+}
+
 .githubvisibleSettings {
   visibility: visible;
   position: absolute;

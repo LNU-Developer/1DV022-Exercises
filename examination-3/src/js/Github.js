@@ -9,9 +9,9 @@ class Github {
     document.getElementById(`starReposBtn${this.count}`).addEventListener('click', this.starRepos.bind(this))
     document.getElementById(`allReposBtn${this.count}`).addEventListener('click', this.allRepos.bind(this))
     document.getElementById(`signInBtn${this.count}`).addEventListener('click', this.signIn.bind(this))
-    document.getElementById(`viewIssuesBtn${this.count}`).disabled = true
-    document.getElementById(`allReposBtn${this.count}`).disabled = true
-    document.getElementById(`starReposBtn${this.count}`).disabled = true
+    document.getElementById(`viewIssuesBtn${this.count}`).setAttribute('class', 'githubinvisibleSettings')
+    document.getElementById(`allReposBtn${this.count}`).setAttribute('class', 'githubinvisibleSettings')
+    document.getElementById(`starReposBtn${this.count}`).setAttribute('class', 'githubinvisibleSettings')
     document.getElementById(`starReposSettings${this.count}`).setAttribute('class', 'githubinvisibleSettings')
     document.getElementById(`signInSettings${this.count}`).setAttribute('class', 'githubinvisibleSettings')
     document.getElementById(`github${this.count}`).addEventListener('scroll', this.infinityScroll.bind(this))
@@ -24,11 +24,11 @@ class Github {
   }
 
   acceptSignIn () {
-    document.getElementById(`viewIssuesBtn${this.count}`).disabled = false
-    document.getElementById(`allReposBtn${this.count}`).disabled = false
-    document.getElementById(`starReposBtn${this.count}`).disabled = false
     this.token = document.getElementById(`token${this.count}`).value
     document.getElementById(`signInSettings${this.count}`).setAttribute('class', 'githubinvisibleSettings')
+    document.getElementById(`viewIssuesBtn${this.count}`).setAttribute('class', 'githubvisibleSettings')
+    document.getElementById(`allReposBtn${this.count}`).setAttribute('class', 'githubvisibleSettings')
+    document.getElementById(`starReposBtn${this.count}`).setAttribute('class', 'githubvisibleSettings')
   }
 
   allRepos () {
@@ -84,17 +84,13 @@ class Github {
     })
       .then(response => response.json().then(json => ({
         headers: response.headers,
-        status: response.status,
         json
       })))
-      .then(({ headers, status, json }) => this.parser(json, type, headers, status))
+      .then(({ headers, json }) => this.parser(json, type, headers))
   }
 
-  parser (data, type, headers, status) {
+  parser (data, type, headers) {
     this.links = headers.get('link')
-    if (this.links === null) {
-      document.getElementById(`github${this.count}`).removeEventListener('scroll', this.infinityScroll.bind(this))
-    }
 
     if (type === 'userIssues') {
       data.forEach(i => {
@@ -103,11 +99,7 @@ class Github {
         anchor.textContent = i.title
         anchor.href = i.html_url
         img.src = i.user.avatar_url
-        img.style.width = '32px'
-        img.style.height = '32px'
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(img)
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(anchor)
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(document.createElement('br'))
+        this.appendHTML(img, anchor)
       })
     } else if (type === 'star') {
       data.items.forEach(i => {
@@ -116,11 +108,7 @@ class Github {
         anchor.textContent = i.name
         anchor.href = i.html_url
         img.src = i.owner.avatar_url
-        img.style.width = '32px'
-        img.style.height = '32px'
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(img)
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(anchor)
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(document.createElement('br'))
+        this.appendHTML(img, anchor)
       })
     } else if (type === 'allRepos') {
       data.forEach(i => {
@@ -129,13 +117,15 @@ class Github {
         anchor.textContent = i.name
         anchor.href = i.html_url
         img.src = i.owner.avatar_url
-        img.style.width = '32px'
-        img.style.height = '32px'
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(img)
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(anchor)
-        document.getElementById(`githubMessageArea${this.count}`).appendChild(document.createElement('br'))
+        this.appendHTML(img, anchor)
       })
     }
+  }
+
+  appendHTML (img, anchor) {
+    document.getElementById(`githubMessageArea${this.count}`).appendChild(img)
+    document.getElementById(`githubMessageArea${this.count}`).appendChild(anchor)
+    document.getElementById(`githubMessageArea${this.count}`).appendChild(document.createElement('br'))
   }
 
   closeGithub () {
