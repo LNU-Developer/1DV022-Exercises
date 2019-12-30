@@ -1,24 +1,37 @@
+/**
+ * Imports different modules to my application
+ */
 import { Chat } from './Chat.js'
 import { Window } from './Window.js'
 import { Memory } from './Memory.js'
 import { Github } from './Github.js'
 
+/**
+ * Different variables to be used in the application
+ */
 let count = 0
 let rootDiv
 let zIndex = 0
 let clickCount = 0
 const timeout = 500
 
+/**
+ * Initiates when DOM has loaded
+ */
 function init () {
   rootDiv = document.getElementById('root')
   document.getElementById('Chat').children[0].addEventListener('click', createApp)
   document.getElementById('Memory').children[0].addEventListener('click', createApp)
   document.getElementById('Github').children[0].addEventListener('click', createApp)
-  document.getElementById('minimizedWindows').addEventListener('click', showWindows)
+  document.getElementById('minimizedWindows').addEventListener('click', hideWindows)
 }
 
 window.addEventListener('load', init, { once: true })
 
+/**
+ * Creates an application based on what was clicked
+ * @param {object} event - adds the click event as a parameter
+ */
 function createApp (event) {
   clickCount++
   if (clickCount === 1) {
@@ -46,12 +59,20 @@ function createApp (event) {
   }
 }
 
-function showWindows (event) {
+/**
+ * Function to hide windows when the minimize button is clicked
+ * @param {object} event - adds the click event as a parameter
+ */
+function hideWindows (event) {
   document.getElementById('window' + event.target.id).classList.toggle('hide')
   const window = document.getElementById(event.target.id)
   window.parentNode.removeChild(window)
 }
 
+/**
+ * Function to make an element dragable and to handle zIndex
+ * @param {element} elmnt - the element to be made draggable
+ */
 function dragElement (elmnt) {
   var pos1 = 0
   var pos2 = 0
@@ -61,10 +82,17 @@ function dragElement (elmnt) {
   document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown
   elmnt.onmousedown = indexUpdate
 
+  /**
+ * Updates zIndex on click
+ */
   function indexUpdate () {
     document.getElementById(elmnt.id).style.zIndex = zIndex++
   }
 
+  /**
+ * Function to call mouse events and to uppdate zindex
+ * @param {oject} e - the mousedown event
+ */
   function dragMouseDown (e) {
     document.getElementById(elmnt.id).style.zIndex = zIndex++
     e = e || window.event
@@ -79,6 +107,10 @@ function dragElement (elmnt) {
     document.onmousemove = elementDrag
   }
 
+  /**
+ * Function to handle dragging
+ * @param {oject} e - the mousedown event
+ */
   function elementDrag (e) {
     // Set focus when clicked, as well as make all other elements see through
     for (let i = 0; i < count; i++) {
@@ -114,6 +146,9 @@ function dragElement (elmnt) {
     }
   }
 
+  /**
+ * Function to handle mouseup and mouse leave event
+ */
   function closeDragElement () {
     // stop moving when mouse button is released:
     document.onmouseup = null
