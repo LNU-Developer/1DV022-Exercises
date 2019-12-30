@@ -1,9 +1,18 @@
+/**
+ * Creates an instance of a Chat app
+ * * @param {number} count - The unique instance number that will populate all IDs
+ * @constructor
+ */
+
 class Chat {
   constructor (count) {
     this.count = count
     this.channel = 'channel'
   }
 
+  /**
+  * Function to handle initial start and adding eventlisteners. If no username exists it will block the user from typing messages.
+  */
   startApp () {
     this.ws = new window.WebSocket('ws://vhost3.lnu.se:20080/socket/')
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this), { once: true })
@@ -31,7 +40,7 @@ class Chat {
   }
 
   /**
-   * Event handler for key strokes
+   * Event handler for key strokes. If enter is selected the message is sent, and if esc is selected it will close the application
    * @param {object} event - keystroke
    */
 
@@ -59,6 +68,10 @@ class Chat {
     }
   }
 
+  /**
+   * Method to get and return the actual time
+   * @returns {string} returns the time
+   */
   getTime () {
     const time = new Date()
     let minutes
@@ -72,6 +85,10 @@ class Chat {
     return time.getHours() + ':' + minutes
   }
 
+  /**
+   * Event handler for listening on messages. Will parse messages when received
+   * @param {object} event - messages
+   */
   listenMessage (event) {
     this.userName = window.sessionStorage.getItem('username')
     const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
@@ -91,6 +108,10 @@ class Chat {
     }
   }
 
+  /**
+   * Event handler for opening menu options
+   * @param {object} event - clicked object
+   */
   showMenu (event) {
     if (event.target.id === `changeUsernameBtn${this.count}`) {
       document.getElementById(`nickName${this.count}`).value = String(this.userName)
@@ -105,6 +126,10 @@ class Chat {
     }
   }
 
+  /**
+   * Event handler for accepting menu option change.
+   * @param {object} event - clicked object
+   */
   updateUsername (event) {
     if (event.target.id === `nameAcceptSettingsBtn${this.count}`) {
       this.userName = document.getElementById(`nickName${this.count}`).value
@@ -144,6 +169,9 @@ class Chat {
   }
 }
 
+/**
+   * Exporting module
+   */
 export {
   Chat
 }

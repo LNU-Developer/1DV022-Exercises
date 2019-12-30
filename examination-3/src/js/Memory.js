@@ -200,6 +200,9 @@ class Memory {
   }
 }
 
+/**
+   * Exporting module
+   */
 export {
   Memory
 }

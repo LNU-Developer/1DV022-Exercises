@@ -1,3 +1,10 @@
+/**
+ * Creates a window
+ * * @param {number} count - The unique instance number that will populate all IDs
+ * @param {string} choice - The type of window to be created
+ * @param {number} zIndex - The current zIndex value
+ * @constructor
+ */
 class Window {
   constructor (count, choice, zIndex) {
     this.count = count
@@ -5,6 +12,10 @@ class Window {
     this.zIndex = zIndex
   }
 
+  /**
+   * Method to create all divs, images and content of a specific window
+   * @returns {element} returns a window element
+   */
   createWindow () {
     // Creating divs, text and adding style
     const windowElement = document.createElement('div')
@@ -53,6 +64,11 @@ class Window {
     return windowElement
   }
 
+  /**
+   * Method to populate with content depending on the type of window being created
+   * @param {string} choice the type of window content to be returned
+   * @returns {object} object containing src and alt data
+   */
   headerChoice (choice) {
     if (choice === 'Memory') {
       return { src: 'image/baseline_layers_black_18dp2.png', alt: 'Memory' }
@@ -63,6 +79,11 @@ class Window {
     }
   }
 
+  /**
+   * Method to populate with content depending on the type of window being created
+   * @param {string} choice the type of window content to be returned
+   * @returns {html} returns html data to populate the menu
+   */
   menuChoice (choice) {
     if (choice === 'Memory') {
       return `
@@ -107,6 +128,11 @@ class Window {
     }
   }
 
+  /**
+   * Method to populate with content depending on the type of window being created
+   * @param {string} choice the type of window content to be returned
+   * @returns {html} returns html data to populate the root div
+   */
   rootChoice (choice) {
     if (choice === 'Memory') {
       return `
@@ -137,6 +163,9 @@ class Window {
   }
 }
 
+/**
+   * Exporting module
+   */
 export {
   Window
 }
