@@ -6,44 +6,50 @@ import { Github } from './Github.js'
 let count = 0
 let rootDiv
 let zIndex = 0
+let clickCount = 0
+const timeout = 500
 
 function init () {
   rootDiv = document.getElementById('root')
-  document.getElementById('chat').addEventListener('click', createChat)
-  document.getElementById('memory').addEventListener('click', createMemory)
-  document.getElementById('github').addEventListener('click', createGithub)
+  document.getElementById('Chat').children[0].addEventListener('click', createApp)
+  document.getElementById('Memory').children[0].addEventListener('click', createApp)
+  document.getElementById('Github').children[0].addEventListener('click', createApp)
+  document.getElementById('minimizedWindows').addEventListener('click', showWindows)
 }
 
 window.addEventListener('load', init, { once: true })
 
-function createChat () {
-  const windowObj = new Window(count, 'Chat', zIndex)
-  const newWindow = windowObj.createWindow()
-  const chat = new Chat(count)
-  rootDiv.appendChild(newWindow)
-  dragElement(newWindow)
-  chat.startChat()
-  count++
+function createApp (event) {
+  clickCount++
+  if (clickCount === 1) {
+    setTimeout(function () {
+      if (clickCount === 1) {
+        let app
+        const windowObj = new Window(count, String(event.target.parentNode.id), zIndex)
+        const newWindow = windowObj.createWindow()
+        rootDiv.appendChild(newWindow)
+        dragElement(newWindow)
+        if (event.target.parentNode.id === 'Chat') {
+          app = new Chat(count)
+        } else if (event.target.parentNode.id === 'Memory') {
+          app = new Memory(count)
+        } else if (event.target.parentNode.id === 'Github') {
+          app = new Github(count)
+        }
+        app.startApp()
+        count++
+      } else {
+        document.getElementById('minimizedWindows').classList.toggle('show')
+      }
+      clickCount = 0
+    }, timeout || 300)
+  }
 }
 
-function createMemory () {
-  const windowObj = new Window(count, 'Memory', zIndex)
-  const newWindow = windowObj.createWindow()
-  const memory = new Memory(count)
-  rootDiv.appendChild(newWindow)
-  dragElement(newWindow)
-  memory.startGame()
-  count++
-}
-
-function createGithub () {
-  const windowObj = new Window(count, 'Github', zIndex)
-  const newWindow = windowObj.createWindow()
-  const rss = new Github(count)
-  rootDiv.appendChild(newWindow)
-  dragElement(newWindow)
-  rss.startGithub()
-  count++
+function showWindows (event) {
+  document.getElementById('window' + event.target.id).classList.toggle('hide')
+  const window = document.getElementById(event.target.id)
+  window.parentNode.removeChild(window)
 }
 
 function dragElement (elmnt) {

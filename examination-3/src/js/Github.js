@@ -3,8 +3,9 @@ class Github {
     this.count = count
   }
 
-  startGithub () {
+  startApp () {
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeGithub.bind(this), { once: true })
+    document.getElementById(`minimize${this.count}`).addEventListener('click', this.minimizeGithub.bind(this))
     document.getElementById(`viewIssuesBtn${this.count}`).addEventListener('click', this.viewIssues.bind(this))
     document.getElementById(`starReposBtn${this.count}`).addEventListener('click', this.starRepos.bind(this))
     document.getElementById(`allReposBtn${this.count}`).addEventListener('click', this.allRepos.bind(this))
@@ -128,6 +129,9 @@ class Github {
     document.getElementById(`githubMessageArea${this.count}`).appendChild(document.createElement('br'))
   }
 
+  /**
+   * Function to remove all eventlisteners and to remove HTML reference to created Window
+   */
   closeGithub () {
     document.getElementById(`signInBtn${this.count}`).removeEventListener('click', this.signIn.bind(this))
     document.getElementById(`viewIssuesBtn${this.count}`).removeEventListener('click', this.viewIssues.bind(this))
@@ -136,6 +140,18 @@ class Github {
     document.getElementById(`github${this.count}`).removeEventListener('scroll', this.infinityScroll.bind(this))
     const window = document.getElementById(`window${this.count}`)
     window.parentNode.removeChild(window)
+  }
+
+  /**
+   * Function to minimize created Window
+   */
+  minimizeGithub () {
+    const a = document.createElement('a')
+    a.setAttribute('href', '#')
+    a.setAttribute('id', `${this.count}`)
+    a.innerHTML = `Github`
+    document.getElementById('minimizedWindows').appendChild(a)
+    document.getElementById(`window${this.count}`).classList.toggle('hide')
   }
 }
 export {

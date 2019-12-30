@@ -42,6 +42,7 @@ class Window {
     const minimizeImg = document.createElement('img')
     minimizeImg.setAttribute('src', 'image/outline_remove_black_18dp.png')
     minimizeImg.setAttribute('alt', 'Minimize')
+    minimizeImg.setAttribute('id', `minimize${this.count}`)
     headerElement.appendChild(minimizeImg)
 
     windowElement.insertAdjacentHTML('beforeend', this.rootChoice(this.choice))

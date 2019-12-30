@@ -18,9 +18,7 @@ class Memory {
   /**
   * Function to handle initial start and adding eventlisteners
   */
-  startGame () {
-    this.createBricks(16)
-    this.ranomdizePics()
+  startApp () {
     document.getElementById(`nrOfBricks${this.count}`).focus()
     document.getElementById(`bricks${this.count}`).addEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).addEventListener('keydown', this.keyUse.bind(this))
@@ -28,6 +26,9 @@ class Memory {
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeMemory.bind(this), { once: true })
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.removeBricks.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).addEventListener('change', this.createBricks.bind(this))
+    document.getElementById(`minimize${this.count}`).addEventListener('click', this.minimizeMemory.bind(this))
+    this.createBricks(16)
+    this.ranomdizePics()
   }
 
   /**
@@ -184,6 +185,18 @@ class Memory {
     document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.createBricks.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
     window.parentNode.removeChild(window)
+  }
+
+  /**
+   * Function to minimize created Window
+   */
+  minimizeMemory () {
+    const a = document.createElement('a')
+    a.setAttribute('href', '#')
+    a.setAttribute('id', `${this.count}`)
+    a.innerHTML = `Memory`
+    document.getElementById('minimizedWindows').appendChild(a)
+    document.getElementById(`window${this.count}`).classList.toggle('hide')
   }
 }
 

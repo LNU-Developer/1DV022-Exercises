@@ -4,9 +4,10 @@ class Chat {
     this.channel = 'channel'
   }
 
-  startChat () {
+  startApp () {
     this.ws = new window.WebSocket('ws://vhost3.lnu.se:20080/socket/')
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this), { once: true })
+    document.getElementById(`minimize${this.count}`).addEventListener('click', this.minimizeChat.bind(this))
     document.getElementById(`changeUsernameBtn${this.count}`).addEventListener('click', this.showMenu.bind(this))
     document.getElementById(`changeChannelNameBtn${this.count}`).addEventListener('click', this.showMenu.bind(this))
     document.getElementById(`window${this.count}`).addEventListener('keydown', this.keyHandle.bind(this))
@@ -116,14 +117,30 @@ class Chat {
     }
   }
 
+  /**
+   * Function to remove all eventlisteners, close socket and to remove HTML reference to created Window
+   */
   closeChat () {
     const window = document.getElementById(`window${this.count}`)
     this.ws.close()
     document.getElementById(`window${this.count}`).removeEventListener('keydown', this.closeChat.bind(this))
     document.getElementById(`changeUsernameBtn${this.count}`).removeEventListener('click', this.showMenu.bind(this))
     document.getElementById(`changeChannelNameBtn${this.count}`).removeEventListener('click', this.showMenu.bind(this))
+    document.getElementById(`minimize${this.count}`).removeEventListener('click', this.minimizeChat.bind(this))
     this.ws.removeEventListener('message', this.listenMessage.bind(this))
     window.parentNode.removeChild(window)
+  }
+
+  /**
+   * Function to minimize created Window
+   */
+  minimizeChat () {
+    const a = document.createElement('a')
+    a.setAttribute('href', '#')
+    a.setAttribute('id', `${this.count}`)
+    a.innerHTML = `Chat`
+    document.getElementById('minimizedWindows').appendChild(a)
+    document.getElementById(`window${this.count}`).classList.toggle('hide')
   }
 }
 
