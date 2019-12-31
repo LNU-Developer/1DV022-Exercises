@@ -24,6 +24,7 @@ class Chat {
     document.getElementById(`userMessage${this.count}`).focus()
     document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
     document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
+    document.getElementById(`userMessage${this.count}`).addEventListener('input', this.emojiChecker.bind(this))
 
     document.getElementById(`userMessage${this.count}`).disabled = true
 
@@ -43,7 +44,6 @@ class Chat {
    * Event handler for key strokes. If enter is selected the message is sent, and if esc is selected it will close the application
    * @param {object} event - keystroke
    */
-
   keyHandle (event) {
     if (event.keyCode === 13) {
       event.preventDefault()
@@ -65,6 +65,45 @@ class Chat {
       }
     } else if (event.keyCode === 27) {
       this.closeChat()
+    }
+  }
+
+  /**
+   * Event handler for changes in input fields. Checks if a emoji shortcut has been entered and changes the value to the actual Emoji
+   * @param {object} event - keystroke
+   */
+  emojiChecker (event) {
+    let string = event.target.value
+    if (string.endsWith(' ')) {
+      const emojis = [
+        { text: '-<@%', code: '\u{1F41D}' }, { text: '(|)', code: '\u{1F435}' }, { text: '(:)', code: '\u{1F437}' }, { text: ']:{', code: '\u{1F473}' },
+        { text: '</3', code: '\u{1F494}' }, { text: '<3', code: '\u{1F49C}' }, { text: '~@~', code: '\u{1F4A9}' }, { text: ':-D', code: '\u{1F600}' },
+        { text: ':D', code: '\u{1F600}' }, { text: '^_^', code: '\u{1F601}' }, { text: ':)', code: '\u{1F603}' }, { text: ':-)', code: '\u{1F603}' },
+        { text: '=)', code: '\u{1F603}' }, { text: '=D', code: '\u{1F604}' }, { text: '^_;^', code: '\u{1F605}' }, { text: '}:)', code: '\u{1F608}' },
+        { text: '}:-)', code: '\u{1F608}' }, { text: '}=)', code: '\u{1F608}' }, { text: ';-)', code: '\u{1F609}' }, { text: ';)', code: '\u{1F609}' },
+        { text: 'B)', code: '\u{1F60E}' }, { text: 'B-)', code: '\u{1F60E}' }, { text: ':-|', code: '\u{1F610}' }, { text: ':|', code: '\u{1F610}' },
+        { text: '=|', code: '\u{1F610}' }, { text: '-_-', code: '\u{1F611}' }, { text: 'o_o', code: '\u{1F613}' }, { text: 'u_u', code: '\u{1F614}' },
+        { text: ':/', code: '\u{1F615}' }, { text: ':-/', code: '\u{1F615}' }, { text: '=/', code: '\u{1F615}' }, { text: ':S', code: '\u{1F616}' },
+        { text: ':-S', code: '\u{1F616}' }, { text: ':s', code: '\u{1F616}' }, { text: ':-s', code: '\u{1F616}' }, { text: ':*', code: '\u{1F617}' },
+        { text: ':-*', code: '\u{1F617}' }, { text: ';*', code: '\u{1F618}' }, { text: ';-*', code: '\u{1F618}' }, { text: ':P', code: '\u{1F61B}' },
+        { text: ':-P', code: '\u{1F61B}' }, { text: '=P', code: '\u{1F61B}' }, { text: ':p', code: '\u{1F61B}' }, { text: ':-p', code: '\u{1F61B}' },
+        { text: '=p', code: '\u{1F61B}' }, { text: ';P', code: '\u{1F61C}' }, { text: ';p', code: '\u{1F61C}' }, { text: ';-p', code: '\u{1F61C}' },
+        { text: ';-P', code: '\u{1F61C}' }, { text: ':(', code: '\u{1F61E}' }, { text: ':-(', code: '\u{1F61E}' }, { text: '=(', code: '\u{1F61E}' },
+        { text: '>.<', code: '\u{1F621}' }, { text: '>:(', code: '\u{1F621}' }, { text: '>:-(', code: '\u{1F621}' }, { text: '>=(', code: '\u{1F621}' },
+        { text: 'T_T', code: '\u{1F622}' }, { text: `:'(`, code: '\u{1F622}' }, { text: ';_;', code: '\u{1F622}' }, { text: `='(`, code: '\u{1F622}' },
+        { text: `>_<`, code: '\u{1F623}' }, { text: `D:`, code: '\u{1F626}' }, { text: `o.o`, code: '\u{1F62E}' }, { text: `:o`, code: '\u{1F62E}' },
+        { text: `:-o`, code: '\u{1F62E}' }, { text: '=o', code: '\u{1F62E}' }, { text: 'O.O', code: '\u{1F632}' }, { text: ':O', code: '\u{1F632}' },
+        { text: ':-O', code: '\u{1F632}' }, { text: '=O', code: '\u{1F632}' }, { text: 'x_x', code: '\u{1F635}' }, { text: 'X-O', code: '\u{1F635}' },
+        { text: 'X-o', code: '\u{1F635}' }, { text: 'X(', code: '\u{1F635}' }, { text: 'X-(', code: '\u{1F635}' }, { text: ':X)', code: '\u{1F638}' },
+        { text: ':3', code: '\u{1F638}' }, { text: '(=^..^=)', code: '\u{1F638}' }, { text: '(=^.^=)', code: '\u{1F638}' }, { text: '=^_^=', code: '\u{1F638}' }
+      ]
+
+      emojis.forEach(element => {
+        if (string.includes(element.text)) {
+          string = string.replace(element.text, element.code)
+        }
+        document.getElementById(`userMessage${this.count}`).value = string
+      })
     }
   }
 
@@ -152,6 +191,7 @@ class Chat {
     document.getElementById(`changeUsernameBtn${this.count}`).removeEventListener('click', this.showMenu.bind(this))
     document.getElementById(`changeChannelNameBtn${this.count}`).removeEventListener('click', this.showMenu.bind(this))
     document.getElementById(`minimize${this.count}`).removeEventListener('click', this.minimizeChat.bind(this))
+    document.getElementById(`userMessage${this.count}`).removeEventListener('input', this.emojiChecker.bind(this))
     this.ws.removeEventListener('message', this.listenMessage.bind(this))
     window.parentNode.removeChild(window)
   }
