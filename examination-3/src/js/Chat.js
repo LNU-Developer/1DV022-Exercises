@@ -7,7 +7,10 @@
 class Chat {
   constructor (count) {
     this.count = count
-    this.channel = 'channel'
+    this.currentChannel = 'channel'
+    this.channels = ['channel']
+    this.savedMessages = []
+    this.userName = ''
   }
 
   /**
@@ -28,16 +31,45 @@ class Chat {
 
     document.getElementById(`userMessage${this.count}`).disabled = true
 
-    const sessionStorage = window.sessionStorage.getItem('username')
+    const sessionStorage = JSON.parse(window.sessionStorage.getItem('data'))
     if (sessionStorage === null) {
       document.getElementById(`changeUsernameBtn${this.count}`).click()
       document.getElementById(`nickName${this.count}`).value = 'Jon Doe'
       document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">You will need to enter a username before you can continue</p>`
       document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">The Matrix ${this.getTime()}</p>`
     } else {
-      this.userName = sessionStorage
+      this.userName = String(sessionStorage[0])
+      this.savedMessages = sessionStorage[1]
+      this.messageCache(this.currentChannel)
       document.getElementById(`userMessage${this.count}`).disabled = false
     }
+  }
+
+  /**
+   * Method to populate channel with cached old messages
+   * @param {string} channel - The name of the channel to be populated
+   */
+  messageCache (channel) {
+    if (channel) {
+      const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
+      this.savedMessages.forEach(element => {
+        if (element.channel === channel) {
+          receivedMessages.innerHTML += `<p class=${element.CSS}>${element.message}</p>`
+          receivedMessages.innerHTML += `<p class=${element.CSS}>${element.name} ${element.time}</p>`
+        }
+      })
+      document.getElementById(`messageArea${this.count}`).scrollTo(0, document.getElementById(`messageArea${this.count}`).scrollHeight)
+    }
+  }
+
+  /**
+   * Method to store available data in local storage
+   */
+  dataStorage () {
+    const array = []
+    array.push(String(this.userName))
+    array.push(this.savedMessages)
+    window.sessionStorage.setItem('data', JSON.stringify(array))
   }
 
   /**
@@ -47,16 +79,14 @@ class Chat {
   keyHandle (event) {
     if (event.keyCode === 13) {
       event.preventDefault()
-      this.userName = window.sessionStorage.getItem('username')
       document.getElementById(`userMessage${this.count}`).focus()
       if (document.getElementById(`userMessage${this.count}`).value !== '') {
-        const username = String(this.userName)
         this.messageData = document.getElementById(`userMessage${this.count}`).value
         const data = {
           type: 'message',
           data: document.getElementById(`userMessage${this.count}`).value,
-          username: username,
-          channel: this.channel,
+          username: String(this.userName),
+          channel: String(this.currentChannel),
           key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd',
           id: 'myApp'
         }
@@ -74,37 +104,35 @@ class Chat {
    */
   emojiChecker (event) {
     let string = event.target.value
-    if (string.endsWith(' ')) {
-      const emojis = [
-        { text: '-<@%', code: '\u{1F41D}' }, { text: '(|)', code: '\u{1F435}' }, { text: '(:)', code: '\u{1F437}' }, { text: ']:{', code: '\u{1F473}' },
-        { text: '</3', code: '\u{1F494}' }, { text: '<3', code: '\u{1F49C}' }, { text: '~@~', code: '\u{1F4A9}' }, { text: ':-D', code: '\u{1F600}' },
-        { text: ':D', code: '\u{1F600}' }, { text: '^_^', code: '\u{1F601}' }, { text: ':)', code: '\u{1F603}' }, { text: ':-)', code: '\u{1F603}' },
-        { text: '=)', code: '\u{1F603}' }, { text: '=D', code: '\u{1F604}' }, { text: '^_;^', code: '\u{1F605}' }, { text: '}:)', code: '\u{1F608}' },
-        { text: '}:-)', code: '\u{1F608}' }, { text: '}=)', code: '\u{1F608}' }, { text: ';-)', code: '\u{1F609}' }, { text: ';)', code: '\u{1F609}' },
-        { text: 'B)', code: '\u{1F60E}' }, { text: 'B-)', code: '\u{1F60E}' }, { text: ':-|', code: '\u{1F610}' }, { text: ':|', code: '\u{1F610}' },
-        { text: '=|', code: '\u{1F610}' }, { text: '-_-', code: '\u{1F611}' }, { text: 'o_o', code: '\u{1F613}' }, { text: 'u_u', code: '\u{1F614}' },
-        { text: ':/', code: '\u{1F615}' }, { text: ':-/', code: '\u{1F615}' }, { text: '=/', code: '\u{1F615}' }, { text: ':S', code: '\u{1F616}' },
-        { text: ':-S', code: '\u{1F616}' }, { text: ':s', code: '\u{1F616}' }, { text: ':-s', code: '\u{1F616}' }, { text: ':*', code: '\u{1F617}' },
-        { text: ':-*', code: '\u{1F617}' }, { text: ';*', code: '\u{1F618}' }, { text: ';-*', code: '\u{1F618}' }, { text: ':P', code: '\u{1F61B}' },
-        { text: ':-P', code: '\u{1F61B}' }, { text: '=P', code: '\u{1F61B}' }, { text: ':p', code: '\u{1F61B}' }, { text: ':-p', code: '\u{1F61B}' },
-        { text: '=p', code: '\u{1F61B}' }, { text: ';P', code: '\u{1F61C}' }, { text: ';p', code: '\u{1F61C}' }, { text: ';-p', code: '\u{1F61C}' },
-        { text: ';-P', code: '\u{1F61C}' }, { text: ':(', code: '\u{1F61E}' }, { text: ':-(', code: '\u{1F61E}' }, { text: '=(', code: '\u{1F61E}' },
-        { text: '>.<', code: '\u{1F621}' }, { text: '>:(', code: '\u{1F621}' }, { text: '>:-(', code: '\u{1F621}' }, { text: '>=(', code: '\u{1F621}' },
-        { text: 'T_T', code: '\u{1F622}' }, { text: `:'(`, code: '\u{1F622}' }, { text: ';_;', code: '\u{1F622}' }, { text: `='(`, code: '\u{1F622}' },
-        { text: `>_<`, code: '\u{1F623}' }, { text: `D:`, code: '\u{1F626}' }, { text: `o.o`, code: '\u{1F62E}' }, { text: `:o`, code: '\u{1F62E}' },
-        { text: `:-o`, code: '\u{1F62E}' }, { text: '=o', code: '\u{1F62E}' }, { text: 'O.O', code: '\u{1F632}' }, { text: ':O', code: '\u{1F632}' },
-        { text: ':-O', code: '\u{1F632}' }, { text: '=O', code: '\u{1F632}' }, { text: 'x_x', code: '\u{1F635}' }, { text: 'X-O', code: '\u{1F635}' },
-        { text: 'X-o', code: '\u{1F635}' }, { text: 'X(', code: '\u{1F635}' }, { text: 'X-(', code: '\u{1F635}' }, { text: ':X)', code: '\u{1F638}' },
-        { text: ':3', code: '\u{1F638}' }, { text: '(=^..^=)', code: '\u{1F638}' }, { text: '(=^.^=)', code: '\u{1F638}' }, { text: '=^_^=', code: '\u{1F638}' }
-      ]
+    const emojis = [
+      { text: '-<@%', code: '\u{1F41D}' }, { text: '(|)', code: '\u{1F435}' }, { text: '(:)', code: '\u{1F437}' }, { text: ']:{', code: '\u{1F473}' },
+      { text: '</3', code: '\u{1F494}' }, { text: '<3', code: '\u{1F49C}' }, { text: '~@~', code: '\u{1F4A9}' }, { text: ':-D', code: '\u{1F600}' },
+      { text: ':D', code: '\u{1F600}' }, { text: '^_^', code: '\u{1F601}' }, { text: ':)', code: '\u{1F603}' }, { text: ':-)', code: '\u{1F603}' },
+      { text: '=)', code: '\u{1F603}' }, { text: '=D', code: '\u{1F604}' }, { text: '^_;^', code: '\u{1F605}' }, { text: '}:)', code: '\u{1F608}' },
+      { text: '}:-)', code: '\u{1F608}' }, { text: '}=)', code: '\u{1F608}' }, { text: ';-)', code: '\u{1F609}' }, { text: ';)', code: '\u{1F609}' },
+      { text: 'B)', code: '\u{1F60E}' }, { text: 'B-)', code: '\u{1F60E}' }, { text: ':-|', code: '\u{1F610}' }, { text: ':|', code: '\u{1F610}' },
+      { text: '=|', code: '\u{1F610}' }, { text: '-_-', code: '\u{1F611}' }, { text: 'o_o', code: '\u{1F613}' }, { text: 'u_u', code: '\u{1F614}' },
+      { text: ':/', code: '\u{1F615}' }, { text: ':-/', code: '\u{1F615}' }, { text: '=/', code: '\u{1F615}' }, { text: ':S', code: '\u{1F616}' },
+      { text: ':-S', code: '\u{1F616}' }, { text: ':s', code: '\u{1F616}' }, { text: ':-s', code: '\u{1F616}' }, { text: ':*', code: '\u{1F617}' },
+      { text: ':-*', code: '\u{1F617}' }, { text: ';*', code: '\u{1F618}' }, { text: ';-*', code: '\u{1F618}' }, { text: ':P', code: '\u{1F61B}' },
+      { text: ':-P', code: '\u{1F61B}' }, { text: '=P', code: '\u{1F61B}' }, { text: ':p', code: '\u{1F61B}' }, { text: ':-p', code: '\u{1F61B}' },
+      { text: '=p', code: '\u{1F61B}' }, { text: ';P', code: '\u{1F61C}' }, { text: ';p', code: '\u{1F61C}' }, { text: ';-p', code: '\u{1F61C}' },
+      { text: ';-P', code: '\u{1F61C}' }, { text: ':(', code: '\u{1F61E}' }, { text: ':-(', code: '\u{1F61E}' }, { text: '=(', code: '\u{1F61E}' },
+      { text: '>.<', code: '\u{1F621}' }, { text: '>:(', code: '\u{1F621}' }, { text: '>:-(', code: '\u{1F621}' }, { text: '>=(', code: '\u{1F621}' },
+      { text: 'T_T', code: '\u{1F622}' }, { text: `:'(`, code: '\u{1F622}' }, { text: ';_;', code: '\u{1F622}' }, { text: `='(`, code: '\u{1F622}' },
+      { text: `>_<`, code: '\u{1F623}' }, { text: `D:`, code: '\u{1F626}' }, { text: `o.o`, code: '\u{1F62E}' }, { text: `:o`, code: '\u{1F62E}' },
+      { text: `:-o`, code: '\u{1F62E}' }, { text: '=o', code: '\u{1F62E}' }, { text: 'O.O', code: '\u{1F632}' }, { text: ':O', code: '\u{1F632}' },
+      { text: ':-O', code: '\u{1F632}' }, { text: '=O', code: '\u{1F632}' }, { text: 'x_x', code: '\u{1F635}' }, { text: 'X-O', code: '\u{1F635}' },
+      { text: 'X-o', code: '\u{1F635}' }, { text: 'X(', code: '\u{1F635}' }, { text: 'X-(', code: '\u{1F635}' }, { text: ':X)', code: '\u{1F638}' },
+      { text: ':3', code: '\u{1F638}' }, { text: '(=^..^=)', code: '\u{1F638}' }, { text: '(=^.^=)', code: '\u{1F638}' }, { text: '=^_^=', code: '\u{1F638}' }
+    ]
 
-      emojis.forEach(element => {
-        if (string.includes(element.text)) {
-          string = string.replace(element.text, element.code)
-        }
-        document.getElementById(`userMessage${this.count}`).value = string
-      })
-    }
+    emojis.forEach(element => {
+      if (string.includes(element.text)) {
+        string = string.replace(element.text, element.code)
+      }
+      document.getElementById(`userMessage${this.count}`).value = string
+    })
   }
 
   /**
@@ -129,10 +157,7 @@ class Chat {
    * @param {object} event - messages
    */
   listenMessage (event) {
-    this.userName = window.sessionStorage.getItem('username')
-    const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
     const data = JSON.parse(event.data)
-
     let classData
 
     if (data.id !== 'myApp') {
@@ -141,10 +166,16 @@ class Chat {
       classData = 'sentMessages'
     }
     if ((data.type === 'message') && (data.username !== 'The Server' || data !== '')) {
-      receivedMessages.innerHTML += `<p class=${classData}>${data.data}</p>`
-      receivedMessages.innerHTML += `<p class=${classData}>${data.username} ${this.getTime()}</p>`
-      document.getElementById(`messageArea${this.count}`).scrollTo(0, document.getElementById(`messageArea${this.count}`).scrollHeight)
+      const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
+      this.savedMessages.push({ name: data.username, message: data.data, time: this.getTime(), channel: data.channel, CSS: classData })
+      const length = this.savedMessages.length - 1
+      if (data.channel === this.currentChannel) {
+        receivedMessages.innerHTML += `<p class=${this.savedMessages[length].CSS}>${this.savedMessages[length].message}</p>`
+        receivedMessages.innerHTML += `<p class=${this.savedMessages[length].CSS}>${this.savedMessages[length].name} ${this.savedMessages[length].time}</p>`
+        document.getElementById(`messageArea${this.count}`).scrollTo(0, document.getElementById(`messageArea${this.count}`).scrollHeight)
+      }
     }
+    this.dataStorage()
   }
 
   /**
@@ -158,7 +189,7 @@ class Chat {
       document.getElementById(`nameAcceptSettingsBtn${this.count}`).addEventListener('click', this.updateUsername.bind(this), { once: true })
       document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
     } else if (event.target.id === `changeChannelNameBtn${this.count}`) {
-      document.getElementById(`channel${this.count}`).value = String(this.channel)
+      document.getElementById(`channel${this.count}`).value = String(this.currentChannel)
       document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'visibleSettings')
       document.getElementById(`channelAcceptSettingsBtn${this.count}`).addEventListener('click', this.updateUsername.bind(this), { once: true })
       document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
@@ -173,10 +204,10 @@ class Chat {
     if (event.target.id === `nameAcceptSettingsBtn${this.count}`) {
       this.userName = document.getElementById(`nickName${this.count}`).value
       document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
-      window.sessionStorage.setItem('username', this.userName)
+      this.dataStorage()
       document.getElementById(`userMessage${this.count}`).disabled = false
     } else if (event.target.id === `channelAcceptSettingsBtn${this.count}`) {
-      this.channel = document.getElementById(`channel${this.count}`).value
+      this.currentChannel = document.getElementById(`channel${this.count}`).value
       document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
     }
   }
