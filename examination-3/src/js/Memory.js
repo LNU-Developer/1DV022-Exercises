@@ -179,6 +179,7 @@ class Memory {
    */
   closeMemory () {
     const window = document.getElementById(`window${this.count}`)
+    document.getElementById(`close${this.count}`).removeEventListener('click', this.closeMemory.bind(this), { once: true })
     document.getElementById(`bricks${this.count}`).removeEventListener('click', this.selectImg.bind(this))
     document.getElementById(`bricks${this.count}`).removeEventListener('keydown', this.keyUse.bind(this))
     document.getElementById(`nrOfBricks${this.count}`).removeEventListener('change', this.removeBricks.bind(this))

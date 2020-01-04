@@ -1,6 +1,6 @@
 /**
  * Creates a window
- * * @param {number} count - The unique instance number that will populate all IDs
+ * @param {number} count - The unique instance number that will populate all IDs
  * @param {string} choice - The type of window to be created
  * @param {number} zIndex - The current zIndex value
  * @constructor
@@ -96,16 +96,7 @@ class Window {
     } else if (choice === 'Chat') {
       return `
               <div class="chatMenu"> 
-                <button type="button" id="changeUsernameBtn${this.count}">Change Nickname</button>
-                <button type="button" id="changeChannelNameBtn${this.count}">Change Channel</button>
-                <div id="nameSettings${this.count}">
-                  <p><input id="nickName${this.count}" type="text" style="width: 50px;">
-                  <button id="nameAcceptSettingsBtn${this.count}">Go</button></p>
-                </div>
-                <div id="channelSettings${this.count}">
-                <p><input id="channel${this.count}" type="text" style="width: 50px;">
-                <button id="channelAcceptSettingsBtn${this.count}">Go</button></p>
-                </div>
+                  <input autocomplete="off" id="nickName${this.count}" type="text" class="form-control" style="width: 100px;">
               </div>
               `
     } else if (choice === 'Github') {
@@ -142,15 +133,19 @@ class Window {
     } else if (choice === 'Chat') {
       return `
               <div id="chat${this.count}" class="chatDiv">
-              <h1>Messages</h2>    
-              <div id="messageArea${this.count}" class="messageArea">
-                <p id="receivedMessages${this.count}"></p>
+                <div id="channels${this.count}" class="channelsDiv">
+                  <lable>#</lable><input autocomplete="off" id="channel${this.count}" type="text" style="width: 100px;" placeholder="Add channel"><br>
+                  <p><a href="#" id="defaultChannel${this.count}">#channel</a></p>
                 </div>
-                <div id="inputArea" class="inputArea">
-                  <h2>Type your message</h2>
-                  <p><textarea rows="2" cols="35" id="userMessage${this.count}" tabindex="${this.count}"></textarea></p>
+                <h1>Messages</h2>    
+                <div id="messageArea${this.count}" class="messageArea">
+                  <p id="receivedMessages${this.count}"></p>
                 </div>
-              </div>
+                  <div id="inputArea" class="inputArea">
+                    <h2>Type your message</h2>
+                    <p><textarea rows="2" cols="45" id="userMessage${this.count}" tabindex="${this.count}"></textarea></p>
+                  </div>
+                </div>
                `
     } else if (choice === 'Github') {
       return `

@@ -8,7 +8,7 @@ class Chat {
   constructor (count) {
     this.count = count
     this.currentChannel = 'channel'
-    this.channels = ['channel']
+    this.channels = []
     this.savedMessages = []
     this.userName = ''
   }
@@ -20,28 +20,86 @@ class Chat {
     this.ws = new window.WebSocket('ws://vhost3.lnu.se:20080/socket/')
     document.getElementById(`close${this.count}`).addEventListener('click', this.closeChat.bind(this), { once: true })
     document.getElementById(`minimize${this.count}`).addEventListener('click', this.minimizeChat.bind(this))
-    document.getElementById(`changeUsernameBtn${this.count}`).addEventListener('click', this.showMenu.bind(this))
-    document.getElementById(`changeChannelNameBtn${this.count}`).addEventListener('click', this.showMenu.bind(this))
-    document.getElementById(`window${this.count}`).addEventListener('keydown', this.keyHandle.bind(this))
+    document.getElementById(`userMessage${this.count}`).addEventListener('keydown', this.sendMessage.bind(this))
+    document.getElementById(`userMessage${this.count}`).addEventListener('input', this.emojiChecker.bind(this))
+    document.getElementById(`channel${this.count}`).addEventListener('keydown', this.createChannel.bind(this))
+    document.getElementById(`channels${this.count}`).addEventListener('click', this.changeChannel.bind(this))
+    document.getElementById(`nickName${this.count}`).addEventListener('keydown', this.updateUsername.bind(this))
     this.ws.addEventListener('message', this.listenMessage.bind(this))
     document.getElementById(`userMessage${this.count}`).focus()
-    document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
-    document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
-    document.getElementById(`userMessage${this.count}`).addEventListener('input', this.emojiChecker.bind(this))
-
     document.getElementById(`userMessage${this.count}`).disabled = true
+    document.getElementById(`channel${this.count}`).disabled = true
 
     const sessionStorage = JSON.parse(window.sessionStorage.getItem('data'))
     if (sessionStorage === null) {
-      document.getElementById(`changeUsernameBtn${this.count}`).click()
-      document.getElementById(`nickName${this.count}`).value = 'Jon Doe'
+      document.getElementById(`defaultChannel${this.count}`).click()
       document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">You will need to enter a username before you can continue</p>`
       document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">The Matrix ${this.getTime()}</p>`
+      document.getElementById(`nickName${this.count}`).focus()
     } else {
       this.userName = String(sessionStorage[0])
+      document.getElementById(`nickName${this.count}`).value = String(this.userName)
       this.savedMessages = sessionStorage[1]
-      this.messageCache(this.currentChannel)
+      this.channels = sessionStorage[2]
+      this.channels.forEach(element => { this.addChannel(element) })
       document.getElementById(`userMessage${this.count}`).disabled = false
+      document.getElementById(`channel${this.count}`).disabled = false
+      document.getElementById(`defaultChannel${this.count}`).click()
+    }
+  }
+
+  /**
+   * Method to add channels to html
+   * @param {string} channel - The name of the channel
+   */
+  addChannel (channel) {
+    const a = document.createElement('a')
+    const p = document.createElement('p')
+    a.setAttribute('href', '#')
+    a.setAttribute('id', `${channel}${this.count}`)
+    a.innerHTML = `#${channel}`
+    p.appendChild(a)
+    document.getElementById(`channels${this.count}`).appendChild(p)
+  }
+
+  /**
+   * Method to add channel to channels list and to change focus to this channel
+   * @param {string} channel - The name of the channel
+   */
+  createChannel (event) {
+    if (event.keyCode === 13) {
+      event.preventDefault()
+      document.getElementById(`userMessage${this.count}`).focus()
+      this.currentChannel = `${document.getElementById(`channel${this.count}`).value}`
+      this.dataStorage()
+      if ((!this.channels.includes(this.currentChannel)) && (this.currentChannel !== 'channel')) {
+        this.channels.push(this.currentChannel)
+        this.addChannel(this.currentChannel)
+      }
+      document.getElementById(`channel${this.count}`).value = ''
+      document.getElementById(this.currentChannel + this.count).click()
+    } else if (event.keyCode === 27) {
+      this.closeChat()
+    }
+  }
+
+  /**
+   * Method to change which channel to populate and show messages for
+   * @param {string} channel - The name of the channel to be populated
+   */
+  changeChannel (event) {
+    if (event.target.tagName === 'A') {
+      document.getElementById(`userMessage${this.count}`).focus()
+      this.currentChannel = event.target.textContent.substr(1)
+      this.messageCache(this.currentChannel)
+
+      this.channels.forEach(element => {
+        document.getElementById(element + this.count).parentNode.classList.remove('activeChannelsDiv')
+      })
+      document.getElementById(`defaultChannel${this.count}`).parentNode.classList.remove('activeChannelsDiv')
+
+      const active = document.getElementById(event.target.id).parentNode
+      active.setAttribute('class', 'activeChannelsDiv')
     }
   }
 
@@ -52,6 +110,7 @@ class Chat {
   messageCache (channel) {
     if (channel) {
       const receivedMessages = document.getElementById(`receivedMessages${this.count}`)
+      receivedMessages.innerHTML = ``
       this.savedMessages.forEach(element => {
         if (element.channel === channel) {
           receivedMessages.innerHTML += `<p class=${element.CSS}>${element.message}</p>`
@@ -69,19 +128,20 @@ class Chat {
     const array = []
     array.push(String(this.userName))
     array.push(this.savedMessages)
+    array.push(this.channels)
     window.sessionStorage.setItem('data', JSON.stringify(array))
+    console.log(array)
   }
 
   /**
    * Event handler for key strokes. If enter is selected the message is sent, and if esc is selected it will close the application
    * @param {object} event - keystroke
    */
-  keyHandle (event) {
+  sendMessage (event) {
     if (event.keyCode === 13) {
       event.preventDefault()
       document.getElementById(`userMessage${this.count}`).focus()
       if (document.getElementById(`userMessage${this.count}`).value !== '') {
-        this.messageData = document.getElementById(`userMessage${this.count}`).value
         const data = {
           type: 'message',
           data: document.getElementById(`userMessage${this.count}`).value,
@@ -157,6 +217,7 @@ class Chat {
    * @param {object} event - messages
    */
   listenMessage (event) {
+    const sessionStorage = JSON.parse(window.sessionStorage.getItem('data'))
     const data = JSON.parse(event.data)
     let classData
 
@@ -174,25 +235,13 @@ class Chat {
         receivedMessages.innerHTML += `<p class=${this.savedMessages[length].CSS}>${this.savedMessages[length].name} ${this.savedMessages[length].time}</p>`
         document.getElementById(`messageArea${this.count}`).scrollTo(0, document.getElementById(`messageArea${this.count}`).scrollHeight)
       }
-    }
-    this.dataStorage()
-  }
-
-  /**
-   * Event handler for opening menu options
-   * @param {object} event - clicked object
-   */
-  showMenu (event) {
-    if (event.target.id === `changeUsernameBtn${this.count}`) {
-      document.getElementById(`nickName${this.count}`).value = String(this.userName)
-      document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'visibleSettings')
-      document.getElementById(`nameAcceptSettingsBtn${this.count}`).addEventListener('click', this.updateUsername.bind(this), { once: true })
-      document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
-    } else if (event.target.id === `changeChannelNameBtn${this.count}`) {
-      document.getElementById(`channel${this.count}`).value = String(this.currentChannel)
-      document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'visibleSettings')
-      document.getElementById(`channelAcceptSettingsBtn${this.count}`).addEventListener('click', this.updateUsername.bind(this), { once: true })
-      document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
+      if (sessionStorage !== null && sessionStorage[0] !== '') {
+        this.userName = String(sessionStorage[0])
+        document.getElementById(`nickName${this.count}`).value = String(this.userName)
+        document.getElementById(`userMessage${this.count}`).disabled = false
+        document.getElementById(`channel${this.count}`).disabled = false
+        this.dataStorage()
+      }
     }
   }
 
@@ -201,14 +250,22 @@ class Chat {
    * @param {object} event - clicked object
    */
   updateUsername (event) {
-    if (event.target.id === `nameAcceptSettingsBtn${this.count}`) {
-      this.userName = document.getElementById(`nickName${this.count}`).value
-      document.getElementById(`nameSettings${this.count}`).setAttribute('class', 'invisibleSettings')
-      this.dataStorage()
-      document.getElementById(`userMessage${this.count}`).disabled = false
-    } else if (event.target.id === `channelAcceptSettingsBtn${this.count}`) {
-      this.currentChannel = document.getElementById(`channel${this.count}`).value
-      document.getElementById(`channelSettings${this.count}`).setAttribute('class', 'invisibleSettings')
+    if (event.keyCode === 13) {
+      event.preventDefault()
+      if (document.getElementById(`nickName${this.count}`).value !== '') {
+        this.userName = document.getElementById(`nickName${this.count}`).value
+        this.dataStorage()
+        document.getElementById(`userMessage${this.count}`).disabled = false
+        document.getElementById(`channel${this.count}`).disabled = false
+        document.getElementById(`userMessage${this.count}`).focus()
+      } else {
+        document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">You will need to enter a username before you can continue</p>`
+        document.getElementById(`receivedMessages${this.count}`).innerHTML += `<p class="receivedMessages">The Matrix ${this.getTime()}</p>`
+        document.getElementById(`nickName${this.count}`).focus()
+        document.getElementById(`messageArea${this.count}`).scrollTo(0, document.getElementById(`messageArea${this.count}`).scrollHeight)
+      }
+    } else if (event.keyCode === 27) {
+      this.closeChat()
     }
   }
 
@@ -218,11 +275,13 @@ class Chat {
   closeChat () {
     const window = document.getElementById(`window${this.count}`)
     this.ws.close()
-    document.getElementById(`window${this.count}`).removeEventListener('keydown', this.closeChat.bind(this))
-    document.getElementById(`changeUsernameBtn${this.count}`).removeEventListener('click', this.showMenu.bind(this))
-    document.getElementById(`changeChannelNameBtn${this.count}`).removeEventListener('click', this.showMenu.bind(this))
+    document.getElementById(`close${this.count}`).removeEventListener('click', this.closeChat.bind(this), { once: true })
     document.getElementById(`minimize${this.count}`).removeEventListener('click', this.minimizeChat.bind(this))
+    document.getElementById(`userMessage${this.count}`).removeEventListener('keydown', this.sendMessage.bind(this))
     document.getElementById(`userMessage${this.count}`).removeEventListener('input', this.emojiChecker.bind(this))
+    document.getElementById(`channel${this.count}`).removeEventListener('keydown', this.createChannel.bind(this))
+    document.getElementById(`channels${this.count}`).removeEventListener('click', this.changeChannel.bind(this))
+    document.getElementById(`nickName${this.count}`).removeEventListener('keydown', this.updateUsername.bind(this))
     this.ws.removeEventListener('message', this.listenMessage.bind(this))
     window.parentNode.removeChild(window)
   }

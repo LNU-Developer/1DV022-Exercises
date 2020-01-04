@@ -181,6 +181,7 @@ class Github {
    * Function to remove all eventlisteners and to remove HTML reference to created Window
    */
   closeGithub () {
+    document.getElementById(`close${this.count}`).removeEventListener('click', this.closeGithub.bind(this), { once: true })
     document.getElementById(`signInBtn${this.count}`).removeEventListener('click', this.signIn.bind(this))
     document.getElementById(`viewIssuesBtn${this.count}`).removeEventListener('click', this.viewIssues.bind(this))
     document.getElementById(`starReposBtn${this.count}`).removeEventListener('click', this.starRepos.bind(this))

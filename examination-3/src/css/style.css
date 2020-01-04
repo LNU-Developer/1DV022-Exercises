@@ -35,7 +35,8 @@ body {
   text-align: center;
   padding: 10px 10px;
   text-decoration: none;
-  transition: all .2s ease-in;
+  transition: all .5s 
+  cubic-bezier(1, -1.04, 0.21, 2.18);
 }
 
 .navbar a:hover {
