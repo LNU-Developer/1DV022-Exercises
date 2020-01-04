@@ -96,7 +96,7 @@ class Window {
     } else if (choice === 'Chat') {
       return `
               <div class="chatMenu"> 
-                  <input autocomplete="off" id="nickName${this.count}" type="text" class="form-control" style="width: 100px;">
+                  <input autocomplete="off" id="nickName${this.count}" type="text" placeholder="Nickname" style="width: 100px;">
               </div>
               `
     } else if (choice === 'Github') {

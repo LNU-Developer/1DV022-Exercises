@@ -8,6 +8,7 @@
    
  .chatDiv textarea {
    resize: none;
+   background-color: #f5f6fa;
  }
  
  .chatDiv h2 {
@@ -25,11 +26,13 @@
  }
 
  .chatMenu input {
-  padding-left: 2px;
+  padding: 5px;
   position: absolute;
   top: 55px;
   right: 10px;
   border-radius: 10px;
+  border: 2px solid #e17055;
+  background-color: #f5f6fa;
  }
 
  .inputArea {
@@ -42,12 +45,13 @@
 
  .inputArea textarea {
   border-radius: 10px;
+  border: 2px solid #e17055;
 }
  
  .messageArea {
-  max-height: 415px;
+  max-height: 405px;
   position: absolute;
-  top: 80px;
+  top: 90px;
   width: 350px;
   left: 160px;
   overflow-y: overlay;
@@ -77,7 +81,7 @@
 											  transparent)
 }
  
- .channelsDiv{
+ .channelsDiv {
   height: 500px;
   width: 140px;
   max-width: 140px;
@@ -90,6 +94,8 @@
  .channelsDiv input{
   border-radius: 10px;
   padding: 5px;
+  border: 2px solid #e17055;
+  background-color: #f5f6fa;
  }
 
  .activeChannelsDiv {
@@ -100,7 +106,8 @@
   background: #e17055 !important;;
   background: linear-gradient(90deg, rgba(225, 112, 85, 1) 70%, rgba(230, 148, 129, 1) 84%, rgba(236, 184, 173, 1) 95%) !important;;
   box-shadow: -5px 9px 15px -8px rgba(0, 0, 0, 0.75);
-  max-width: 120px
+  max-width: 120px;
+  overflow-wrap: break-word;
 }
 
  .channelsDiv p {
@@ -111,10 +118,16 @@
   background: rgb(204, 204, 204);
   background: linear-gradient(90deg, rgba(204, 204, 204, 1) 70%, rgba(218, 218, 218, 1) 95%);
   box-shadow: 5px 9px 15px -8px rgba(0, 0, 0, 0.75);
-  max-width: 120px
+  max-width: 120px;
+  overflow-wrap: break-word;
+  font-size: 14px;
  }
 
-
+ .channelsDiv a:hover, a:visited, a:link, a:active {
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+}
 
  .channelsDiv::-webkit-scrollbar-track
  {
@@ -152,6 +165,7 @@
    overflow-wrap: break-word;
    max-width: 200px;
    width: fit-content;
+   font-size: 14px;
  }
  
  .receivedMessages:nth-of-type(even) {
@@ -173,6 +187,7 @@
    overflow-wrap: break-word;
    width: fit-content;
    max-width: 200px;
+   font-size: 14px;
  }
  
  .sentMessages:nth-of-type(even) {
