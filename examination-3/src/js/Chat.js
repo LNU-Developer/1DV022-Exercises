@@ -24,6 +24,7 @@ class Chat {
     document.getElementById(`userMessage${this.count}`).addEventListener('input', this.emojiChecker.bind(this))
     document.getElementById(`channel${this.count}`).addEventListener('keydown', this.createChannel.bind(this))
     document.getElementById(`channels${this.count}`).addEventListener('click', this.changeChannel.bind(this))
+    document.getElementById(`channels${this.count}`).addEventListener('dblclick', this.removeChannel.bind(this))
     document.getElementById(`nickName${this.count}`).addEventListener('keydown', this.updateUsername.bind(this))
     this.ws.addEventListener('message', this.listenMessage.bind(this))
     document.getElementById(`userMessage${this.count}`).focus()
@@ -63,21 +64,40 @@ class Chat {
   }
 
   /**
+   * Event handler for doubleclick. If doubleclick is made on an channel item the item is removed from DOM
+   * @param {object} event - double click
+   */
+
+  removeChannel (event) {
+    if (event.target.tagName === 'A') {
+      if (this.channels.includes(event.target.text.substring(1))) {
+        const a = document.getElementById(event.target.id)
+        a.parentNode.remove()
+        this.channels.splice(this.channels.indexOf(event.target.text.substring(1)), 1)
+        document.getElementById(`defaultChannel${this.count}`).click()
+        this.dataStorage()
+      }
+    }
+  }
+
+  /**
    * Method to add channel to channels list and to change focus to this channel
    * @param {string} channel - The name of the channel
    */
   createChannel (event) {
     if (event.keyCode === 13) {
       event.preventDefault()
-      document.getElementById(`userMessage${this.count}`).focus()
-      this.currentChannel = `${document.getElementById(`channel${this.count}`).value}`
-      this.dataStorage()
-      if ((!this.channels.includes(this.currentChannel)) && (this.currentChannel !== 'channel')) {
-        this.channels.push(this.currentChannel)
-        this.addChannel(this.currentChannel)
+      if (document.getElementById(`channel${this.count}`).value !== '') {
+        document.getElementById(`userMessage${this.count}`).focus()
+        this.currentChannel = `${document.getElementById(`channel${this.count}`).value}`
+        if ((!this.channels.includes(this.currentChannel)) && (this.currentChannel !== 'channel')) {
+          this.channels.push(this.currentChannel)
+          this.addChannel(this.currentChannel)
+        }
+        document.getElementById(`channel${this.count}`).value = ''
+        document.getElementById(this.currentChannel + this.count).click()
+        this.dataStorage()
       }
-      document.getElementById(`channel${this.count}`).value = ''
-      document.getElementById(this.currentChannel + this.count).click()
     } else if (event.keyCode === 27) {
       this.closeChat()
     }
@@ -282,6 +302,7 @@ class Chat {
     document.getElementById(`channel${this.count}`).removeEventListener('keydown', this.createChannel.bind(this))
     document.getElementById(`channels${this.count}`).removeEventListener('click', this.changeChannel.bind(this))
     document.getElementById(`nickName${this.count}`).removeEventListener('keydown', this.updateUsername.bind(this))
+    document.getElementById(`channels${this.count}`).removeEventListener('dblclick', this.removeChannel.bind(this))
     this.ws.removeEventListener('message', this.listenMessage.bind(this))
     window.parentNode.removeChild(window)
   }
